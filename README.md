@@ -9,7 +9,6 @@ A Unity 3D souls-like game based on chess
 - **Arthur** - [Github](https://github.com/Soleis)
 
 - **Damian Dorosz** - [Github](https://github.com/exostin)
-  - [![Twitter Follow](https://img.shields.io/twitter/follow/exostin.svg?style=social)](https://twitter.com/exostin)
 
 - **Hans** - [Github](https://github.com/unbekanntunity)
   
@@ -27,3 +26,9 @@ Make many small **Pull Requests** rather than packing too much code into one bra
 We want every prefab or asset to be able to be used in any scene. If there are steps needed to get it working (initializing variables, etc), document them here.
 
 We plan to demo all features weekly.
+
+## Documentation
+### Title Screen
+
+- GetVersion.cs - A script that pulls the current build version (We set that in Project Settings under Player tab)
+				and puts it into a transparent text in the bottom left corner. It can for example indicate which version is a screenshot from.
