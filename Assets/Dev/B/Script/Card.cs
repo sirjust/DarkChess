@@ -8,4 +8,5 @@ public class Card : ScriptableObject
     public string skillname;
     public int manacost;
     public Sprite pic;
+    public GameObject template;
 }

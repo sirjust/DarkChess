@@ -235,12 +235,14 @@ MonoBehaviour:
   maxamount: 4
   drawableCards:
   - {fileID: 11400000, guid: bac20520681b8df419ed953f80afdf6c, type: 2}
+  - {fileID: 11400000, guid: 3a572358c5e40bd43a8fca7d1e8c53a9, type: 2}
+  uniqueCards:
+  - {fileID: 11400000, guid: 3a572358c5e40bd43a8fca7d1e8c53a9, type: 2}
   template: {fileID: 7997651603213714223, guid: 3725578da8927204ca24a19d581e1a7c,
     type: 3}
   x_start: 157
   y_start: 47
   gap: 20
-  lastIndex: 0
 --- !u!114 &191016237
 MonoBehaviour:
   m_ObjectHideFlags: 0
