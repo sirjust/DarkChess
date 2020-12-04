@@ -46,4 +46,4 @@ MonoBehaviour:
   tilePrefab: {fileID: 6255773228827400433, guid: 9d27b632c9da6c248afd248616ba08be,
     type: 3}
   clone: {fileID: 0}
-  mapSize: {x: 100, y: 100}
+  gridSize: {x: 8, y: 8}

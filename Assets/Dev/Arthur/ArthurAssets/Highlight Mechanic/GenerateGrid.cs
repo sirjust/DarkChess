@@ -7,8 +7,8 @@ public class GenerateGrid : MonoBehaviour
     public GameObject tilePrefab;
     public GameObject clone; // A clone of the tilePrefab that can be edited without harming the original prefab.
 
-    // Change dimensions in the inspector
-    public Vector2 gridSize;
+    // Change dimensions in the inspector. Defaulted to 8x8.
+    public Vector2 gridSize  = new Vector2(8, 8);
 
 
     void Start()

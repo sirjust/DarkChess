@@ -12,7 +12,7 @@ public class Movement : MonoBehaviour
 
     Vector3 nextPosition, destination, direction;
 
-    float speed = 5f;
+    public float speed = 5f;
     float rayLength = 1;
 
     bool canMove;

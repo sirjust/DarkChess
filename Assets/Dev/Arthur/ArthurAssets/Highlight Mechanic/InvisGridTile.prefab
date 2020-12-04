@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6255773228827400435}
   - component: {fileID: 6255773228827400434}
   m_Layer: 0
-  m_Name: Cube 1
+  m_Name: InvisGridTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,6 +106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae11e4836221e3240ae914d85a40f6bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalHL: {fileID: 4875429470512011234, guid: 75e15b27a39f8a340ad2d4b237ab0969,
+  highlight: {fileID: 4875429470512011234, guid: 75e15b27a39f8a340ad2d4b237ab0969,
     type: 3}
-  clone1: {fileID: 0}
+  clone: {fileID: 0}
