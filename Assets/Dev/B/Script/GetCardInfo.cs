@@ -15,5 +15,6 @@ public class GetCardInfo : MonoBehaviour
         textName.SetText(card.skillName);
         textMana.SetText(card.manaCost.ToString("n0"));
         image.sprite = card.skillPic;
+        image.enabled = true;
     }
 }

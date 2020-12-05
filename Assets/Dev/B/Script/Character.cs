@@ -17,11 +17,11 @@ public class Character : ScriptableObject
     public int currentHealth;
     public int mana;
     public int currentMana;
-    public int strenght;
+    public int strength;
     public int defense;
     public int movement;
     public int critRate;
-    public int dogdeRate;
+    public int dodgeRate;
 
     public RealtionType realtion;
 }

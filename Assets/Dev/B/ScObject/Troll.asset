@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: 1a6b1a590869f034c8a3b7e7f60b9db0, type: 3}
   Model: {fileID: 2582797683533289831, guid: 2f6fb5d74051cc6458d5c67c68397ccd, type: 3}
-  charname: Troll
+  charName: Troll
   health: 100
-  currenthealth: 100
+  currentHealth: 0
   mana: 10
-  currentmana: 10
+  currentMana: 0
   strenght: 10
   defense: 22
   movement: 11

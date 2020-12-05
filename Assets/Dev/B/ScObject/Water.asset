@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f28ad9802594a6544bca596f74615df1, type: 3}
   m_Name: Water
   m_EditorClassIdentifier: 
-  skillname: ww
-  manacost: 11
-  pic: {fileID: 21300000, guid: 382845e9ae7fd4bbcae87e795b1732d2, type: 3}
+  skillName: Water
+  manaCost: 11
+  skillPic: {fileID: 21300000, guid: 92aee0fb85e2f4c2f9f3a34e83522ec3, type: 3}
   template: {fileID: 8347153845744924136, guid: f1fc5ce857ea6ca47869c5f15af24703,
     type: 3}

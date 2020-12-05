@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardSystem : MonoBehaviour
 {
-    public int amountStart;
-    public int maxAmount;
+    public int startingCardCount;
+    public int maxCardCount;
     public Card[] drawableCards;
     public Card[] uniqueCards;
     public GameObject template;
@@ -16,11 +17,11 @@ public class CardSystem : MonoBehaviour
     private List<Card> handcards = new List<Card>();
     private int lastIndex;
 
-    private void Awake()
+    private void Awake()                    
     {
         GameObject empty = new GameObject();
 
-        for (int i = 0; i < maxAmount; i++)
+        for (int i = 0; i < maxCardCount; i++)
         {
             var obj = Instantiate(empty, drawableCards[0].template.transform);
             obj.transform.SetParent(this.transform);
@@ -28,9 +29,9 @@ public class CardSystem : MonoBehaviour
             places.Add(obj);
         }
 
-        if (amountStart <= maxAmount)
+        if (startingCardCount <= maxCardCount)
         {
-            for (int i = 0; i < amountStart; i++)
+            for (int i = 0; i < startingCardCount; i++)
             {
                 var cardobj = PickRandCard(drawableCards, uniqueCards);
                 var obj = Instantiate(cardobj.template, places[i].transform);
@@ -39,11 +40,11 @@ public class CardSystem : MonoBehaviour
                 obj.AddComponent<Identify>();
                 handcards.Add(cardobj);
             }
-            lastIndex = amountStart;
+            lastIndex = startingCardCount;
         }
         else
         {
-            for (int i = 0; i < maxAmount; i++)
+            for (int i = 0; i < maxCardCount; i++)
             {
                 var cardobj = PickRandCard(drawableCards, uniqueCards);
                 var obj = Instantiate(cardobj.template, places[i].transform);
@@ -52,7 +53,7 @@ public class CardSystem : MonoBehaviour
                 obj.AddComponent<Identify>();
                 handcards.Add(cardobj);
             }
-            lastIndex = maxAmount;
+            lastIndex = maxCardCount;
         }
     }
 
@@ -61,13 +62,14 @@ public class CardSystem : MonoBehaviour
         Destroy(places[index].GetComponentInChildren<Identify>().gameObject);
         for (int i = index + 1; i < lastIndex; i++)
         {
-            var old_obj = places[i].GetComponentInChildren<Identify>().gameObject;
-            Destroy(old_obj);
+            var old_cardObj = places[i].GetComponentInChildren<Identify>().gameObject;
+            var old_card = places[i].GetComponentInChildren<GetCardInfo>().card;
+            Destroy(old_cardObj);
 
-            var new_obj = Instantiate(template, places[i - 1].transform);
-            new_obj.transform.SetParent(places[i - 1].transform);
-            new_obj.AddComponent<Identify>();
-            new_obj.GetComponentInChildren<DragDrop>().index = i - 1;
+            var new_cardObj = Instantiate(old_card.template, places[i - 1].transform);
+            new_cardObj.transform.SetParent(places[i - 1].transform);
+            new_cardObj.AddComponent<Identify>();
+            new_cardObj.GetComponentInChildren<DragDrop>().index = i - 1;
         }
         handcards.RemoveAt(index);
         lastIndex--;
@@ -75,7 +77,7 @@ public class CardSystem : MonoBehaviour
 
     public void DrawCard()
     {
-        if (lastIndex != maxAmount)
+        if (lastIndex != maxCardCount)
         {
             var cardobj = PickRandCard(drawableCards, uniqueCards);
             var new_obj = Instantiate(cardobj.template, places[lastIndex].transform);
@@ -91,30 +93,30 @@ public class CardSystem : MonoBehaviour
         }
     }
 
-    public Card PickRandCard(Card[] posibilities, Card[] unique)
+    public Card PickRandCard(Card[] possibilities, Card[] unique)
     {
         bool pass = false;
 
-        int random = Random.Range(0, posibilities.Length);
+        int random = Random.Range(0, possibilities.Length);
         while (pass == false)
         {
             pass = true;
 
             for (int m = 0; m < unique.Length; m++)
             {
-                if (unique[m] == posibilities[random])
+                if (unique[m] == possibilities[random])
                 {
                     for (int i = 0; i < handcards.Count; i++)
                     {
-                        if (handcards[i] == posibilities[random])
+                        if (handcards[i] == possibilities[random])
                         {
                             pass = false;
-                            random = Random.Range(0, posibilities.Length);
+                            random = Random.Range(0, possibilities.Length);
                         }
                     }
                 }
             }
         }
-        return posibilities[random];
+        return possibilities[random];
     }
 }

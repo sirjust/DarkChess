@@ -5,15 +5,15 @@ public class SimpleButton : MonoBehaviour
 {
     public GameObject button;
 
-    public void ControlMenu(GameObject _target)
+    public void ControlMenu(GameObject target)
     {
-        if (_target.GetComponent<Image>().enabled)
+        if (target.GetComponent<Image>().enabled)
         {
-            _target.GetComponent<CharInfo>().DisableMenu(false);
+            target.GetComponent<CharInfo>().DisableMenu(false);
         }
         else
         {
-            _target.GetComponent<CharInfo>().DisableMenu(true);
+            target.GetComponent<CharInfo>().DisableMenu(true);
         }
     }
 }

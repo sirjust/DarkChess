@@ -10,15 +10,15 @@ public class CharInfo : MonoBehaviour
     public TMP_Text charStats;
     public Image charPic;
 
-    private Image[] allimage;
+    private Image[] allImages;
     private TextMeshProUGUI[] allGUI;
 
     public void DisableMenu(bool mode)
     {
-        allimage = this.gameObject.GetComponentsInChildren<Image>();
+        allImages = this.gameObject.GetComponentsInChildren<Image>();
         allGUI = this.gameObject.GetComponentsInChildren<TextMeshProUGUI>();
 
-        foreach (Image image in allimage)
+        foreach (Image image in allImages)
         {
             image.enabled = mode;
         }
@@ -34,7 +34,16 @@ public class CharInfo : MonoBehaviour
         charName.SetText(_character.charName);
         charValues.SetText($"{_character.currentHealth} / {_character.health} \n {_character.currentMana} / {_character.mana}");
         charPic.sprite = _character.picture;
-        charStats.SetText($"DMG         {_character.strenght.ToString("00")} \nCRIT         {_character.critRate.ToString("00")} \nDOGDE    {_character.dogdeRate.ToString("00")} \nARMOR    {_character.defense.ToString("00")}");
+        charStats.SetText($"DMG         {_character.strength.ToString("00")} \nCRIT         {_character.critRate.ToString("00")} \nDOGDE    {_character.dodgeRate.ToString("00")} \nARMOR    {_character.defense.ToString("00")}");
+        
+        if(_character.realtion == RealtionType.Enemy)
+        {
+            charPic.color = Color.red;
+        }
+        else
+        {
+            charPic.color = Color.green;
+        }
     }
 
     public void getCharID(Character _character)
