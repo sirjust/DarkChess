@@ -231,8 +231,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24c9fc6d6476a94c9daffc30c0d0ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountStart: 2
-  maxAmount: 4
+  startingCardCount: 2
+  maxCardCount: 4
   drawableCards:
   - {fileID: 11400000, guid: bac20520681b8df419ed953f80afdf6c, type: 2}
   - {fileID: 11400000, guid: 3a572358c5e40bd43a8fca7d1e8c53a9, type: 2}
