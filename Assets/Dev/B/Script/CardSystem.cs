@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CardSystem : MonoBehaviour
 {
@@ -17,28 +16,29 @@ public class CardSystem : MonoBehaviour
     private List<Card> handcards = new List<Card>();
     private int lastIndex;
 
-    private void Awake()                    
+    private void Awake()
     {
         GameObject empty = new GameObject();
 
         for (int i = 0; i < maxCardCount; i++)
         {
-            var obj = Instantiate(empty, drawableCards[0].template.transform);
-            obj.transform.SetParent(this.transform);
-            obj.transform.position = new Vector3(x_start + ((drawableCards[0].template.GetComponentInChildren<RectTransform>().rect.width + 19 + gap) * i), y_start, obj.transform.position.z);
-            places.Add(obj);
+            var place = Instantiate(empty, new Vector3(x_start + ((drawableCards[0].template.GetComponentInChildren<RectTransform>().rect.width + 19 + gap) * i), y_start, this.transform.position.z), this.transform.rotation);
+            place.transform.SetParent(this.transform);
+            places.Add(place);
         }
 
         if (startingCardCount <= maxCardCount)
         {
             for (int i = 0; i < startingCardCount; i++)
             {
-                var cardobj = PickRandCard(drawableCards, uniqueCards);
-                var obj = Instantiate(cardobj.template, places[i].transform);
-                obj.transform.SetParent(places[i].transform);
-                obj.GetComponentInChildren<DragDrop>().index = i;
-                obj.AddComponent<Identify>();
-                handcards.Add(cardobj);
+                var card = PickRandCard(drawableCards, uniqueCards);
+                handcards.Add(card);
+
+                var cardObj = Instantiate(card.template, places[i].transform);
+                cardObj.transform.SetParent(places[i].transform);
+                cardObj.GetComponentInChildren<DragDrop>().index = i;
+                cardObj.AddComponent<Identify>();
+
             }
             lastIndex = startingCardCount;
         }
