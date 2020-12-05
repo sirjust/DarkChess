@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Dev/Exostin/ExostinScenes/TitleScreen.unity
+    guid: 3665644cac2df084ca35de9b045c07d7
+  - enabled: 1
+    path: Assets/Dev/Gathdar/GathdarScenes/GathdarDev.unity
+    guid: 7d6d8b1dd75897a4998c76c3549bca3c
   m_configObjects: {}
