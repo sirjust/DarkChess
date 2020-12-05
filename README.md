@@ -6,7 +6,7 @@ A Unity 3D souls-like game based on chess
 
 - **Justin Moore** - [Github](https://github.com/sirjust)
   
-- **Arthur** - [Github](https://github.com/Soleis)
+- **Arthur** - [Github](https://github.com/arthur-schevey)
 
 - **Damian Dorosz** - [Github](https://github.com/exostin)
 
