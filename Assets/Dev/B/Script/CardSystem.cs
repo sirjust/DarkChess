@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class CardSystem : MonoBehaviour
 {
-    public int amountstart;
-    public int maxamount;
+    public int amountStart;
+    public int maxAmount;
     public Card[] drawableCards;
     public Card[] uniqueCards;
     public GameObject template;
@@ -20,7 +20,7 @@ public class CardSystem : MonoBehaviour
     {
         GameObject empty = new GameObject();
 
-        for (int i = 0; i < maxamount; i++)
+        for (int i = 0; i < maxAmount; i++)
         {
             var obj = Instantiate(empty, drawableCards[0].template.transform);
             obj.transform.SetParent(this.transform);
@@ -28,9 +28,9 @@ public class CardSystem : MonoBehaviour
             places.Add(obj);
         }
 
-        if (amountstart <= maxamount)
+        if (amountStart <= maxAmount)
         {
-            for (int i = 0; i < amountstart; i++)
+            for (int i = 0; i < amountStart; i++)
             {
                 var cardobj = PickRandCard(drawableCards, uniqueCards);
                 var obj = Instantiate(cardobj.template, places[i].transform);
@@ -39,11 +39,11 @@ public class CardSystem : MonoBehaviour
                 obj.AddComponent<Identify>();
                 handcards.Add(cardobj);
             }
-            lastIndex = amountstart;
+            lastIndex = amountStart;
         }
         else
         {
-            for (int i = 0; i < maxamount; i++)
+            for (int i = 0; i < maxAmount; i++)
             {
                 var cardobj = PickRandCard(drawableCards, uniqueCards);
                 var obj = Instantiate(cardobj.template, places[i].transform);
@@ -52,7 +52,7 @@ public class CardSystem : MonoBehaviour
                 obj.AddComponent<Identify>();
                 handcards.Add(cardobj);
             }
-            lastIndex = maxamount;
+            lastIndex = maxAmount;
         }
     }
 
@@ -75,7 +75,7 @@ public class CardSystem : MonoBehaviour
 
     public void DrawCard()
     {
-        if (lastIndex != maxamount)
+        if (lastIndex != maxAmount)
         {
             var cardobj = PickRandCard(drawableCards, uniqueCards);
             var new_obj = Instantiate(cardobj.template, places[lastIndex].transform);

@@ -231,14 +231,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24c9fc6d6476a94c9daffc30c0d0ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountstart: 2
-  maxamount: 4
+  amountStart: 0
+  maxAmount: 0
   drawableCards:
   - {fileID: 11400000, guid: bac20520681b8df419ed953f80afdf6c, type: 2}
   - {fileID: 11400000, guid: 3a572358c5e40bd43a8fca7d1e8c53a9, type: 2}
   uniqueCards:
   - {fileID: 11400000, guid: 3a572358c5e40bd43a8fca7d1e8c53a9, type: 2}
-  template: {fileID: 7997651603213714223, guid: 3725578da8927204ca24a19d581e1a7c,
+  template: {fileID: 1527677221299457677, guid: 30b7b2fb44e35db48b46ee2df05985d1,
     type: 3}
   x_start: 157
   y_start: 47
@@ -1162,10 +1162,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
-  charname: {fileID: 1218128539}
-  values: {fileID: 804542046}
-  stats: {fileID: 1730109645}
-  charpic: {fileID: 367928655}
+  charName: {fileID: 0}
+  charValues: {fileID: 0}
+  charStats: {fileID: 0}
+  charPic: {fileID: 0}
 --- !u!1 &1218128537
 GameObject:
   m_ObjectHideFlags: 0

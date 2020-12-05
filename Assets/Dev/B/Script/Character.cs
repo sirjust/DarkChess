@@ -12,11 +12,11 @@ public class Character : ScriptableObject
     public Sprite picture;
     public GameObject Model;
 
-    public string charname;
+    public string charName;
     public int health;
-    public int currenthealth;
+    public int currentHealth;
     public int mana;
-    public int currentmana;
+    public int currentMana;
     public int strenght;
     public int defense;
     public int movement;
@@ -24,6 +24,4 @@ public class Character : ScriptableObject
     public int dogdeRate;
 
     public RealtionType realtion;
-
-    
 }

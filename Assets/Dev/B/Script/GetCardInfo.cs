@@ -6,14 +6,14 @@ public class GetCardInfo : MonoBehaviour
 {
     public Card card;
 
-    public TMP_Text textname;
-    public TMP_Text textmana;
+    public TMP_Text textName;
+    public TMP_Text textMana;
     public Image image;
 
     private void Awake()
     {
-        textname.SetText(card.skillname);
-        textmana.SetText(card.manacost.ToString("n0"));
-        image.sprite = card.pic;
+        textName.SetText(card.skillName);
+        textMana.SetText(card.manaCost.ToString("n0"));
+        image.sprite = card.skillPic;
     }
 }
