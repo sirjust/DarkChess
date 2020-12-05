@@ -32,8 +32,8 @@ public class CharInfo : MonoBehaviour
     public void RefreshStats(Character _character)
     {
         charName.SetText(_character.charName);
-        charValues.SetText($"{_character.currentHealth} / {_character.health} \n {_character.currentMana} / {_character.mana}");
         charPic.sprite = _character.picture;
+        charValues.SetText($"{_character.currentHealth} / {_character.health} \n {_character.currentMana} / {_character.mana}");
         charStats.SetText($"DMG         {_character.strength.ToString("00")} \nCRIT         {_character.critRate.ToString("00")} \nDOGDE    {_character.dodgeRate.ToString("00")} \nARMOR    {_character.defense.ToString("00")}");
         
         if(_character.realtion == RealtionType.Enemy)
