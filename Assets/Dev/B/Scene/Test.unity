@@ -577,7 +577,7 @@ GameObject:
   - component: {fileID: 569465009}
   - component: {fileID: 569465008}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: DrawButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -595,7 +595,7 @@ RectTransform:
   m_LocalScale: {x: 0.25234374, y: 4.5931253, z: 1}
   m_Children: []
   m_Father: {fileID: 1742116681}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -796,7 +796,7 @@ GameObject:
   - component: {fileID: 644870735}
   - component: {fileID: 644870734}
   m_Layer: 5
-  m_Name: Button
+  m_Name: CharInfoButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1389,11 +1389,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 897177475}
   m_LocalRotation: {x: 0.42610517, y: 0.275246, z: -0.12405019, w: 0.85281044}
-  m_LocalPosition: {x: 419.23, y: 237.95, z: 52.14}
+  m_LocalPosition: {x: -29.660675, y: 21.126022, z: -15.00515}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 1389642532}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 52.661003, y: 36.850002, z: 2.1720002}
 --- !u!1 &935806212
 GameObject:
@@ -1592,7 +1592,7 @@ GameObject:
   - component: {fileID: 1117977451}
   - component: {fileID: 1117977454}
   m_Layer: 5
-  m_Name: Canvas (1)
+  m_Name: 'Canvas '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1725,7 +1725,7 @@ RectTransform:
   - {fileID: 367928654}
   - {fileID: 1218128538}
   m_Father: {fileID: 1742116681}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2169,6 +2169,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1356185815}
   m_CullTransparentMesh: 0
+--- !u!1 &1389642531
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1389642532}
+  m_Layer: 0
+  m_Name: SceneManagement
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1389642532
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389642531}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 448.8907, y: 216.82397, z: 67.14515}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 897177478}
+  - {fileID: 1565928995}
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1427132827
 GameObject:
   m_ObjectHideFlags: 0
@@ -2426,11 +2458,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565928993}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: -448.8907, y: -213.82397, z: -67.14515}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 1389642532}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1621339613
 GameObject:
@@ -2675,8 +2707,8 @@ RectTransform:
   m_LocalScale: {x: 1.0118672, y: 0.25832593, z: 1}
   m_Children:
   - {fileID: 644870733}
-  - {fileID: 1183067789}
   - {fileID: 569465007}
+  - {fileID: 1183067789}
   - {fileID: 191016235}
   m_Father: {fileID: 935806216}
   m_RootOrder: 0
@@ -2773,7 +2805,7 @@ GameObject:
   - component: {fileID: 1864737639}
   - component: {fileID: 1864737638}
   m_Layer: 5
-  m_Name: Canvas (1)
+  m_Name: 'Canvas '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
