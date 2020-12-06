@@ -5,22 +5,23 @@ using UnityEngine;
 public class shadow : MonoBehaviour
 {
 
-    bool shadowOn, shadowOff;
+    bool checkerOn, checkerOff;
     public float fadeSpeed = 1;
 
     public Material original;
     Renderer rend;
 
+    public Projector kingShadow;
+
     void Start()
     {
         rend = GetComponent<Renderer>();
         rend.material = original;
-
     }
 
     void Update()
     {
-        if(shadowOn)
+        if(checkerOn)
         {
             Color objectColor = rend.material.color;
             float fadeAmountr = objectColor.r + (fadeSpeed * Time.deltaTime);
@@ -32,11 +33,11 @@ public class shadow : MonoBehaviour
 
             if(objectColor.r >= 1)
             {
-                shadowOn = false;
+                checkerOn = false;
             }
         }
 
-        if (shadowOff)
+        if (checkerOff)
         {
             Color objectColor = rend.material.color;
             float fadeAmountr = objectColor.r - (fadeSpeed * Time.deltaTime);
@@ -48,19 +49,29 @@ public class shadow : MonoBehaviour
 
             if (objectColor.r <= 0)
             {
-                shadowOff = false;
+                checkerOff = false;
             }
         }
     }
 
-    public void TurnShadowOn()
+    public void TurnCheckerOff()
     {
-        shadowOn = true;
+        checkerOn = true;
+    }
+
+    public void TurnCheckerOn()
+    {
+        checkerOff = true;
     }
 
     public void TurnShadowOff()
     {
-        shadowOff = true;
+        kingShadow.enabled = false;
+    }
+
+    public void TurnShadowOn()
+    {
+        kingShadow.enabled = true;
     }
 
 }

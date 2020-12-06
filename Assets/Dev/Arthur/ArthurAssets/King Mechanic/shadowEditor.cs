@@ -12,11 +12,19 @@ public class ObjectBuilderEditor : Editor
         shadow myScript = (shadow)target;
         if (GUILayout.Button("Checker On"))
         {
-            myScript.TurnShadowOff();
+            myScript.TurnCheckerOff();
         }
         if (GUILayout.Button("Checker Off"))
         {
+            myScript.TurnCheckerOn();
+        }
+        if (GUILayout.Button("Shadow On"))
+        {
             myScript.TurnShadowOn();
+        }
+        if (GUILayout.Button("Shadow Off"))
+        {
+            myScript.TurnShadowOff();
         }
     }
 }
