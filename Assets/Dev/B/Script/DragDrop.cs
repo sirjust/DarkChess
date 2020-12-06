@@ -5,10 +5,12 @@ using UnityEngine.EventSystems;
 
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
+    [Header("Requiered")]
     public float heightUI;
 
-    private Vector3 lastPos;
+    [Header("Assigned Automatically")]
     public int index;
+    private Vector3 lastPos;
 
     public void OnBeginDrag(PointerEventData eventData)
     {

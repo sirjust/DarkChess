@@ -16,12 +16,15 @@ MonoBehaviour:
   Model: {fileID: 3573679730390062478, guid: 4d5a3563ccfa8a34dbff57e49f156d32, type: 3}
   charName: Troll
   health: 100
-  currentHealth: 0
+  currentHealth: 100
+  hearts: 8
+  currenthearts: 8
   mana: 40
   currentMana: 0
-  strenght: 1
+  strength: 0
   defense: 12
   movement: 331
   critRate: 0
-  dogdeRate: 1
+  dodgeRate: 0
+  healthRepresentation: 1
   realtion: 0

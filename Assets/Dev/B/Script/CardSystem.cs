@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CardSystem : MonoBehaviour
 {
+    [Header("Requiered")]
     public int startingCardCount;
     public int maxCardCount;
     public Card[] drawableCards;

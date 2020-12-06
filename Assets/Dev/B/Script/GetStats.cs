@@ -1,33 +1,37 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
-
-public enum HealthRepresentation
-{
-    healthbar, hearts
-}
 
 [RequireComponent(typeof(BoxCollider))]
 public class GetStats : MonoBehaviour
 {
+    [Header("Requiered")]
     public Character character;
-    public CharInfo charInfo;
+    public GameObject hearttemplate;
 
-    public HealthRepresentation healthRepresentation;
-    public Sprite heartsPic;
+
+    [Header("Optional")]
     public int size = 4;
+    public float gapBeforeLast = 2;
+    public float multiplier = 2;
+
+    [Header("Assigned Automatically")]
+    public CharInfo charInfo;
 
     private BoxCollider boxCollider;
     private GameObject body;
     private GameObject[] allObj;
     private Slider healthbar;
-    private Image heartsContainer;
+    private GameObject heartsContainer;
+    private List<GameObject> hearts = new List<GameObject>();
+
 
     private void Awake()
     {
         healthbar = GetComponentInChildren<Slider>();
-        heartsContainer = GetComponentInChildren<Image>();
-
+        heartsContainer = GetComponentInChildren<Identify>().gameObject;
         allObj = FindObjectsOfType<GameObject>();
+
         foreach (GameObject _gameObject in allObj)
         {
             if (_gameObject.GetComponent<CharInfo>())
@@ -43,16 +47,35 @@ public class GetStats : MonoBehaviour
         charObj.transform.SetParent(this.gameObject.transform);
         body = charObj;
 
-        if(healthRepresentation == HealthRepresentation.healthbar)
+        if (character.healthRepresentation == HealthRepresentation.healthbar)
         {
-            heartsContainer.enabled = false;
+            heartsContainer.SetActive(false);
+            healthbar.maxValue = character.health;
+            healthbar.value = character.currentHealth;
         }
         else
         {
-            heartsContainer.enabled = false;
+            healthbar.gameObject.SetActive(false);
+            for (int i = 0; i < character.hearts; i++)
+            {
+                InstantiateHearts(i);
+            }
         }
-
         charInfo.DisableMenu(false);
+    }
+
+    public void InstantiateHearts(int index)
+    {
+        if (multiplier > 0)
+        {
+            var pos = new Vector3((0 + ((gapBeforeLast / multiplier) * index)), 0, 0);
+            var heartObj = Instantiate(hearttemplate, pos, this.gameObject.transform.rotation);
+            heartObj.transform.SetParent(heartsContainer.GetComponentInParent<Transform>().gameObject.transform);
+            heartObj.transform.localPosition = pos;
+            heartObj.GetComponent<Image>().color = Color.green;
+            hearts.Add(heartObj);
+            hearts[index].transform.localPosition -= new Vector3(gapBeforeLast, 0, 0);
+        }
     }
 
     private void Update()

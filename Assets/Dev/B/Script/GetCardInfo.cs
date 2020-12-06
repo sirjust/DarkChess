@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class GetCardInfo : MonoBehaviour
 {
+    [Header("Requiered")]
     public Card card;
-
     public TMP_Text textName;
     public TMP_Text textMana;
     public Image image;
