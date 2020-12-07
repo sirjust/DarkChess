@@ -26,5 +26,5 @@ MonoBehaviour:
   movement: 331
   critRate: 0
   dodgeRate: 0
-  healthRepresentation: 1
+  healthRepresentation: 0
   realtion: 0

@@ -7,6 +7,7 @@ public class Card : ScriptableObject
 {
     public string skillName;
     public int manaCost;
+    public float damage;
     public Sprite skillPic;
     public GameObject template;
 }

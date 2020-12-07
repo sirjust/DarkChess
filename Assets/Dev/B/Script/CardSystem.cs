@@ -6,12 +6,12 @@ public class CardSystem : MonoBehaviour
     [Header("Requiered")]
     public int startingCardCount;
     public int maxCardCount;
-    public Card[] drawableCards;
-    public Card[] uniqueCards;
-    public GameObject template;
     public int x_start;
     public int y_start;
     public int gap;
+    public Card[] drawableCards;
+    public Card[] uniqueCards;
+    public GameObject template;
 
     private List<GameObject> places = new List<GameObject>();
     private List<Card> handcards = new List<Card>();
@@ -25,6 +25,7 @@ public class CardSystem : MonoBehaviour
         {
             var place = Instantiate(empty, new Vector3(x_start + ((drawableCards[0].template.GetComponentInChildren<RectTransform>().rect.width + 19 + gap) * i), y_start, this.transform.position.z), this.transform.rotation);
             place.transform.SetParent(this.transform);
+            place.transform.localScale = new Vector3(1, 1, 1);
             places.Add(place);
         }
 
