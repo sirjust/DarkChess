@@ -16,5 +16,5 @@ MonoBehaviour:
   manaCost: 11
   damage: 11
   skillPic: {fileID: 21300000, guid: 92aee0fb85e2f4c2f9f3a34e83522ec3, type: 3}
-  template: {fileID: 4652221703640096160, guid: 061dc95f36693614db20e942d18de959,
+  template: {fileID: 2368595213499208057, guid: 1073e743ec71a1c4890892eea5bf8b34,
     type: 3}

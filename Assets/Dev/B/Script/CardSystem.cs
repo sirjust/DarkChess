@@ -11,7 +11,6 @@ public class CardSystem : MonoBehaviour
     public int gap;
     public Card[] drawableCards;
     public Card[] uniqueCards;
-    public GameObject template;
 
     private List<GameObject> places = new List<GameObject>();
     private List<Card> handcards = new List<Card>();
