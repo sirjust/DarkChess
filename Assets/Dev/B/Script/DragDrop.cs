@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
@@ -10,11 +8,16 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     [Header("Assigned Automatically")]
     public int index;
+    public GameObject CardGameObject;
+    public Vector3 selectedPos;
     private Vector3 lastPos;
-
+    public bool isSelected = false;
+    
+    
     public void OnBeginDrag(PointerEventData eventData)
     {
-        lastPos = this.transform.position;   
+        lastPos = this.transform.position - selectedPos;
+        isSelected = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -24,19 +27,27 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if(this.transform.position.y <= heightUI)
+        if (this.transform.position.y <= heightUI)
         {
             this.transform.position = lastPos;
             return;
         }
 
-        SendMessageUpwards("PlayCard", index);        
+        SendMessageUpwards("PlayCard", index);
         Destroy(this.gameObject.GetComponentInParent<Transform>().gameObject);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-
+        if (!isSelected)
+        {
+            CardGameObject.transform.position += selectedPos;
+            isSelected = true;
+        }
+        else
+        {
+            CardGameObject.transform.position -= selectedPos;
+            isSelected = false;
+        }
     }
-
 }
