@@ -11,9 +11,24 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public GameObject CardGameObject;
     public Vector3 selectedPos;
     private Vector3 lastPos;
+    private GetCardInfo getCardInfo;
+    private AllSkills allSkills;
     public bool isSelected = false;
-    
-    
+
+    private void Awake()
+    {
+        GameObject[] gameObjects = FindObjectsOfType<GameObject>();
+        foreach(GameObject gameObject in gameObjects)
+        {
+            if (gameObject.GetComponent<AllSkills>())
+            {
+                allSkills = gameObject.GetComponent<AllSkills>();
+            }
+        }
+
+        getCardInfo = GetComponent<GetCardInfo>();
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         lastPos = this.transform.position - selectedPos;
@@ -34,6 +49,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         }
 
         SendMessageUpwards("PlayCard", index);
+        allSkills.cast(getCardInfo.card.skill);
         Destroy(this.gameObject.GetComponentInParent<Transform>().gameObject);
     }
 

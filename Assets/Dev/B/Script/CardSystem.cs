@@ -4,13 +4,12 @@ using UnityEngine;
 public class CardSystem : MonoBehaviour
 {
     [Header("Requiered")]
+    public GameObject Player;
     public int startingCardCount;
     public int maxCardCount;
     public int x_start;
     public int y_start;
     public int gap;
-    public Card[] drawableCards;
-    public Card[] uniqueCards;
 
     [Header("Optional")]
     public Vector3 selectedPos;
@@ -18,9 +17,14 @@ public class CardSystem : MonoBehaviour
     private List<GameObject> places = new List<GameObject>();
     private List<Card> handcards = new List<Card>();
     private int lastIndex;
+    private Card[] drawableCards;
+    private Card[] uniqueCards;
 
     private void Awake()
     {
+        drawableCards = Player.GetComponentInChildren<GetStats>().normalskills;
+        uniqueCards = Player.GetComponentInChildren<GetStats>().uniqueSkills;
+
         GameObject empty = new GameObject();
         empty.name = "place";
 

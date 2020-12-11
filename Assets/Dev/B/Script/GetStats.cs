@@ -8,12 +8,15 @@ public class GetStats : MonoBehaviour
     [Header("Requiered")]
     public Character character;
     public GameObject hearttemplate;
-
+    public Card[] normalskills;
+    public Card[] uniqueSkills;
+    public bool haveBody = false;
 
     [Header("Optional")]
-    public int size = 4;
+    public Vector3 size = new Vector3(1,1,1);
     public float gapBeforeLast = 2;
     public float multiplier = 2;
+    public bool health = false;
 
     [Header("Assigned Automatically")]
     public CharInfo charInfo;
@@ -28,8 +31,27 @@ public class GetStats : MonoBehaviour
 
     private void Awake()
     {
-        healthbar = GetComponentInChildren<Slider>();
-        heartsContainer = GetComponentInChildren<Identify>().gameObject;
+        if (health)
+        {
+            healthbar = GetComponentInChildren<Slider>();
+            heartsContainer = GetComponentInChildren<Identify>().gameObject;
+
+            if (character.healthRepresentation == HealthRepresentation.healthbar)
+            {
+                heartsContainer.SetActive(false);
+                healthbar.maxValue = character.health;
+                healthbar.value = character.currentHealth;
+            }
+            else
+            {
+                healthbar.gameObject.SetActive(false);
+                for (int i = 0; i < character.hearts; i++)
+                {
+                    InstantiateHearts(i);
+                }
+            }
+        }
+
         allObj = FindObjectsOfType<GameObject>();
 
         foreach (GameObject _gameObject in allObj)
@@ -41,26 +63,19 @@ public class GetStats : MonoBehaviour
         }
 
         boxCollider = GetComponent<BoxCollider>();
-        boxCollider.size = new Vector3(size, size, size);
+        boxCollider.size = size;
 
-        var charObj = Instantiate(character.Model, this.gameObject.transform);
-        charObj.transform.SetParent(this.gameObject.transform);
-        body = charObj;
-
-        if (character.healthRepresentation == HealthRepresentation.healthbar)
+        if (!haveBody)
         {
-            heartsContainer.SetActive(false);
-            healthbar.maxValue = character.health;
-            healthbar.value = character.currentHealth;
+            var charObj = Instantiate(character.Model, this.gameObject.transform);
+            charObj.transform.SetParent(this.gameObject.transform);
+            body = charObj;
         }
         else
         {
-            healthbar.gameObject.SetActive(false);
-            for (int i = 0; i < character.hearts; i++)
-            {
-                InstantiateHearts(i);
-            }
+            body = this.gameObject;
         }
+
         charInfo.DisableMenu(false);
     }
 
@@ -80,7 +95,7 @@ public class GetStats : MonoBehaviour
 
     private void Update()
     {
-        this.gameObject.transform.position = body.transform.position;
+        if (!haveBody) this.gameObject.transform.position = body.transform.position;
     }
 
     private void OnMouseDown()

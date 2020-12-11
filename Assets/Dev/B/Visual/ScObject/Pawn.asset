@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pawn
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: 1a6b1a590869f034c8a3b7e7f60b9db0, type: 3}
-  Model: {fileID: 3573679730390062478, guid: 4d5a3563ccfa8a34dbff57e49f156d32, type: 3}
+  Model: {fileID: 5403002427580834744, guid: 8361691f425fb7f44a02419bf45f5154, type: 3}
   charName: Troll
   health: 100
   currentHealth: 100

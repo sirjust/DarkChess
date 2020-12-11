@@ -12,6 +12,7 @@ public class GetCardInfo : MonoBehaviour
 
     private void Awake()
     {
+        card.Init();
         textName.SetText(card.skillName);
         textMana.SetText(card.manaCost.ToString("n0"));
         image.sprite = card.skillPic;
