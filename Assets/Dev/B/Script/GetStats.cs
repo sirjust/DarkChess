@@ -13,10 +13,10 @@ public class GetStats : MonoBehaviour
     public bool haveBody = false;
 
     [Header("Optional")]
-    public Vector3 size = new Vector3(1,1,1);
+    public Vector3 collidersize = new Vector3(1,1,1);
+    public bool health = false;
     public float gapBeforeLast = 2;
     public float multiplier = 2;
-    public bool health = false;
 
     [Header("Assigned Automatically")]
     public CharInfo charInfo;
@@ -63,7 +63,7 @@ public class GetStats : MonoBehaviour
         }
 
         boxCollider = GetComponent<BoxCollider>();
-        boxCollider.size = size;
+        boxCollider.size = collidersize;
 
         if (!haveBody)
         {
@@ -87,7 +87,7 @@ public class GetStats : MonoBehaviour
             var heartObj = Instantiate(hearttemplate, pos, this.gameObject.transform.rotation);
             heartObj.transform.SetParent(heartsContainer.GetComponentInParent<Transform>().gameObject.transform);
             heartObj.transform.localPosition = pos;
-            heartObj.GetComponent<Image>().color = Color.green;
+            heartObj.AddComponent<UILookToCanvas>();
             hearts.Add(heartObj);
             hearts[index].transform.localPosition -= new Vector3(gapBeforeLast, 0, 0);
         }

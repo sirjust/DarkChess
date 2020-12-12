@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class getObjectonTile : MonoBehaviour
 {
+    [Header("Optional")]
+    public LayerMask layer;
+
     [Header("Assigned Automatically")]
     public GameObject gameObjectOnTile;
-    public LayerMask layer;
 
     private void Update()
     {

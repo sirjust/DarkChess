@@ -10,20 +10,9 @@ public class Card : ScriptableObject
     public Sprite skillPic;
     public GameObject template;
     public Skills skill;
-    public Vector2 range;
-    public bool horizontal;
-    public bool vertical;
+    public int maxAmountOfTargets;
 
     [Header("Assigned Automatically")]
-    public List<Vector2> ranges = new List<Vector2>();
+    public List<Vector3> ranges = new List<Vector3>();
 
-    public void Init()
-    {
-        if (ranges.Count == 0)
-        {
-            ranges.Add(range);
-            if (horizontal) ranges.Add(new Vector2(range.x, range.y - (range.y * 2)));
-            if (vertical) ranges.Add(new Vector2(range.x - (range.x * 2), range.y));
-        }
-    }
 }

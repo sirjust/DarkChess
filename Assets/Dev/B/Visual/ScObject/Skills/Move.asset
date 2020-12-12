@@ -19,3 +19,14 @@ MonoBehaviour:
   template: {fileID: 2368595213499208057, guid: 1073e743ec71a1c4890892eea5bf8b34,
     type: 3}
   skill: 1
+  maxAmountOfTargets: 1
+  ranges:
+  - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: -1, y: 0, z: 0}
+  - {x: 1, y: 0, z: 1}
+  - {x: 0, y: 0, z: 1}
+  - {x: -1, y: 0, z: 1}
+  - {x: 1, y: 0, z: -1}
+  - {x: 0, y: 0, z: -1}
+  - {x: -1, y: 0, z: -1}

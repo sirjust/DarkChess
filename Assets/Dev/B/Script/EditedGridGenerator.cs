@@ -25,7 +25,9 @@ public class EditedGridGenerator : MonoBehaviour
 
     [Header("Assigned Automatically")]
     public List<GameObject> selectedTiles = new List<GameObject>();
+    public List<GameObject> skillrangeTiles = new List<GameObject>();
     private GameObject tilePrefabclone;
+
 
     void Start()
     {
@@ -69,6 +71,14 @@ public class EditedGridGenerator : MonoBehaviour
         }
     }
 
+    public void ResetSelection()
+    {
+        foreach (GameObject tile in selectedTiles)
+        {
+            Destroy(tile);
+        }
+    }
+
     public void HoverHighlight()
     {
         RaycastHit hit;
@@ -85,16 +95,24 @@ public class EditedGridGenerator : MonoBehaviour
         }
     }
 
-    public void ResetSelection()
+    public void GenerateSkillTiles(List<Vector3> relativepositions, GameObject user)
     {
-        GameObject[] gameObjects = FindObjectsOfType<GameObject>();
-        foreach (GameObject gameObject in gameObjects)
+        foreach (Vector3 realtiveposition in relativepositions)
         {
-            if (gameObject.GetComponent<MeshCollider>())
-            {
-                Destroy(gameObject);
-            }
+            var position = realtiveposition + user.transform.position;
+            var tile = Instantiate(highlight, new Vector3(position.x, 0.02f, position.z), Quaternion.Euler(Vector3.right * 90));
+            tile.transform.SetParent(this.gameObject.transform);
+            skillrangeTiles.Add(tile);
         }
+    }
+
+    public void DestroySkillTiles()
+    {
+        foreach (GameObject tile in skillrangeTiles)
+        {
+            Destroy(tile);
+        }
+        skillrangeTiles.Clear();
     }
 
     IEnumerator Wait(GameObject gameObject, bool _destroy, float _timeBeforeDestroy)

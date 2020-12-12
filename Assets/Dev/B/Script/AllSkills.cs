@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public enum Skills
 {
@@ -7,14 +8,41 @@ public enum Skills
 
 public class AllSkills : MonoBehaviour
 {
-    public void cast(Skills skill)
+    private GameObject user;
+    private EditedGridGenerator gridGenerator;
+    private int targets = 0;
+
+    public bool cast(Card card, EditedGridGenerator _gridGenerator, GameObject _user)
     {
-        this.SendMessage(skill.ToString());
+        user = _user;
+        gridGenerator = _gridGenerator;
+
+        foreach(GameObject tile in gridGenerator.selectedTiles)
+        {
+            foreach(GameObject tile1 in gridGenerator.skillrangeTiles)
+            {
+                Debug.Log($"{tile.transform.position.x} == { tile1.transform.position.x} && { tile.transform.position.z} == { tile1.transform.position.z}");
+                if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
+                {
+                    this.SendMessage(card.skill.ToString(), tile1);
+                    targets++;
+
+                    if (targets >= card.maxAmountOfTargets) return true;
+                }
+            }
+        }
+        if (targets == 0)
+        {
+            Debug.LogError("Select other tiles");
+            return false;
+        }
+
+        return true;
     }
 
-    public void strike()
+    public void strike(GameObject targetTile)
     {
-        Debug.LogError("strike");
+        Debug.LogError($"strike at {targetTile.GetComponent<getObjectonTile>().gameObjectOnTile}");
     }
 
     public void move()
