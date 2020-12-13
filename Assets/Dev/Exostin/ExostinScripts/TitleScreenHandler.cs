@@ -14,5 +14,6 @@ public class TitleScreenHandler : MonoBehaviour
     public void ExitButton()
     {
         Application.Quit();
+        Debug.Log("Quitting...");
     }
 }
