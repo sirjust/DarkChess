@@ -84,7 +84,7 @@ public class Movement : MonoBehaviour
 
         if (Physics.Raycast(myRay, out hit, rayLength))
         {
-            if(hit.collider.tag == "Wall")
+            if(hit.collider.tag == "Wall" || hit.collider.tag == "Enemy")
             {
                 return false;
             }
