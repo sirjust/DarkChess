@@ -12,6 +12,7 @@ public class GetStats : MonoBehaviour
     public Card[] uniqueSkills;
     public bool haveBody = false;
 
+
     [Header("Optional")]
     public Vector3 collidersize = new Vector3(1,1,1);
     public bool health = false;
@@ -22,7 +23,6 @@ public class GetStats : MonoBehaviour
     public CharInfo charInfo;
 
     private BoxCollider boxCollider;
-    private GameObject body;
     private GameObject[] allObj;
     private Slider healthbar;
     private GameObject heartsContainer;
@@ -69,13 +69,8 @@ public class GetStats : MonoBehaviour
         {
             var charObj = Instantiate(character.Model, this.gameObject.transform);
             charObj.transform.SetParent(this.gameObject.transform);
-            body = charObj;
         }
-        else
-        {
-            body = this.gameObject;
-        }
-
+      
         charInfo.DisableMenu(false);
     }
 
@@ -93,14 +88,8 @@ public class GetStats : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (!haveBody) this.gameObject.transform.position = body.transform.position;
-    }
-
     private void OnMouseDown()
     {
-        charInfo.getCharID(character);
-        charInfo.RefreshStats(character);
+        charInfo.SetCharID(character);
     }
 }

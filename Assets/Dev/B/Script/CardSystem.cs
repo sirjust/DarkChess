@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CardSystem : MonoBehaviour
 {
@@ -119,5 +121,23 @@ public class CardSystem : MonoBehaviour
         cardObj.GetComponentInChildren<DragDrop>().CardGameObject = cardObj;
         cardObj.GetComponentInChildren<DragDrop>().selectedPos = selectedPos;
         handcards.Add(card);
+    }
+
+    public void ResetCardSelection(int index)
+    {
+        foreach (GameObject place in places)
+        {
+            try
+            {
+                if (place.GetComponentInChildren<DragDrop>().GetSelectionStatus() && place.GetComponentInChildren<DragDrop>().index != index)
+                {
+                    place.GetComponentInChildren<DragDrop>().Deselect();
+                }
+            }
+            catch (Exception)
+            {
+                continue;
+            }
+        }
     }
 }

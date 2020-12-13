@@ -45,8 +45,9 @@ public class CharInfo : MonoBehaviour
         else charPic.color = Color.green;
     }
 
-    public void getCharID(Character _character)
+    public void SetCharID(Character _character)
     {
         character = _character;
+        RefreshStats(character);
     }
 }

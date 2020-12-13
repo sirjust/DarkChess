@@ -19,6 +19,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private GetCardInfo getCardInfo;
     private CardSystem cardSystem;
     private AllSkills allSkills;
+    private SkillInfo skillInfo;
     private EditedGridGenerator gridGenerator;
 
     private void Awake()
@@ -30,6 +31,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
             if (gameObject.GetComponent<CardSystem>()) cardSystem = gameObject.GetComponent<CardSystem>();
             if (gameObject.GetComponent<EditedGridGenerator>()) gridGenerator = gameObject.GetComponent<EditedGridGenerator>();
             if (gameObject.GetComponent<AllSkills>()) allSkills = gameObject.GetComponent<AllSkills>();
+            if (gameObject.GetComponent<SkillInfo>()) skillInfo = gameObject.GetComponent<SkillInfo>();
         }
         getCardInfo = GetComponent<GetCardInfo>();
     }
@@ -45,6 +47,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        Debug.LogError("DragBegin");
         lastPos = this.transform.position - selectedPos;
         isDraging = true;
         isSelected = false;
@@ -57,6 +60,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        Debug.LogError("EndBegin");
         if (this.transform.position.y <= heightUI)
         {
             ResetCardPos();
@@ -64,6 +68,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         }
 
         SendMessageUpwards("PlayCard", index);
+        skillInfo.SetCardID(getCardInfo.card);
         successful = allSkills.cast(getCardInfo.card, gridGenerator, cardSystem.Player);
 
         if (successful)
@@ -78,8 +83,11 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        Debug.LogError("PointerDown");
+        SendMessageUpwards("ResetCardSelection", index);
         if (!isSelected && !isDraging) Select();
         else if (!isDraging) Deselect();
+        
     }
 
     public void Select()
@@ -100,5 +108,10 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     {
         this.transform.position = lastPos;
         isDraging = false;
+    }
+
+    public bool GetSelectionStatus()
+    {
+        return isSelected;
     }
 }
