@@ -14,4 +14,5 @@ public class Card : ScriptableObject
     public List<Vector3> ranges = new List<Vector3>();
     [TextArea(1, 50)]
     public string skillDesciption;
+    public int actionCost;
 }

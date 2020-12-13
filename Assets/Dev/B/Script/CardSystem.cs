@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+
 using Random = UnityEngine.Random;
 
 public class CardSystem : MonoBehaviour
 {
     [Header("Requiered")]
+    public TMP_Text ActionCounter;
     public GameObject Player;
     public int startingCardCount;
     public int maxCardCount;
@@ -21,11 +24,13 @@ public class CardSystem : MonoBehaviour
     private int lastIndex;
     private Card[] drawableCards;
     private Card[] uniqueCards;
+    private int amountAction = 0;
 
     private void Awake()
     {
         drawableCards = Player.GetComponentInChildren<GetStats>().normalskills;
         uniqueCards = Player.GetComponentInChildren<GetStats>().uniqueSkills;
+        amountAction = Player.GetComponentInChildren<GetStats>().character.actionAmount;
 
         GameObject empty = new GameObject();
         empty.name = "place";
@@ -110,7 +115,7 @@ public class CardSystem : MonoBehaviour
         }
         return possibilities[random];
     }
-    
+
     public void InstantiateCard(int index)
     {
         var card = PickRandCard(drawableCards, uniqueCards);
@@ -140,4 +145,22 @@ public class CardSystem : MonoBehaviour
             }
         }
     }
+
+    public void SetAmountAction(int amount)
+    {
+        amountAction -= amount;
+    }
+
+    public int GetAmountAction()
+    {
+        return amountAction;
+    }
+
+    public void RefreshAmountAction()
+    {
+        ActionCounter.SetText(amountAction.ToString("n0"));
+    }
+
 }
+
+

@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: 1a6b1a590869f034c8a3b7e7f60b9db0, type: 3}
   Model: {fileID: 5403002427580834744, guid: 8361691f425fb7f44a02419bf45f5154, type: 3}
-  charName: Troll
+  charName: Pawn
   health: 100
-  currentHealth: 100
+  currentHealth: 50
   hearts: 8
   currenthearts: 8
   mana: 40
@@ -26,5 +26,6 @@ MonoBehaviour:
   movement: 331
   critRate: 0
   dodgeRate: 0
-  healthRepresentation: 1
+  actionAmount: 0
+  healthRepresentation: 0
   realtion: 0
