@@ -62,7 +62,7 @@ To keep your fork's `main` branch up to date with the central repository, initia
 
 Once you're done working on a certain issue submit a pull request, and link it to that issue, so it can be automatically closed after merging.
 
-![linking pull request to an issue](https://ibb.co/DM83sm3)
+![linking pull request to an issue](https://i.ibb.co/JpyX08X/Link-Pull-Request-To-Issue-Example.png)
 
 ## **Mechanics**
 
