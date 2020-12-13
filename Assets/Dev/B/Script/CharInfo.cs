@@ -1,14 +1,18 @@
-﻿using UnityEngine;
+CharInfo:
+using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
 public class CharInfo : MonoBehaviour
 {
-    public Character character;
+    [Header("Requiered")]
     public TMP_Text charName;
     public TMP_Text charValues;
     public TMP_Text charStats;
     public Image charPic;
+
+    [Header("Assigned Automatically")]
+    public Character character;
 
     private Image[] allImages;
     private TextMeshProUGUI[] allGUI;
@@ -33,21 +37,18 @@ public class CharInfo : MonoBehaviour
     {
         charName.SetText(_character.charName);
         charPic.sprite = _character.picture;
-        charValues.SetText($"{_character.currentHealth} / {_character.health} \n {_character.currentMana} / {_character.mana}");
         charStats.SetText($"DMG         {_character.strength.ToString("00")} \nCRIT         {_character.critRate.ToString("00")} \nDOGDE    {_character.dodgeRate.ToString("00")} \nARMOR    {_character.defense.ToString("00")}");
         
-        if(_character.realtion == RealtionType.Enemy)
-        {
-            charPic.color = Color.red;
-        }
-        else
-        {
-            charPic.color = Color.green;
-        }
+        if (_character.healthRepresentation == HealthRepresentation.healthbar) charValues.SetText($"{_character.currentHealth} / {_character.health} \n {_character.currentMana} / {_character.mana}");
+        else charValues.SetText($"{_character.currenthearts} / {_character.hearts} \n {_character.currentMana} / {_character.mana}");
+
+        if (_character.realtion == RealtionType.Enemy) charPic.color = Color.red;
+        else charPic.color = Color.green;
     }
 
-    public void getCharID(Character _character)
+    public void SetCharID(Character _character)
     {
         character = _character;
+        RefreshStats(character);
     }
 }

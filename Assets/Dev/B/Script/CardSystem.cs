@@ -1,24 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CardSystem : MonoBehaviour
 {
+    [Header("Requiered")]
+    public GameObject Player;
     public int startingCardCount;
     public int maxCardCount;
-    public Card[] drawableCards;
-    public Card[] uniqueCards;
-    public GameObject template;
     public int x_start;
     public int y_start;
     public int gap;
 
+    [Header("Optional")]
+    public Vector3 selectedPos;
+
     private List<GameObject> places = new List<GameObject>();
     private List<Card> handcards = new List<Card>();
     private int lastIndex;
+    private Card[] drawableCards;
+    private Card[] uniqueCards;
 
     private void Awake()
     {
+        drawableCards = Player.GetComponentInChildren<GetStats>().normalskills;
+        uniqueCards = Player.GetComponentInChildren<GetStats>().uniqueSkills;
+
         GameObject empty = new GameObject();
+        empty.name = "place";
 
         for (int i = 0; i < maxCardCount; i++)
         {
@@ -31,14 +41,7 @@ public class CardSystem : MonoBehaviour
         {
             for (int i = 0; i < startingCardCount; i++)
             {
-                var card = PickRandCard(drawableCards, uniqueCards);
-                handcards.Add(card);
-
-                var cardObj = Instantiate(card.template, places[i].transform);
-                cardObj.transform.SetParent(places[i].transform);
-                cardObj.GetComponentInChildren<DragDrop>().index = i;
-                cardObj.AddComponent<Identify>();
-
+                InstantiateCard(i);
             }
             lastIndex = startingCardCount;
         }
@@ -46,12 +49,7 @@ public class CardSystem : MonoBehaviour
         {
             for (int i = 0; i < maxCardCount; i++)
             {
-                var cardobj = PickRandCard(drawableCards, uniqueCards);
-                var obj = Instantiate(cardobj.template, places[i].transform);
-                obj.transform.SetParent(places[i].transform);
-                obj.GetComponentInChildren<DragDrop>().index = i;
-                obj.AddComponent<Identify>();
-                handcards.Add(cardobj);
+                InstantiateCard(i);
             }
             lastIndex = maxCardCount;
         }
@@ -69,6 +67,8 @@ public class CardSystem : MonoBehaviour
             var new_cardObj = Instantiate(old_card.template, places[i - 1].transform);
             new_cardObj.transform.SetParent(places[i - 1].transform);
             new_cardObj.AddComponent<Identify>();
+            new_cardObj.GetComponentInChildren<DragDrop>().CardGameObject = new_cardObj;
+            new_cardObj.GetComponentInChildren<DragDrop>().selectedPos = selectedPos;
             new_cardObj.GetComponentInChildren<DragDrop>().index = i - 1;
         }
         handcards.RemoveAt(index);
@@ -79,17 +79,8 @@ public class CardSystem : MonoBehaviour
     {
         if (lastIndex != maxCardCount)
         {
-            var cardobj = PickRandCard(drawableCards, uniqueCards);
-            var new_obj = Instantiate(cardobj.template, places[lastIndex].transform);
-            new_obj.transform.SetParent(places[lastIndex].transform);
-            new_obj.AddComponent<Identify>();
-            new_obj.GetComponentInChildren<DragDrop>().index = lastIndex;
+            InstantiateCard(lastIndex);
             lastIndex++;
-            handcards.Add(cardobj);
-        }
-        else
-        {
-            Debug.LogError("Max card reached");
         }
     }
 
@@ -118,5 +109,35 @@ public class CardSystem : MonoBehaviour
             }
         }
         return possibilities[random];
+    }
+    
+    public void InstantiateCard(int index)
+    {
+        var card = PickRandCard(drawableCards, uniqueCards);
+        var cardObj = Instantiate(card.template, places[index].transform);
+        cardObj.transform.SetParent(places[index].transform);
+        cardObj.AddComponent<Identify>();
+        cardObj.GetComponentInChildren<DragDrop>().index = index;
+        cardObj.GetComponentInChildren<DragDrop>().CardGameObject = cardObj;
+        cardObj.GetComponentInChildren<DragDrop>().selectedPos = selectedPos;
+        handcards.Add(card);
+    }
+
+    public void ResetCardSelection(int index)
+    {
+        foreach (GameObject place in places)
+        {
+            try
+            {
+                if (place.GetComponentInChildren<DragDrop>().GetSelectionStatus() && place.GetComponentInChildren<DragDrop>().index != index)
+                {
+                    place.GetComponentInChildren<DragDrop>().Deselect();
+                }
+            }
+            catch (Exception)
+            {
+                continue;
+            }
+        }
     }
 }
