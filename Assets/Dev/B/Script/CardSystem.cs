@@ -110,7 +110,7 @@ public class CardSystem : MonoBehaviour
         }
         return possibilities[random];
     }
-
+    
     public void InstantiateCard(int index)
     {
         var card = PickRandCard(drawableCards, uniqueCards);

@@ -1,10 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [Header("Requiered")]
-
     public float heightUI;
 
     [Header("Assigned Automatically")]
@@ -60,7 +59,6 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.LogError("EndBegin");
         if (this.transform.position.y <= heightUI)
         {
             ResetCardPos();
@@ -71,19 +69,27 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         skillInfo.SetCardID(getCardInfo.card);
         successful = allSkills.cast(getCardInfo.card, gridGenerator, cardSystem.Player);
 
-        if (successful)
+        if (successful && cardSystem.GetAmountAction() > getCardInfo.card.actionCost)
         {
+            cardSystem.SetAmountAction(getCardInfo.card.actionCost);
+            cardSystem.RefreshAmountAction();
             gridGenerator.DestroySkillTiles();
             Destroy(this.gameObject.GetComponentInParent<Transform>().gameObject);
         }
-        else ResetCardPos();
+        else if (cardSystem.GetAmountAction() > getCardInfo.card.actionCost)
+        {
+            ResetCardPos();
+        }
+        else
+        {
+            ResetCardPos();
+        }
 
         isDraging = false;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.LogError("PointerDown");
         SendMessageUpwards("ResetCardSelection", index);
         if (!isSelected && !isDraging) Select();
         else if (!isDraging) Deselect();

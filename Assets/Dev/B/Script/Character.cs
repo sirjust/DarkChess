@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 public enum RealtionType
@@ -29,6 +29,7 @@ public class Character : ScriptableObject
     public int movement;
     public int critRate;
     public int dodgeRate;
+    public int actionAmount;
 
     public HealthRepresentation healthRepresentation;
     public RealtionType realtion;

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+CharInfo:
+using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
