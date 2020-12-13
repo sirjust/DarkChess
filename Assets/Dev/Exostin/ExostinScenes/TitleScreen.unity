@@ -177,7 +177,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Pawn Souls
+  m_text: Pawns have Souls
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8da507791dc93334eaeeb3e1241ea40e, type: 2}
   m_sharedMaterial: {fileID: 3563404438591627237, guid: 8da507791dc93334eaeeb3e1241ea40e,
@@ -205,10 +205,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 223.85
-  m_fontSizeBase: 36
+  m_fontSize: 157
+  m_fontSizeBase: 157
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 698.3
   m_fontStyle: 32
@@ -1954,7 +1954,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Pawn Souls
+  m_text: Pawns have Souls
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8da507791dc93334eaeeb3e1241ea40e, type: 2}
   m_sharedMaterial: {fileID: 3563404438591627237, guid: 8da507791dc93334eaeeb3e1241ea40e,
@@ -1982,8 +1982,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 227.2
-  m_fontSizeBase: 227.2
+  m_fontSize: 157.7
+  m_fontSizeBase: 157.7
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
