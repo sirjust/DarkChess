@@ -10,10 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f28ad9802594a6544bca596f74615df1, type: 3}
-  m_Name: Fire
+  m_Name: Strike
   m_EditorClassIdentifier: 
-  skillName: Fire
+  skillName: Strike
   manaCost: 11
+  damage: 8
   skillPic: {fileID: 21300000, guid: 7ae06a498d47544d7a75ddfdf1ada9d4, type: 3}
-  template: {fileID: 1486373989168012142, guid: 30b7b2fb44e35db48b46ee2df05985d1,
+  template: {fileID: 8569735353428587967, guid: 30b7b2fb44e35db48b46ee2df05985d1,
     type: 3}
+  skill: 0
+  maxAmountOfTargets: 1
+  ranges:
+  - {x: 1, y: 0, z: -1}
+  - {x: 1, y: 0, z: 1}
