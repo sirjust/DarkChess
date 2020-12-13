@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class getObjectonTile : MonoBehaviour
+public class GetObjectonTile : MonoBehaviour
 {
     [Header("Optional")]
     public LayerMask layer;
@@ -13,7 +13,7 @@ public class getObjectonTile : MonoBehaviour
     private void Update()
     {
         RaycastHit hit;
-        if (Physics.Raycast(this.gameObject.transform.position, Vector3.up, out hit, layer))
+        if (Physics.Raycast(this.gameObject.transform.position, new Vector3(0,1,0), out hit, layer))
         {
             gameObjectOnTile = hit.collider.gameObject;
         }

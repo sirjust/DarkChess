@@ -46,7 +46,6 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.LogError("DragBegin");
         lastPos = this.transform.position - selectedPos;
         isDraging = true;
         isSelected = false;

@@ -42,11 +42,11 @@ public class AllSkills : MonoBehaviour
 
     public void strike(GameObject targetTile)
     {
-        Debug.LogError($"strike at {targetTile.GetComponent<getObjectonTile>().gameObjectOnTile}");
+        Debug.Log($"strike at {targetTile.GetComponent<GetObjectonTile>().gameObjectOnTile.name}");
     }
 
     public void move()
     {
-        Debug.LogError("move");
+        Debug.Log("move");
     }
 }
