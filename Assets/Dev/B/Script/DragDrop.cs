@@ -4,7 +4,6 @@ using UnityEngine.EventSystems;
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [Header("Requiered")]
-    public AllSkills allSkills;
     public float heightUI;
 
     [Header("Assigned Automatically")]
@@ -19,6 +18,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private GetCardInfo getCardInfo;
     private CardSystem cardSystem;
     private SkillInfo skillInfo;
+    private AllSkills allSkills;
     private EditedGridGenerator gridGenerator;
 
     private void Awake()
