@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum Skills
@@ -19,7 +20,7 @@ public class AllSkills : MonoBehaviour
         {
             foreach(GameObject tile1 in gridGenerator.skillrangeTiles)
             {
-                Debug.Log($"{tile.transform.position.x} == { tile1.transform.position.x} && { tile.transform.position.z} == { tile1.transform.position.z}");
+                //Debug.Log($"{tile.transform.position.x} == { tile1.transform.position.x} && { tile.transform.position.z} == { tile1.transform.position.z}");
                 if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
                 {
                     this.SendMessage(card.skill.ToString(), tile1);
@@ -40,6 +41,14 @@ public class AllSkills : MonoBehaviour
 
     public void strike(GameObject targetTile)
     {
-        Debug.Log($"strike at {targetTile.GetComponent<GetObjectonTile>().gameObjectOnTile.name}");
+        try
+        {
+            Debug.Log($"strike at {targetTile.GetComponent<GetObjectonTile>().gameObjectOnTile.name}");
+
+        }
+        catch (Exception)
+        {
+
+        }
     }
 }

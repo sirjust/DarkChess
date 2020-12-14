@@ -71,7 +71,6 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         {
           
             SendMessageUpwards("PlayCard", index);
-            Destroy(this.gameObject.GetComponentInParent<Transform>().gameObject);
             gridGenerator.DestroySkillTiles();
 
         }
