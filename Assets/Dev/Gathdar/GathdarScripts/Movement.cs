@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    Animator anim;
     Vector3 up = Vector3.zero,
     right = new Vector3(0, 90, 0),
     down = new Vector3(0, 180, 0),
@@ -23,6 +24,7 @@ public class Movement : MonoBehaviour
         currentDirection = up;
         nextPosition = Vector3.forward;
         destination = transform.position;
+        anim = this.gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -67,6 +69,7 @@ public class Movement : MonoBehaviour
             {
                 destination = transform.position + nextPosition;
                 direction = nextPosition;
+                anim.Play("BasicMotions@Walk01");
                 canMove = false;
             }
         }

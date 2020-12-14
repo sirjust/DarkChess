@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 public enum RealtionType
@@ -8,7 +8,7 @@ public enum RealtionType
 
 public enum HealthRepresentation
 {
-    healthbar, hearts
+    healthbar, none
 }
 
 [CreateAssetMenu(fileName = "New Character", menuName = "ScObject/Character")]
