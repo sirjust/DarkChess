@@ -51,6 +51,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         isSelected = false;
     }
 
+
     public void OnDrag(PointerEventData eventData)
     {
         this.transform.position += new Vector3(eventData.delta.x, eventData.delta.y, 0);

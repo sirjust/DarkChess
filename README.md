@@ -113,3 +113,135 @@ OnMouseExit() {
 ```
 
 If I tried to destroy the original "highlight" it would attempt to delete the prefab from our assets which would not work.
+
+### **Battle Menu**
+
+#### **Components / sections**
+The Battle menu contains several components which can be used individually until a specific point. Each component add a functionality to the Battle Menu
+
+1. [**CharInfo**](#charInfo)
+2. [**SkillInfo**](#skillInfo)
+3. [**Health**](#health)
+4. [**CardHolding**](#cardHolding)
+5. [**Important Notes**](#importantNotes)
+
+#### **charInfo**
+
+##### **function**
+display the character informations(name, picture, health, mana, strenght, critRate, dogdeRate, armor) of the last selected character in the scene
+
+##### **How to use**
+1. Attach `CharInfo.cs` to the game object you want to use as a display for the character informations
+2. then assign the different components to the variables under the `Requiered` header 
+
+![charInfo image](https://i.ibb.co/gT9Qh4D/CharInfo.png)
+
+#### **skillInfo**
+
+##### **function**
+display the name and description of the last played card/skill in the scene
+
+##### **How to use**
+1. Attach `SkillInfo.cs` to the game object you want to use as a display for the skill  informations
+2. then assign the different components to the variables under the `Requiered` header 
+
+![skillInfo image](https://i.ibb.co/BfZhB15/Skill-Info.png)
+
+#### **health**
+
+##### **function**
+display the players healthbar and manabar 
+
+##### **How to use**
+1. Attach `GetBarInfo.cs` to the game object you want to use as a display the character's health and mana
+2. then assign the different components to the variables under the `Requiered` header  
+
+![skillInfo image](https://i.ibb.co/s3Z64Fx/Health.png)
+
+##### **cardHolding**
+
+##### **function**
+Used to draw, display and play cards/skills
+
+Note: There is a difference between cards and card objects. 
+- cards:  scriptableObject which are linked to a card object
+-  card objects: the whole gameObject with additional game objects and scripts e.g UI elements or the `DragDrop.cs`  
+
+![cardHolding image](https://i.ibb.co/qkcB0FD/Card-System.png)
+
+#### **How to use**
+1. Attach `CardSystem.cs` to the game object you want to use as container for the cards
+2. then assign the different components to the variables under the `Requiered` header 
+
+- `Starting Card Count`: specify the amount of cards which will be created at the beginning
+- `Max Card Count`: specify the highest number of cards in the hand 
+- `Y_start`: specify the y-coordinate of the instantiated card.
+- `Gap`: the distance between every card on the hand
+- `Selected Pos`: Specify the position which will add to the current Position of the Card, if the card is selected
+
+#### **How it works**
+
+##### **Card spawning**
+Once the scene starts the `CardSystem.cs`  instatiates empty objects. These empty objects (`place` are saved in a array. Afterwards the script spawn a specific amount of `card objects` on the position of the empty objects in the array. In addition all card objects will receive a index which represent the index of the `place` which the cards are children of. These `place` object and the cards will be saved in a seperate array. 
+
+Note: All posibile cards which can be played/drawed are saved in the scriptableObject of the player. 
+
+![CardArrays Image](https://i.ibb.co/PxSJRR3/Card-Arrays.png)
+
+##### **Drag and Drop**
+In order to use the unity drag and drop functionality I have to import the different Interfaces( `IPointerDownHandler`, `IBeginDragHandler`, `IEndDragHandler`, `IDragHandler` ). Each Interface add a new method into the `DragDrop.cs` script which will triggered in the different stages in the drag and drop process. Now I can modify the different methods and add new functionalities in it. 
+
+##### **Play a Card(visual aspect)**
+Once the card object is moved the drag and drop process begin and the position of the card object will be save in a variable called `lastPos`. Since the card is always clicked and selected when moving it, I have to subtract the `SelectedPos` from the position
+
+```cs
+public void OnBeginDrag(PointerEventData eventData)
+{
+        lastPos = this.transform.position - selectedPos;
+}
+
+```
+
+Now if the y-coordinate of the card object is higher than the variable `height UI`, a method named `PlayCard()` is triggered in the `CardSystem.cs`.  Otherwise the position of the card object will be reset to the `lastPos`. The `PlayCard()` method destroys the card and moves all other cards one position to the left. 
+1. destroy the played card object
+2. the next card object will saved in a temporary variable called `old_cardObj`
+3. the next card object will be destroyed
+4. the next card object will be instatiated to position of the new place
+5. the index of the next card object will be decreased
+
+```cs            
+var old_cardObj = places[i].GetComponentInChildren<DragDrop>().gameObject;
+
+Destroy(old_cardObj);
+
+var new_cardObj = Instantiate(old_card.template, places[i - 1].transform);
+```
+This process goes through each card until all have been moved
+
+##### **Use a card**
+Play and use a card are two different things. To play a card the player has only to move the card object to a specific position. To use a card the player has to select the right tiles and on the tiles has to be a object which can be detected. 
+
+##### **Draw a Card**
+As soon as the player presses on the `DrawButton`, it is checked whether the maximum number of cards is exceeded or not. If this is not the case, then the `PickRandCard()` method is called. This takes an array of cards and randomly picks one. This card is then returned. The linked card object of the returned card will then instantiated in first free `place` object. 
+
+Note: "Free" means that the object hasnt any card object as a children
+
+##### **Select a Card**
+The range of every card/skill are saved in the scriptableObject in a array. If the player only clicks on the card object and does not move, it will be selected. This selected card then will trigger a method called ` GenerateSkillTiles()`. This method read the saved relative positions in the array of the card/skill and add them to the current position of the user. After the calculations the method will instantiate the `highlight` object to the calculated object and save them into a other array called `skillrangeTiles`. This will be important for the combat system
+
+#### **Important notes**
+
+##### ScriptableObject
+- in this project work with scriptableObjects
+- currently there are two types of scriptableObjects(Character, Card)
+- ScriptableObject are containers for different values e.g health or mana cost
+- These ScriptableObject also contains some other scripts
+
+##### Player
+- this variable has to contains a scriptable Object which was created with the `character.cs` 
+
+##### Character objects
+- game objects in the scene  which represents a character has to have the `GetStats.cs` script in order to use it with battle menu. In addition the game Object will receive stats, which will be necessary for the Combat System    
+  
+##### GridGenerator
+- be sure that you only have one game Object in the scene which the `EditedGridGenerator.cs` script is attached to
