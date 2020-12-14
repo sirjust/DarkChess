@@ -98,6 +98,7 @@ public class EditedGridGenerator : MonoBehaviour
 
     public void GenerateSkillTiles(List<Vector3> relativepositions, GameObject user)
     {
+        
         foreach (Vector3 realtiveposition in relativepositions)
         {
             var position = realtiveposition + user.transform.position;

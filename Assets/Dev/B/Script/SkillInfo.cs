@@ -4,9 +4,11 @@ using UnityEngine;
 public class SkillInfo : MonoBehaviour
 {
     [Header("Requiered")]
-    public Card card;
     public TMP_Text textName;
     public TMP_Text textDescription;
+
+    [Header("Assigned Automatically")]
+    public Card card;
 
     public void RefreshStats(Card _card)
     {

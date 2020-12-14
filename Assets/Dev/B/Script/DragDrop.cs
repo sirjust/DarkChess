@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [Header("Requiered")]
+    public AllSkills allSkills;
     public float heightUI;
 
     [Header("Assigned Automatically")]
@@ -17,7 +18,6 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private Vector3 lastPos;
     private GetCardInfo getCardInfo;
     private CardSystem cardSystem;
-    private AllSkills allSkills;
     private SkillInfo skillInfo;
     private EditedGridGenerator gridGenerator;
 
@@ -64,26 +64,22 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
             return;
         }
 
-        SendMessageUpwards("PlayCard", index);
         skillInfo.SetCardID(getCardInfo.card);
         successful = allSkills.cast(getCardInfo.card, gridGenerator, cardSystem.Player);
 
-        if (successful && cardSystem.GetAmountAction() > getCardInfo.card.actionCost)
+        if (successful)
         {
-            cardSystem.SetAmountAction(getCardInfo.card.actionCost);
-            cardSystem.RefreshAmountAction();
-            gridGenerator.DestroySkillTiles();
+          
+            SendMessageUpwards("PlayCard", index);
             Destroy(this.gameObject.GetComponentInParent<Transform>().gameObject);
-        }
-        else if (cardSystem.GetAmountAction() > getCardInfo.card.actionCost)
-        {
-            ResetCardPos();
+            gridGenerator.DestroySkillTiles();
+
         }
         else
         {
             ResetCardPos();
+            gridGenerator.DestroySkillTiles();
         }
-
         isDraging = false;
     }
 
@@ -92,7 +88,6 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         SendMessageUpwards("ResetCardSelection", index);
         if (!isSelected && !isDraging) Select();
         else if (!isDraging) Deselect();
-        
     }
 
     public void Select()

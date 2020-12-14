@@ -8,13 +8,11 @@ public enum Skills
 
 public class AllSkills : MonoBehaviour
 {
-    private GameObject user;
     private EditedGridGenerator gridGenerator;
     private int targets = 0;
 
     public bool cast(Card card, EditedGridGenerator _gridGenerator, GameObject _user)
     {
-        user = _user;
         gridGenerator = _gridGenerator;
 
         foreach(GameObject tile in gridGenerator.selectedTiles)
@@ -43,10 +41,5 @@ public class AllSkills : MonoBehaviour
     public void strike(GameObject targetTile)
     {
         Debug.Log($"strike at {targetTile.GetComponent<GetObjectonTile>().gameObjectOnTile.name}");
-    }
-
-    public void move()
-    {
-        Debug.Log("move");
     }
 }

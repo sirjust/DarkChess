@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 public class CardSystem : MonoBehaviour
 {
     [Header("Requiered")]
-    public TMP_Text ActionCounter;
     public GameObject Player;
     public int startingCardCount;
     public int maxCardCount;
@@ -24,13 +23,11 @@ public class CardSystem : MonoBehaviour
     private int lastIndex;
     private Card[] drawableCards;
     private Card[] uniqueCards;
-    private int amountAction = 0;
 
     private void Awake()
     {
         drawableCards = Player.GetComponentInChildren<GetStats>().normalskills;
         uniqueCards = Player.GetComponentInChildren<GetStats>().uniqueSkills;
-        amountAction = Player.GetComponentInChildren<GetStats>().character.actionAmount;
 
         GameObject empty = new GameObject();
         empty.name = "place";
@@ -62,19 +59,17 @@ public class CardSystem : MonoBehaviour
 
     public void PlayCard(int index)
     {
-        Destroy(places[index].GetComponentInChildren<Identify>().gameObject);
         for (int i = index + 1; i < lastIndex; i++)
         {
-            var old_cardObj = places[i].GetComponentInChildren<Identify>().gameObject;
-            var old_card = places[i].GetComponentInChildren<GetCardInfo>().card;
+            var old_cardObj = places[i].GetComponent<DragDrop>().gameObject;
+            var old_card = places[i].GetComponent<GetCardInfo>().card;
             Destroy(old_cardObj);
 
             var new_cardObj = Instantiate(old_card.template, places[i - 1].transform);
             new_cardObj.transform.SetParent(places[i - 1].transform);
-            new_cardObj.AddComponent<Identify>();
-            new_cardObj.GetComponentInChildren<DragDrop>().CardGameObject = new_cardObj;
-            new_cardObj.GetComponentInChildren<DragDrop>().selectedPos = selectedPos;
-            new_cardObj.GetComponentInChildren<DragDrop>().index = i - 1;
+            new_cardObj.GetComponent<DragDrop>().CardGameObject = new_cardObj;
+            new_cardObj.GetComponent<DragDrop>().selectedPos = selectedPos;
+            new_cardObj.GetComponent<DragDrop>().index = i - 1;
         }
         handcards.RemoveAt(index);
         lastIndex--;
@@ -121,10 +116,9 @@ public class CardSystem : MonoBehaviour
         var card = PickRandCard(drawableCards, uniqueCards);
         var cardObj = Instantiate(card.template, places[index].transform);
         cardObj.transform.SetParent(places[index].transform);
-        cardObj.AddComponent<Identify>();
-        cardObj.GetComponentInChildren<DragDrop>().index = index;
-        cardObj.GetComponentInChildren<DragDrop>().CardGameObject = cardObj;
-        cardObj.GetComponentInChildren<DragDrop>().selectedPos = selectedPos;
+        cardObj.GetComponent<DragDrop>().index = index;
+        cardObj.GetComponent<DragDrop>().CardGameObject = cardObj;
+        cardObj.GetComponent<DragDrop>().selectedPos = selectedPos;
         handcards.Add(card);
     }
 
@@ -145,22 +139,6 @@ public class CardSystem : MonoBehaviour
             }
         }
     }
-
-    public void SetAmountAction(int amount)
-    {
-        amountAction -= amount;
-    }
-
-    public int GetAmountAction()
-    {
-        return amountAction;
-    }
-
-    public void RefreshAmountAction()
-    {
-        ActionCounter.SetText(amountAction.ToString("n0"));
-    }
-
 }
 
 
