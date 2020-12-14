@@ -203,11 +203,11 @@ public void OnBeginDrag(PointerEventData eventData)
 ```
 
 Now if the y-coordinate of the card object is higher than the variable `height UI`, a method named `PlayCard()` is triggered in the `CardSystem.cs`.  Otherwise the position of the card object will be reset to the `lastPos`. The `PlayCard()` method destroys the card and moves all other cards one position to the left. 
-1. destroy the played card object
-2. the next card object will saved in a temporary variable called `old_cardObj`
-3. the next card object will be destroyed
-4. the next card object will be instatiated to position of the new place
-5. the index of the next card object will be decreased
+1. destroys the played card object
+2. saves the next card object in a temporary variable called `old_cardObj`
+3. destroys the next card object 
+4. instatiated the next card object to position of the new place
+5. decreased the index of the next card object 
 
 ```cs            
 var old_cardObj = places[i].GetComponentInChildren<DragDrop>().gameObject;
@@ -219,7 +219,9 @@ var new_cardObj = Instantiate(old_card.template, places[i - 1].transform);
 This process goes through each card until all have been moved
 
 ##### **Use a card**
-Play and use a card are two different things. To play a card the player has only to move the card object to a specific position. To use a card the player has to select the right tiles and on the tiles has to be a object which can be detected. 
+Play and use a card are two different things. To play a card the player has only to move the card object to a specific position. To use a card the player has also to select the right tiles and on the tiles has to be a object which can be detected e.g a other character object. 
+
+-> AllSkills() mit einbringen und auch detecting system verwenden
 
 ##### **Draw a Card**
 As soon as the player presses on the `DrawButton`, it is checked whether the maximum number of cards is exceeded or not. If this is not the case, then the `PickRandCard()` method is called. This takes an array of cards and randomly picks one. This card is then returned. The linked card object of the returned card will then instantiated in first free `place` object. 
@@ -227,7 +229,7 @@ As soon as the player presses on the `DrawButton`, it is checked whether the max
 Note: "Free" means that the object hasnt any card object as a children
 
 ##### **Select a Card**
-The range of every card/skill are saved in the scriptableObject in a array. If the player only clicks on the card object and does not move, it will be selected. This selected card then will trigger a method called ` GenerateSkillTiles()`. This method read the saved relative positions in the array of the card/skill and add them to the current position of the user. After the calculations the method will instantiate the `highlight` object to the calculated object and save them into a other array called `skillrangeTiles`. This will be important for the combat system
+The range of every card/skill are saved in the scriptableObject in a array. If the player only clicks on the card object and does not move, it will be selected. This selected card then will trigger a method called ` GenerateSkillTiles()`. This method read the saved relative positions in the array of the card/skill and add them to the current position of the user. After the calculations the method will instantiate the `highlight` object to the calculated object and save them into a other array called `skillrangeTiles`. This will be important for the Combat System
 
 #### **Important notes**
 
