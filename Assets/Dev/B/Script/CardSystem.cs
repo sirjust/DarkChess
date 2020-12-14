@@ -11,7 +11,6 @@ public class CardSystem : MonoBehaviour
     public GameObject Player;
     public int startingCardCount;
     public int maxCardCount;
-    public int x_start;
     public int y_start;
     public int gap;
 
@@ -23,6 +22,7 @@ public class CardSystem : MonoBehaviour
     private int lastIndex;
     private Card[] drawableCards;
     private Card[] uniqueCards;
+    private Vector3 placePos;
 
     private void Awake()
     {
@@ -34,7 +34,9 @@ public class CardSystem : MonoBehaviour
 
         for (int i = 0; i < maxCardCount; i++)
         {
-            var place = Instantiate(empty, new Vector3(x_start + ((drawableCards[0].template.GetComponentInChildren<RectTransform>().rect.width + 19 + gap) * i), y_start, this.transform.position.z), this.transform.rotation);
+            placePos = new Vector3(this.transform.position.x - (this.GetComponent<RectTransform>().rect.width / 2) + ((drawableCards[0].template.GetComponent<RectTransform>().rect.width + gap) * i) + drawableCards[0].template.GetComponent<RectTransform>().rect.width / 2 ,  y_start, this.transform.position.z);
+            
+            var place = Instantiate(empty,placePos, this.transform.rotation);
             place.transform.SetParent(this.transform);
             places.Add(place);
         }
@@ -59,10 +61,11 @@ public class CardSystem : MonoBehaviour
 
     public void PlayCard(int index)
     {
+        Destroy(places[index].GetComponentInChildren<DragDrop>().gameObject);
         for (int i = index + 1; i < lastIndex; i++)
         {
-            var old_cardObj = places[i].GetComponent<DragDrop>().gameObject;
-            var old_card = places[i].GetComponent<GetCardInfo>().card;
+            var old_cardObj = places[i].GetComponentInChildren<DragDrop>().gameObject;
+            var old_card = places[i].GetComponentInChildren<GetCardInfo>().card;
             Destroy(old_cardObj);
 
             var new_cardObj = Instantiate(old_card.template, places[i - 1].transform);
