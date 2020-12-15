@@ -123,7 +123,9 @@ The Battle menu contains several components which can be used individually until
 2. [**SkillInfo**](#skillInfo)
 3. [**Health**](#health)
 4. [**CardHolding**](#cardHolding)
-5. [**Important Notes**](#importantNotes)
+5. [**ObjectDetection](#objectDetection)
+6. [**Important Notes**](#importantNotes)
+
 
 #### **charInfo**
 
@@ -169,7 +171,7 @@ Note: There is a difference between [cards](#Card) and card objects.
 
 ![cardHolding image](https://i.ibb.co/qkcB0FD/Card-System.png)
 
-#### **How to use**
+##### **How to use**
 1. Attach `CardSystem.cs` to the game object you want to use as container for the cards
 2. then assign the different components to the variables under the `Requiered` header 
 
@@ -179,10 +181,8 @@ Note: There is a difference between [cards](#Card) and card objects.
 - `Gap`: the distance between every card on the hand
 - `Selected Pos`: Specify the position which will add to the current Position of the card object, if the card objects is selected
 
-#### **How it works**
-
 ##### **Card spawning**
-Once the scene starts the `CardSystem.cs`  instatiates empty objects. These empty objects (`place` are saved in a array. Afterwards the script spawn a specific amount of `card objects` on the position of the empty objects in the array. In addition all card objects will receive a index which represent the index of the `place` which the cards are children of. These `place` object and the [cards](#Card) will be saved in a seperate array. 
+Once the scene starts the `CardSystem.cs`  instatiates empty objects. These empty objects (`place`) are saved in a array. Afterwards the script spawn a specific amount of `card object` on the position of the empty objects in the array. In addition all card objects will receive a index which represent the index of the `place` which the cards are children of. These `place` object and the [cards](#Card) will be saved in a seperate array. 
 
 Note: All possible [cards](#Card) which can be played/drawed are saved in the [scriptableObject](#ScriptableObject) of the player. 
 
@@ -191,7 +191,7 @@ Note: All possible [cards](#Card) which can be played/drawed are saved in the [s
 ##### **Drag and Drop**
 In order to use the unity drag and drop functionality I have to import the different Interfaces( `IPointerDownHandler`, `IBeginDragHandler`, `IEndDragHandler`, `IDragHandler` ). Each Interface add a new method into the `DragDrop.cs` script which will triggered in the different stages in the drag and drop process. Now I can modify the different methods and add new functionalities in it. 
 
-##### **Play a Card(visual aspect)**
+##### **Play a Card**
 Once the card object is moved the drag and drop process begin and the position of the card object will be save in a variable called `lastPos`. Since the card is always clicked and selected when moving it, I have to subtract the `SelectedPos` from the position
 
 ```cs
@@ -219,9 +219,7 @@ var new_cardObj = Instantiate(old_card.template, places[i - 1].transform);
 This process goes through each card until all have been moved
 
 ##### **Use a card**
-Play and use a card objects are two different things. To play a card object the player has only to move the card object to a specific position. To use a card object the player has also to select the right tiles and on the tiles has to be a object which can be detected e.g a other character object. 
-
--> AllSkills() mit einbringen und auch detecting system verwenden
+Play and use a card objects are two different things. To play a card object the player has only to move the card object to a specific position. To use a card object the player has also to select the right tiles and on the tiles has to be a object which can be [detected](#objectDetection) e.g a other character object. 
 
 ##### **Draw a Card**
 As soon as the player presses on the `DrawButton`, it is checked whether the maximum number of cards is exceeded or not. If this is not the case, then the `PickRandCard()` method is called. This takes an array of [cards](#Card) and randomly picks one. This card is then returned. The linked card object of the returned [card](#Card) will then instantiated in first free `place` object. 
@@ -231,24 +229,82 @@ Note: "Free" means that the object hasnt any card object as a children
 ##### **Select a Card**
 The range of every [card](#Card) are saved in the [scriptableObject](#ScriptableObject) in a array. If the player only clicks on the card object and does not move, it will be selected. This selected card then will trigger a method called ` GenerateSkillTiles()`. This method read the saved relative positions in the array of the [cards](#Card) and add them to the current position of the user. After the calculations the method will instantiate the `highlight` object to the calculated object and save them into a other array called `skillrangeTiles`. This will be important for the Combat System
 
+
+#### **objectDetection**
+##### **How to use**
+1.
+2.
+
 #### **Important notes**
 
 ##### ScriptableObject
 - in this project work with scriptableObjects
-- currently there are two types of scriptableObjects(Character, [Card](#Card))
+- currently there are two types of scriptableObjects([Character](#Character), [Card](#Card))
 - scriptableObject are containers for different values e.g health or mana cost
 - These scriptableObject also contains some other scripts
 
-##### Player
-- this variable has to contains a [scriptableObject](#ScriptableObject) which was created with the `character.cs` 
+##### Card
 
-##### Character objects
-- game objects in the scene  which represents a character has to have the `GetStats.cs` script in order to use it with battle menu. In addition the game Object will receive stats, which will be necessary for the Combat System    
+An example:
+
+![CardScObject Image](https://i.ibb.co/3rQ7j1N/Strike-Sc-Object.png)
+
+- `Skill Name`: The name which will displayed on the [skillInfo](#skillInfo) display(the name doesnt have to be the same as the name of the object)
+- `Mana Cost`: The amount of mana which will be consumed if the card Object is played
+- `Damage`: The amount of basedamage. This number will be added to the strenght of the user
+- `Skill Pic`: The picture which is displayed on the card object 
+- `Template`: The linked card object
+- `Skill`: The skill which will triggered if the card object is played
+- `Max Amount Of Targets`: The highest number of targets(If the player select more targets, only the first selected will be count)
+- `Ranges`: An array of the relative position of the user e.g (1 | 0 | -1) means the tile before the user on the left side  
+- `Skill description`: A short description,which will be displayed on the [skillInfo](#skillInfo) display
+
+##### Character
+
+An example:
+
+![CardScObject Image](https://i.ibb.co/1mtRLVQ/Pawn.png)
+
+- `Char Name`: The name which will displayed on the [charInfo](#charInfo) display(the name doesnt have to be the same as the name of the object)
+
+- `Skill Pic`: The picture which is displayed on the [charInfo](#charInfo) display
+
+- `Health Representation`: Specify the way how the haelth be showed in the game. Currently there are two options: None, Healthbar
+
+- `Realtion`: Specify the relation to the player. Currently there are three options: friendly, enenmy, neutral 
+
+##### game objects(card object, character object)
+- game objects in the scene has to have specific scripts to work with the Card System or Combat System
+
+##### card object
+
+An example:
+
+![card object Image](https://i.ibb.co/hV0XFSK/Strike-Prefab-New.png)
+
+- `Card`: The linked [scriptableObject](#ScriptableObject)
+- `height UI`: if the y-coordinate of the position of this card is higehr than that the the card will played  
+
+##### character object
+
+An example
   
+![character object Image](https://i.ibb.co/P4D8pmG/charcacter-Object.png)
+
+- `Character`: The linked [scriptableObject](#ScriptableObject)
+- `Have Body`: If the Prefab has a Body like in this example then make a check mark
+- `Normal Skills`: Collection of drawable [cards](#Card)
+- `Unique Skills`: Collection of unique drawable [cards](#Card), which can be only one time at the same time on the hand(has to be in the `Normal Skills` array to) 
+
+Note: Every character object has to have a collider in order to be [detected](#objectDetection)
+
+##### Player
+- this variable has to contains a [scriptableObject](#ScriptableObject) which was created with the `character.cs`
+
+-> Bild einfügen
+
 ##### GridGenerator & AllSkills
 - be sure that you only have one game Object in the scene which the `EditedGridGenerator.cs` script is attached to.
 - the same applies to the `allSkills.cs`
 
-#### Card
--> screen shot einfügen
-das gleich auch für character
+

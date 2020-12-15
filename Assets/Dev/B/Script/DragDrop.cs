@@ -4,7 +4,6 @@ using UnityEngine.EventSystems;
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [Header("Requiered")]
-    public AllSkills allSkills;
     public float heightUI;
 
     [Header("Assigned Automatically")]
@@ -12,6 +11,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public GameObject CardGameObject;
     public Vector3 selectedPos;
 
+    private AllSkills allSkills;
     private bool isSelected = false;
     private bool isDraging = false;
     private bool successful = false;
