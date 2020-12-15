@@ -319,14 +319,14 @@ In our case we using this script for the `EditedHighlight Quad` object and the `
 ![card object Image](https://i.ibb.co/hV0XFSK/Strike-Prefab-New.png)
 
 - `Card`: The linked [scriptableObject](#ScriptableObject)
-- `height UI`: the y-coordinate, which has to be exceeded to count the [card object](#card-object) as played
+- `height UI`: The y-coordinate, which has to be exceeded to count the [card object](#card-object) as played
 
 ### character object
 
 ![character object Image](https://i.ibb.co/P4D8pmG/charcacter-Object.png)
 
 - `Character`: The linked [scriptableObject](#ScriptableObject)
-- `Have Body`: If the Prefab has a Body like in this example then make a check mark
+- `Have Body`: If the Prefab has a Body like in this example then make a check mark. Otherwise the `GetStats.cs` create the prefab, which is saved in the variable `model` 
 - `Normal Skills`: Collection of drawable [cards](#Card)
 - `Unique Skills`: Collection of unique drawable [cards](#Card), which can be only one time at the same time on the hand(has to be in the `Normal Skills` array to) 
 
