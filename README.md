@@ -330,7 +330,7 @@ In our case we using this script for the `EditedHighlight Quad` object and the `
 - `Normal Skills`: Collection of drawable [cards](#Card)
 - `Unique Skills`: Collection of unique drawable [cards](#Card), which can be only one time at the same time on the hand(has to be in the `Normal Skills` array to) 
 
-Note: Every character object has to have a collider in order to be [detected](#objectDetection)
+Note: Every [character object](#character-object) has to have a collider in order to be [detected](#objectDetection)
 
 ##### Player
 - This variable has to contains a [scriptableObject](#ScriptableObject), which was created with the `character.cs`
