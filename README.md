@@ -15,6 +15,14 @@ A Unity 3D souls-like game based on chess
 		- [**Highlight Mechanic**](#highlight-mechanic)
 			- [**How To Use**](#how-to-use)
 			- [**How It Works**](#how-it-works)
+	- [**Battle Menu**](#Battle-Menu)
+		- [**CharInfo**](#charInfo)
+		- [**SkillInfo**](#skillInfo)
+		- [**Health**](#health)
+		- [**CardHolding**](#cardHolding)
+		- [**ObjectDetection**](#objectDetection)
+		- [**Important Notes**](#important-notes)
+	 	
 
 ## **Authors**
 
