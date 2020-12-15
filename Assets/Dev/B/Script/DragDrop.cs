@@ -11,6 +11,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public GameObject CardGameObject;
     public Vector3 selectedPos;
 
+    private AllSkills allSkills;
     private bool isSelected = false;
     private bool isDraging = false;
     private bool successful = false;
@@ -50,6 +51,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         isDraging = true;
         isSelected = false;
     }
+
 
     public void OnDrag(PointerEventData eventData)
     {

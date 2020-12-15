@@ -23,5 +23,4 @@ MonoBehaviour:
   ranges:
   - {x: 1, y: 0, z: -1}
   - {x: 1, y: 0, z: 1}
-  skillDesciption: 
-  actionCost: 0
+  skillDesciption: Normal attack
