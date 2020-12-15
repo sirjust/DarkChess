@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Dev/Exostin/ExostinScenes/TitleScreen.unity
-    guid: 3665644cac2df084ca35de9b045c07d7
+    path: Assets/Dev/Arthur/ArthurScenes/MenuScene.unity
+    guid: 9d4847c32dc193042af2142d24ae9aca
   - enabled: 1
     path: Assets/Dev/Arthur/ArthurScenes/ArthurScene.unity
     guid: 876b18faa0e91914194c10161fdf556e
