@@ -73,8 +73,8 @@ GameObject:
   m_Component:
   - component: {fileID: 808148296443703348}
   - component: {fileID: 750619831258349368}
-  - component: {fileID: 808784654044385431}
   - component: {fileID: 4738342292949778748}
+  - component: {fileID: 808784654044385431}
   - component: {fileID: 4738342292949778749}
   m_Layer: 9
   m_Name: Player 1
@@ -119,19 +119,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &808784654044385431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 809147242364156822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9171f3f986f518459d1745a4ddd1cef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
 --- !u!65 &4738342292949778748
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -145,6 +132,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &808784654044385431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809147242364156822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9171f3f986f518459d1745a4ddd1cef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
 --- !u!114 &4738342292949778749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,9 +159,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 11400000, guid: e36a276cd6b45f047b57034a071d9f6b, type: 2}
   haveBody: 0
-  heartsContainer: {fileID: 5436696959102626574}
-  hearttemplate: {fileID: 1154037827617869546, guid: 7c21c66fdca161045b68b8751d036708,
-    type: 3}
   normalskills:
   - {fileID: 0}
   - {fileID: 11400000, guid: bac20520681b8df419ed953f80afdf6c, type: 2}
