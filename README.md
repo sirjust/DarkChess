@@ -319,7 +319,7 @@ In our case we using this script for the `EditedHighlight Quad` object and the `
 ![card object Image](https://i.ibb.co/hV0XFSK/Strike-Prefab-New.png)
 
 - `Card`: The linked [scriptableObject](#ScriptableObject)
-- `height UI`: If the y-coordinate of the position of this card is higher than that the [card object](#card-object) will played  
+- `height UI`: the y-coordinate, which has to be exceeded to count the [card object](#card-object) as played
 
 ### character object
 
