@@ -205,7 +205,7 @@ In order to use the unity drag and drop functionality I have to import the diffe
 
 ##### **How it works**
 
-Once the [card object](#card-object) is moved the drag and drop process begin and the position of the [card object](#card-object) will be save in a variable called `lastPos`. Since the card is always clicked and selected when moving it, I had to subtract the `SelectedPos` from the position
+Once the [card object](#card-object) is moved the drag and drop process begin and the position of the [card object](#card-object) will be save in a variable called `lastPos`. Since the card is always clicked and selected when moving it, I had to subtract the `SelectedPos` from the position.
 
 ```cs
 public void OnBeginDrag(PointerEventData eventData)
@@ -215,7 +215,16 @@ public void OnBeginDrag(PointerEventData eventData)
 
 ```
 
-Now if the y-coordinate of the [card object](#card-object) is higher than the variable `height UI`, then the `cast()` will triggered. If this method returns true, then a method named `PlayCard()` is triggered in the `CardSystem.cs`.  Otherwise the position of the [card object](#card-object) will be reset to the `lastPos`. The `PlayCard()` method destroys the [card object](#card-object) and moves all other [card objects](#card-object) one position to the left. 
+Now the next stage begins and triggers the `OnDrag()` method as long as the player hold down the mouse button. This method add a the delta mouse position to the position of the dragged object. 
+
+```cs
+    public void OnDrag(PointerEventData eventData)
+    {
+        this.transform.position += new Vector3(eventData.delta.x, eventData.delta.y, 0);
+    }
+```
+
+When the y-coordinate of the [card object](#card-object) is higher than the variable `height UI`, then the `cast()` will triggered. If this method returns true, then a method named `PlayCard()` is triggered in the `CardSystem.cs`.  Otherwise the position of the [card object](#card-object) will be reset to the `lastPos`. The `PlayCard()` method destroys the [card object](#card-object) and moves all other [card objects](#card-object) one position to the left. 
 1. destroys the played [card object](#card-object)
 2. saves the next [card object](#card-object) in a temporary variable called `old_cardObj`
 3. destroys the next [card object](#card-object) 
