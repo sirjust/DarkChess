@@ -338,5 +338,6 @@ Note: Every [character object](#character-object) has to have a collider in orde
 ##### GridGenerator & AllSkills
 - Be sure that you only have one game Object in the scene which the `EditedGridGenerator.cs` script is attached to
 - The same applies to the `allSkills.cs`
+- The name of the method and the name of the enums has to be the same e.g `strike()` and `strike`
 
 
