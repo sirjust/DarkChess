@@ -2,7 +2,7 @@
 
 public enum Skills
 {
-    strike, move
+    Strike
 }
 
 public class AllSkills : MonoBehaviour
@@ -37,7 +37,7 @@ public class AllSkills : MonoBehaviour
         return true;
     }
 
-    public void strike(GameObject targetTile)
+    public void Strike(GameObject targetTile)
     {
 
         Debug.Log($"strike at {targetTile.GetComponent<GetObjectonTile>().gameObjectOnTile.name}");
