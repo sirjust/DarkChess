@@ -11,9 +11,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public GameObject CardGameObject;
     public Vector3 selectedPos;
 
-    private AllSkills allSkills;
     private bool isSelected = false;
-    private bool isDraging = false;
     private bool successful = false;
     private Vector3 lastPos;
     private GetCardInfo getCardInfo;
@@ -47,9 +45,10 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        lastPos = this.transform.position - selectedPos;
-        isDraging = true;
-        isSelected = false;
+        if (isSelected) lastPos = this.transform.position - selectedPos;
+        else lastPos = this.transform.position;
+
+        Select();
     }
 
 
@@ -81,14 +80,13 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
             ResetCardPos();
             gridGenerator.DestroySkillTiles();
         }
-        isDraging = false;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         SendMessageUpwards("ResetCardSelection", index);
-        if (!isSelected && !isDraging) Select();
-        else if (!isDraging) Deselect();
+        if (!isSelected) Select();
+        else Deselect();
     }
 
     public void Select()
@@ -108,7 +106,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void ResetCardPos()
     {
         this.transform.position = lastPos;
-        isDraging = false;
+        isSelected = false;
     }
 
     public bool GetSelectionStatus()
