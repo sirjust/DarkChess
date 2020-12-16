@@ -107,18 +107,15 @@ public class EditedGridGenerator : MonoBehaviour
                 {
                     if (realtiveposition.z > 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
                     else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
-                    Debug.Log("up");
                 }
                 if (user.transform.localEulerAngles == new Vector3(0, 270, 0))
                 {
                     newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, -realtiveposition.z);
-                    Debug.Log("right");
                 }
                 if (user.transform.localEulerAngles == new Vector3(0, 180, 0))
                 {
                     if (realtiveposition.z > 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
                     else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
-                    Debug.Log("down");
                 }
 
                 var position = newRealtiveposition + user.transform.position;
