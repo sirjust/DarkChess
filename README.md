@@ -1,6 +1,27 @@
 # **Pawns Have Souls**
 
-A Unity 3D souls-like game based on chess
+We're creating an exciting chess crawler cRPG with souls-like atmosphere and card game combat mechanics!
+
+__Genres:__
+
+- _Dungeon crawler_ - core gameplay idea
+
+- _Chess_ - world setting
+
+- _Card game_ - combat mechanics
+
+- _cRPG_ - combat statistics, lore
+
+- _Souls-like_ - atmosphere
+
+__Inspired by games such as:__
+
+- _Book of Demons_
+
+- _Darkest Dungeon_
+
+- _Dark Souls_
+
 
 ## Table of Contents
 
