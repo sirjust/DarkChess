@@ -1,4 +1,4 @@
-# **Dark Chess**
+# **Pawns Have Souls**
 
 A Unity 3D souls-like game based on chess
 
@@ -68,7 +68,9 @@ At this point, the branch is both local and is tracked in your fork. You can the
 
 To keep your fork's `main` branch up to date with the central repository, initiate a pull request on Github that brings the current code on `sirjust:main` to `your-fork:main`. When that is complete, pull the changes into your local `main` branch and then merge the `main` branch into your feature branch. There are more streamlined ways to do this, but this is the simplest way.
 
-We need to keep track of our issues, and close them when they are merged in. When we figure out how to close them automatically, we will implement that, but currently they sit there until we manually close them.
+Once you're done working on a certain issue submit a pull request, and link it to that issue, so it can be automatically closed after merging.
+
+![linking pull request to an issue](https://i.ibb.co/JpyX08X/Link-Pull-Request-To-Issue-Example.png)
 
 ## **Mechanics**
 
