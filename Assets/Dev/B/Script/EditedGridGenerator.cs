@@ -29,7 +29,6 @@ public class EditedGridGenerator : MonoBehaviour
     public List<GameObject> skillrangeTiles = new List<GameObject>();
     private GameObject tilePrefabclone;
 
-
     void Start()
     {
         GenerateMap();
@@ -98,12 +97,32 @@ public class EditedGridGenerator : MonoBehaviour
 
     public void GenerateSkillTiles(List<Vector3> relativepositions, GameObject user)
     {
-        foreach (Vector3 realtiveposition in relativepositions)
+        if (user.transform.position.x % 0.5f == 0 && user.transform.position.z % 0.5f == 0)
         {
-            var position = realtiveposition + user.transform.position;
-            var tile = Instantiate(highlight, new Vector3(position.x, highlightHeight, position.z), Quaternion.Euler(Vector3.right * 90));
-            tile.transform.SetParent(this.gameObject.transform);
-            skillrangeTiles.Add(tile);
+            foreach (Vector3 realtiveposition in relativepositions)
+            {
+                var newRealtiveposition = realtiveposition;
+
+                if (user.transform.localEulerAngles == Vector3.zero)
+                {
+                    if (realtiveposition.z > 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
+                    else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
+                }
+                if (user.transform.localEulerAngles == new Vector3(0, 270, 0))
+                {
+                    newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, -realtiveposition.z);
+                }
+                if (user.transform.localEulerAngles == new Vector3(0, 180, 0))
+                {
+                    if (realtiveposition.z > 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
+                    else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
+                }
+
+                var position = newRealtiveposition + user.transform.position;
+                var tile = Instantiate(highlight, new Vector3(position.x, highlightHeight, position.z), Quaternion.Euler(Vector3.right * 90));
+                tile.transform.SetParent(this.gameObject.transform);
+                skillrangeTiles.Add(tile);
+            }
         }
     }
 

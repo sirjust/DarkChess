@@ -8,11 +8,9 @@ using Random = UnityEngine.Random;
 public class CardSystem : MonoBehaviour
 {
     [Header("Requiered")]
-    public TMP_Text ActionCounter;
     public GameObject Player;
     public int startingCardCount;
     public int maxCardCount;
-    public int x_start;
     public int y_start;
     public int gap;
 
@@ -24,20 +22,21 @@ public class CardSystem : MonoBehaviour
     private int lastIndex;
     private Card[] drawableCards;
     private Card[] uniqueCards;
-    private int amountAction = 0;
+    private Vector3 placePos;
 
     private void Awake()
     {
         drawableCards = Player.GetComponentInChildren<GetStats>().normalskills;
         uniqueCards = Player.GetComponentInChildren<GetStats>().uniqueSkills;
-        amountAction = Player.GetComponentInChildren<GetStats>().character.actionAmount;
 
         GameObject empty = new GameObject();
         empty.name = "place";
 
         for (int i = 0; i < maxCardCount; i++)
         {
-            var place = Instantiate(empty, new Vector3(x_start + ((drawableCards[0].template.GetComponentInChildren<RectTransform>().rect.width + 19 + gap) * i), y_start, this.transform.position.z), this.transform.rotation);
+            placePos = new Vector3(this.transform.position.x - (this.GetComponent<RectTransform>().rect.width / 2) + ((drawableCards[0].template.GetComponent<RectTransform>().rect.width + gap) * i) + drawableCards[0].template.GetComponent<RectTransform>().rect.width / 2 ,  y_start, this.transform.position.z);
+            
+            var place = Instantiate(empty,placePos, this.transform.rotation);
             place.transform.SetParent(this.transform);
             places.Add(place);
         }
@@ -62,19 +61,18 @@ public class CardSystem : MonoBehaviour
 
     public void PlayCard(int index)
     {
-        Destroy(places[index].GetComponentInChildren<Identify>().gameObject);
+        Destroy(places[index].GetComponentInChildren<DragDrop>().gameObject);
         for (int i = index + 1; i < lastIndex; i++)
         {
-            var old_cardObj = places[i].GetComponentInChildren<Identify>().gameObject;
+            var old_cardObj = places[i].GetComponentInChildren<DragDrop>().gameObject;
             var old_card = places[i].GetComponentInChildren<GetCardInfo>().card;
             Destroy(old_cardObj);
 
             var new_cardObj = Instantiate(old_card.template, places[i - 1].transform);
             new_cardObj.transform.SetParent(places[i - 1].transform);
-            new_cardObj.AddComponent<Identify>();
-            new_cardObj.GetComponentInChildren<DragDrop>().CardGameObject = new_cardObj;
-            new_cardObj.GetComponentInChildren<DragDrop>().selectedPos = selectedPos;
-            new_cardObj.GetComponentInChildren<DragDrop>().index = i - 1;
+            new_cardObj.GetComponent<DragDrop>().CardGameObject = new_cardObj;
+            new_cardObj.GetComponent<DragDrop>().selectedPos = selectedPos;
+            new_cardObj.GetComponent<DragDrop>().index = i - 1;
         }
         handcards.RemoveAt(index);
         lastIndex--;
@@ -121,10 +119,9 @@ public class CardSystem : MonoBehaviour
         var card = PickRandCard(drawableCards, uniqueCards);
         var cardObj = Instantiate(card.template, places[index].transform);
         cardObj.transform.SetParent(places[index].transform);
-        cardObj.AddComponent<Identify>();
-        cardObj.GetComponentInChildren<DragDrop>().index = index;
-        cardObj.GetComponentInChildren<DragDrop>().CardGameObject = cardObj;
-        cardObj.GetComponentInChildren<DragDrop>().selectedPos = selectedPos;
+        cardObj.GetComponent<DragDrop>().index = index;
+        cardObj.GetComponent<DragDrop>().CardGameObject = cardObj;
+        cardObj.GetComponent<DragDrop>().selectedPos = selectedPos;
         handcards.Add(card);
     }
 
@@ -145,22 +142,6 @@ public class CardSystem : MonoBehaviour
             }
         }
     }
-
-    public void SetAmountAction(int amount)
-    {
-        amountAction -= amount;
-    }
-
-    public int GetAmountAction()
-    {
-        return amountAction;
-    }
-
-    public void RefreshAmountAction()
-    {
-        ActionCounter.SetText(amountAction.ToString("n0"));
-    }
-
 }
 
 

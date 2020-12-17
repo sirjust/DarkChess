@@ -38,8 +38,7 @@ public class CharInfo : MonoBehaviour
         charPic.sprite = _character.picture;
         charStats.SetText($"DMG         {_character.strength.ToString("00")} \nCRIT         {_character.critRate.ToString("00")} \nDOGDE    {_character.dodgeRate.ToString("00")} \nARMOR    {_character.defense.ToString("00")}");
         
-        if (_character.healthRepresentation == HealthRepresentation.healthbar) charValues.SetText($"{_character.currentHealth} / {_character.health} \n {_character.currentMana} / {_character.mana}");
-        else charValues.SetText($"{_character.currenthearts} / {_character.hearts} \n {_character.currentMana} / {_character.mana}");
+        charValues.SetText($"{_character.currentHealth} / {_character.health} \n {_character.currentMana} / {_character.mana}");
 
         if (_character.realtion == RealtionType.Enemy) charPic.color = Color.red;
         else charPic.color = Color.green;
