@@ -12,13 +12,12 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public Vector3 selectedPos;
 
     private bool isSelected = false;
-    private bool isDraging = false;
     private bool successful = false;
     private Vector3 lastPos;
     private GetCardInfo getCardInfo;
     private CardSystem cardSystem;
-    private AllSkills allSkills;
     private SkillInfo skillInfo;
+    private AllSkills allSkills;
     private EditedGridGenerator gridGenerator;
 
     private void Awake()
@@ -46,10 +45,12 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        lastPos = this.transform.position - selectedPos;
-        isDraging = true;
-        isSelected = false;
+        if (isSelected) lastPos = this.transform.position - selectedPos;
+        else lastPos = this.transform.position;
+
+        Select();
     }
+
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -64,35 +65,28 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
             return;
         }
 
-        SendMessageUpwards("PlayCard", index);
         skillInfo.SetCardID(getCardInfo.card);
         successful = allSkills.cast(getCardInfo.card, gridGenerator, cardSystem.Player);
 
-        if (successful && cardSystem.GetAmountAction() > getCardInfo.card.actionCost)
+        if (successful)
         {
-            cardSystem.SetAmountAction(getCardInfo.card.actionCost);
-            cardSystem.RefreshAmountAction();
+          
+            SendMessageUpwards("PlayCard", index);
             gridGenerator.DestroySkillTiles();
-            Destroy(this.gameObject.GetComponentInParent<Transform>().gameObject);
-        }
-        else if (cardSystem.GetAmountAction() > getCardInfo.card.actionCost)
-        {
-            ResetCardPos();
+
         }
         else
         {
             ResetCardPos();
+            gridGenerator.DestroySkillTiles();
         }
-
-        isDraging = false;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         SendMessageUpwards("ResetCardSelection", index);
-        if (!isSelected && !isDraging) Select();
-        else if (!isDraging) Deselect();
-        
+        if (!isSelected) Select();
+        else Deselect();
     }
 
     public void Select()
@@ -112,7 +106,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void ResetCardPos()
     {
         this.transform.position = lastPos;
-        isDraging = false;
+        isSelected = false;
     }
 
     public bool GetSelectionStatus()
