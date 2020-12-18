@@ -10,11 +10,13 @@ public enum Mode
 public class EditedGridGenerator : MonoBehaviour
 {
     [Header("Requiered")]
+    public Camera mainCam;
     public Mode mode;
     public GameObject tilePrefab;
     public GameObject highlight;
 
     [Header("Optional")]
+    public bool takeObjectTransform = false;
     public bool destroy = false;
     public float timeBeforeDestroy = 0;
     public Vector2 gridstart;
@@ -28,6 +30,8 @@ public class EditedGridGenerator : MonoBehaviour
     public List<GameObject> selectedTiles = new List<GameObject>();
     public List<GameObject> skillrangeTiles = new List<GameObject>();
     private GameObject tilePrefabclone;
+    private float gridstartX;
+    private float gridstartY;
 
     void Start()
     {
@@ -44,9 +48,19 @@ public class EditedGridGenerator : MonoBehaviour
 
     public void GenerateMap()
     {
-        for (int x = (int)gridstart.x; x < gridSize.x; x++)
+        if (takeObjectTransform)
         {
-            for (int y = (int)gridstart.y; y < gridSize.y; y++)
+            gridstartX = this.transform.position.x;
+            gridstartY = this.transform.position.z;
+        }
+        else
+        {
+            gridstartX = gridstart.x;
+            gridstartY = gridstart.y;
+        }
+        for (float x = gridstartX; x < gridstartX + gridSize.x; x++)
+        {
+            for (float y = gridstartY; y < gridstartY + gridSize.y; y++)
             {
                 Vector3 tilePosition = new Vector3(-gridSize.x / 2 + 0.5f + x, highlightHeight, -gridSize.y / 2 + 0.5f + y);
                 tilePrefabclone = Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 0));
@@ -58,7 +72,7 @@ public class EditedGridGenerator : MonoBehaviour
     public void ClickHighlight()
     {
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, layer) && Input.GetMouseButtonDown(0))
+        if (Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out hit, layer) && Input.GetMouseButtonDown(0))
         {
             if (hit.collider.gameObject.name == tilePrefabclone.name && Input.GetMouseButtonDown(0))
             {
@@ -82,7 +96,7 @@ public class EditedGridGenerator : MonoBehaviour
     public void HoverHighlight()
     {
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, layer))
+        if (Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out hit, layer))
         {
             if (hit.collider.gameObject == tilePrefabclone)
             {

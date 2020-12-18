@@ -2936,7 +2936,7 @@ Transform:
   m_LocalPosition: {x: 310.975, y: 152.73662, z: -26.3125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1389642532}
+  m_Father: {fileID: 1463579191}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1115862254
@@ -3564,8 +3564,6 @@ Transform:
   m_Children:
   - {fileID: 897177478}
   - {fileID: 1565928995}
-  - {fileID: 3299004820945157935}
-  - {fileID: 1115862253}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3703,6 +3701,8 @@ Transform:
   m_Children:
   - {fileID: 935806216}
   - {fileID: 1333238506}
+  - {fileID: 3299004820945157935}
+  - {fileID: 1115862253}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6613,11 +6613,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee29a615c0e31f543a7b4fce7a048a6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCam: {fileID: 897177477}
   mode: 1
   tilePrefab: {fileID: 6668079847477128508, guid: e9ef1df2bc0fcb244897319290405823,
     type: 3}
   highlight: {fileID: 7369433659295709892, guid: dc527a0ec64aab543b3202d5b8731d47,
     type: 3}
+  takeObjectTransform: 0
   destroy: 1
   timeBeforeDestroy: 1
   gridstart: {x: 0, y: 0}
@@ -6641,7 +6643,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1389642532}
+  m_Father: {fileID: 1463579191}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &4506709845843582210
