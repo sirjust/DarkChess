@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    [Header("Requiered")]
+    [Header("Required")]
     public float heightUI;
 
     [Header("Assigned Automatically")]
