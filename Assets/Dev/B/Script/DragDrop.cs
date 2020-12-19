@@ -19,7 +19,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private CardSystem cardSystem;
     private SkillInfo skillInfo;
     private AllSkills allSkills;
-    private TurnSystem turnSystem;
+
     private EditedGridGenerator gridGenerator;
 
     private void Awake()
@@ -31,7 +31,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
             if (gameObject.GetComponent<EditedGridGenerator>()) gridGenerator = gameObject.GetComponent<EditedGridGenerator>();
             if (gameObject.GetComponent<AllSkills>()) allSkills = gameObject.GetComponent<AllSkills>();
             if (gameObject.GetComponent<SkillInfo>()) skillInfo = gameObject.GetComponent<SkillInfo>();
-            if (gameObject.GetComponent<TurnSystem>()) turnSystem = gameObject.GetComponent<TurnSystem>();
+           // if (gameObject.GetComponent<TurnSystem>()) turnSystem = gameObject.GetComponent<TurnSystem>();
         }
         getCardInfo = GetComponent<GetCardInfo>();
     }
@@ -61,17 +61,14 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void OnEndDrag(PointerEventData eventData)
     {
         skillInfo.SetCardID(getCardInfo.card);
-        successful = allSkills.cast(getCardInfo.card, gridGenerator, cardSystem.Player) && this.transform.position.y <= heightUI && turnSystem.GetBattleStatus() == BattleStatus.PlayerCombat;
+        successful = allSkills.cast(getCardInfo.card, gridGenerator, cardSystem.Player) && this.transform.position.y <= heightUI;
         if (successful)
         {
-
             SendMessageUpwards("PlayCard", index);
-            turnSystem.NextTurn();
             gridGenerator.DestroySkillTiles();
         }
         else
         {
-            if (turnSystem.GetBattleStatus() != BattleStatus.PlayerCombat) Debug.Log("its not your turn");
             ResetCardPos();
         }
     }

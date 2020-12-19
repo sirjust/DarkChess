@@ -7,12 +7,19 @@ public enum Skills
 
 public class AllSkills : MonoBehaviour
 {
+    public TurnSystem turnSystem;
     private EditedGridGenerator gridGenerator;
     private int targets = 0;
 
     public bool cast(Card card, EditedGridGenerator _gridGenerator, GameObject _user)
     {
         gridGenerator = _gridGenerator;
+
+        if(turnSystem.GetBattleStatus() != BattleStatus.PlayerCombat)
+        {
+            Debug.Log("Its not your turn");
+            return false;
+        }
 
         foreach (GameObject tile in gridGenerator.selectedTiles)
         {
@@ -38,9 +45,7 @@ public class AllSkills : MonoBehaviour
 
     public void Strike(GameObject targetTile)
     {
-
         Debug.Log($"strike at {targetTile.GetComponent<GetObjectonTile>().gameObjectOnTile.name}");
-
-
+        turnSystem.NextTurn();
     }
 }

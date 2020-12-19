@@ -29,7 +29,6 @@ public class TurnSystem : MonoBehaviour
 
     public void BackTurn()
     {
-
         if (index > 0) index--;
         else index = 3;
 
