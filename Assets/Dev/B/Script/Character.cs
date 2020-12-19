@@ -8,7 +8,7 @@ public enum RealtionType
 
 public enum HealthRepresentation
 {
-    healthbar, hearts
+    healthbar, none
 }
 
 [CreateAssetMenu(fileName = "New Character", menuName = "ScObject/Character")]
@@ -29,7 +29,6 @@ public class Character : ScriptableObject
     public int movement;
     public int critRate;
     public int dodgeRate;
-    public int actionAmount;
 
     public HealthRepresentation healthRepresentation;
     public RealtionType realtion;

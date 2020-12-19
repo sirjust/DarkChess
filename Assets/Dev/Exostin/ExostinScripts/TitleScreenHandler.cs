@@ -51,6 +51,7 @@ public class TitleScreenHandler : MonoBehaviour
     public void ExitButton()
     {
         Application.Quit();
+        Debug.Log("Quitting...");
     }
 
     // Play screenshaking animation AND level slide up animation

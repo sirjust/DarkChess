@@ -1,30 +1,33 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum Skills
 {
-    strike, move
+    Strike
 }
 
 public class AllSkills : MonoBehaviour
 {
-    private GameObject user;
+    public TurnSystem turnSystem;
     private EditedGridGenerator gridGenerator;
     private int targets = 0;
 
     public bool cast(Card card, EditedGridGenerator _gridGenerator, GameObject _user)
     {
-        user = _user;
         gridGenerator = _gridGenerator;
 
-        foreach(GameObject tile in gridGenerator.selectedTiles)
+        if(turnSystem.GetBattleStatus() != BattleStatus.PlayerCombat)
         {
-            foreach(GameObject tile1 in gridGenerator.skillrangeTiles)
+            Debug.Log("Its not your turn");
+            return false;
+        }
+
+        foreach (GameObject tile in gridGenerator.selectedTiles)
+        {
+            foreach (GameObject tile1 in gridGenerator.skillrangeTiles)
             {
-                Debug.Log($"{tile.transform.position.x} == { tile1.transform.position.x} && { tile.transform.position.z} == { tile1.transform.position.z}");
                 if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
                 {
-                    this.SendMessage(card.skill.ToString(), tile1);
+                    this.SendMessage(card.skill.ToString(), tile);
                     targets++;
 
                     if (targets >= card.maxAmountOfTargets) return true;
@@ -40,13 +43,9 @@ public class AllSkills : MonoBehaviour
         return true;
     }
 
-    public void strike(GameObject targetTile)
+    public void Strike(GameObject targetTile)
     {
         Debug.Log($"strike at {targetTile.GetComponent<GetObjectonTile>().gameObjectOnTile.name}");
-    }
-
-    public void move()
-    {
-        Debug.Log("move");
+        turnSystem.NextTurn();
     }
 }

@@ -16,10 +16,11 @@ MonoBehaviour:
   manaCost: 11
   damage: 8
   skillPic: {fileID: 21300000, guid: 7ae06a498d47544d7a75ddfdf1ada9d4, type: 3}
-  template: {fileID: 8569735353428587967, guid: 30b7b2fb44e35db48b46ee2df05985d1,
+  template: {fileID: 6698063244603946842, guid: 469c2f66c251cb44c97dd8b1d6ac464c,
     type: 3}
   skill: 0
   maxAmountOfTargets: 1
   ranges:
   - {x: 1, y: 0, z: -1}
   - {x: 1, y: 0, z: 1}
+  skillDesciption: Normal attack
