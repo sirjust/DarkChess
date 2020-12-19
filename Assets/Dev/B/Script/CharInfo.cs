@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class CharInfo : MonoBehaviour
 {
-    [Header("Requiered")]
+    [Header("Required")]
     public TMP_Text charName;
     public TMP_Text charValues;
     public TMP_Text charStats;
