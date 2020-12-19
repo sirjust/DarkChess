@@ -113,3 +113,29 @@ OnMouseExit() {
 ```
 
 If I tried to destroy the original "highlight" it would attempt to delete the prefab from our assets which would not work.
+
+### **Audio Manager**
+
+#### **What is it?**
+
+![audio manager](https://i.ibb.co/4KKx6BL/image.png)
+
+A library of audio clips that we can call on demand throughout our game. By developing a strong audio manager, we should be able to control different sounds in various ways.
+
+#### **How To Use**
+
+The `Audio Manager` prefab should be placed in every scene. It comes with  `AudioManager.cs` preloaded. 
+
+To add your audio clip:
+1. Increase the size by +1
+2. Name the added audio element
+3. Drag your audio clip into `Clip`
+
+To play your audio clip on demand, use:
+
+`FindObjectOfType<AudioManager>().Play("INSERT_NAME");`
+
+We can alter the properties of each audio clip, such as `Volume`, `Pitch`, or `Loop`. If necessary, we can add more parameters to each audio source to have more control. This can be done by altering the `Sound.cs` script which displays the parameters in the inspector for each sound.
+
+![sound.cs](https://i.ibb.co/99xMqf0/image.png)
+

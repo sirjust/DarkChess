@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class TitleScreenHandler : MonoBehaviour
 {
+    public Animator lowerLevel;
     public Animator transition;
     public float transitionDelay;
 
@@ -12,17 +13,23 @@ public class TitleScreenHandler : MonoBehaviour
     public GameObject[] buttonsList; // Makes the animation adaptable to other UI buttons if needed
     List<Animator> animatorList = new List<Animator>();
 
-    public AudioSource buttonHoverAudio;
+    void Awake(){
+        // Play music on awake
+        FindObjectOfType<AudioManager>().Play("FireAmbient");
+        FindObjectOfType<AudioManager>().Play("MenuMusic");
+    }
 
     void Start(){
+        // Finding the amount of buttons I have listed on 
         for (int i = 0; i < buttonsList.Length; i++) 
         {
             animatorList.Add(buttonsList[i].GetComponent<Animator>()); 
-            animatorList[i].enabled = false; //turn off each animator component at the start
+            animatorList[i].enabled = false; //turn off animator component for each button at the start
+            // I only want the one I'm hovering over to be "on" so all the buttons don't animate
         }
     }
 
-     public void FindButton(string buttonName)
+    public void FindButton(string buttonName)
      {
         for (int i = 0; i < buttonsList.Length; i++) 
         {
@@ -35,11 +42,6 @@ public class TitleScreenHandler : MonoBehaviour
         }
      }
 
-     public void LaunchAudioClip()
-     {
-        buttonHoverAudio = GetComponent<AudioSource>();
-        buttonHoverAudio.Play(0);
-     }
 
     public void PlayButton()
     {
@@ -51,16 +53,29 @@ public class TitleScreenHandler : MonoBehaviour
         Application.Quit();
     }
 
+    // Play screenshaking animation AND level slide up animation
+    // Play relevant audio clips
+    // Time delay until animation ends (WaitForSeconds)
+    // Fade out
+    // Delay until fade animation is finished before loading scene (WaitForSeconds)
+    // Load scene
     IEnumerator LoadLevel() 
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        lowerLevel.SetTrigger("Lower");
+        FindObjectOfType<AudioManager>().Play("StoneScrapingEffect");
+        FindObjectOfType<AudioManager>().Play("StoneMovingBass");
+
+        yield return new WaitForSeconds(2.5f);
         transition.SetTrigger("Start"); // Activates the trigger called "Start" in animator
 
         yield return new WaitForSeconds(transitionDelay); // Don't wanna load the scene too early
 
         SceneManager.LoadScene(1); // You need to put the number of the main scene from build settings in here
-    }
 
-    // public void HighlightPlay(){
-    //     buttons.SetTrigger("OnHover");
-    // }
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
 }
