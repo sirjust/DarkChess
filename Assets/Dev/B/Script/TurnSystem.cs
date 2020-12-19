@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public enum BattleStatus
 {
@@ -7,12 +8,14 @@ public enum BattleStatus
 
 public class TurnSystem : MonoBehaviour
 {
-    [Header("Requiered")]
+    [Header("Required")]
     [SerializeField]
     private BattleStatus status;
 
+    [Header("Optional")]
+    public float time = 1;
     private int index = 0;
-
+    
     private void Awake()
     {
         index = (int)status;
@@ -24,6 +27,10 @@ public class TurnSystem : MonoBehaviour
         else index = 0;
 
         status = (BattleStatus)index;
+
+        if (status == BattleStatus.EnemyMove) StartCoroutine(EnemyMove(time));
+        if (status == BattleStatus.EnemyCombat) StartCoroutine(EnemyFight(time));
+
         PrintBattleStatus();
     }
 
@@ -33,7 +40,6 @@ public class TurnSystem : MonoBehaviour
         else index = 3;
 
         status = (BattleStatus)index;
-
     }
 
     public void PrintBattleStatus()
@@ -44,5 +50,19 @@ public class TurnSystem : MonoBehaviour
     public BattleStatus GetBattleStatus()
     {
         return status;
+    }
+
+    IEnumerator EnemyMove(float _time)
+    {
+        Debug.Log("Enemy is moving...");
+        yield return new WaitForSecondsRealtime(_time);
+        NextTurn();
+    }
+
+    IEnumerator EnemyFight(float _time)
+    {
+        Debug.Log("Enemy is fighting...");
+        yield return new WaitForSecondsRealtime(_time);
+        NextTurn();
     }
 }
