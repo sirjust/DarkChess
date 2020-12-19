@@ -6619,17 +6619,17 @@ MonoBehaviour:
     type: 3}
   highlight: {fileID: 7369433659295709892, guid: dc527a0ec64aab543b3202d5b8731d47,
     type: 3}
-  takeObjectTransform: 0
+  player: {fileID: 0}
+  takeObjectTransform: 1
   destroy: 1
   timeBeforeDestroy: 1
-  gridstart: {x: 0, y: 0}
+  gridstart: {x: 0, y: 0, z: 0}
   gridSize: {x: 8, y: 8}
   layer:
     serializedVersion: 2
     m_Bits: 544
   selectionkey: 113
   clearSelectionkey: 101
-  highlightHeight: 0.01
   selectedTiles: []
   skillrangeTiles: []
 --- !u!4 &3299004820945157935
@@ -6640,7 +6640,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3299004820945157933}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -4, y: 0, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1463579191}
