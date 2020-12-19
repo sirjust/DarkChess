@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class GetBarInfo : MonoBehaviour
 {
-    [Header("Requiered")]
+    [Header("Required")]
     public Character player;
 
     public Slider healthbar;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SkillInfo : MonoBehaviour
 {
-    [Header("Requiered")]
+    [Header("Required")]
     public TMP_Text textName;
     public TMP_Text textDescription;
 

@@ -9,7 +9,7 @@ public enum Mode
 
 public class EditedGridGenerator : MonoBehaviour
 {
-    [Header("Requiered")]
+    [Header("Required")]
     public Camera mainCam;
     public Mode mode;
     public GameObject tilePrefab;
