@@ -18,7 +18,6 @@ public class AllSkills : MonoBehaviour
         {
             foreach (GameObject tile1 in gridGenerator.skillrangeTiles)
             {
-                //Debug.Log($"{tile.transform.position.x} == { tile1.transform.position.x} && { tile.transform.position.z} == { tile1.transform.position.z}");
                 if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
                 {
                     this.SendMessage(card.skill.ToString(), tile);

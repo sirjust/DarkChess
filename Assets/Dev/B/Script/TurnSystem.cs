@@ -8,7 +8,8 @@ public enum BattleStatus
 public class TurnSystem : MonoBehaviour
 {
     [Header("Requiered")]
-    public BattleStatus status;
+    [SerializeField]
+    private BattleStatus status;
 
     private int index = 0;
 
@@ -23,6 +24,7 @@ public class TurnSystem : MonoBehaviour
         else index = 0;
 
         status = (BattleStatus)index;
+        PrintBattleStatus();
     }
 
     public void BackTurn()
@@ -35,8 +37,13 @@ public class TurnSystem : MonoBehaviour
 
     }
 
-    public void GetBattleStatus()
+    public void PrintBattleStatus()
     {
         Debug.Log($"BattleStatus: {status}");
+    }
+
+    public BattleStatus GetBattleStatus()
+    {
+        return status;
     }
 }
