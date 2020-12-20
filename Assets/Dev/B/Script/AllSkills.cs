@@ -45,7 +45,7 @@ public class AllSkills : MonoBehaviour
 
     public void Strike(GameObject targetTile)
     {
-        Debug.Log($"strike at {targetTile.GetComponent<GetObjectonTile>().gameObjectOnTile.name}");
         turnSystem.NextTurn();
+        Debug.Log($"strike at {targetTile.GetComponent<GetObjectonTile>().gameObjectOnTile.name}");
     }
 }
