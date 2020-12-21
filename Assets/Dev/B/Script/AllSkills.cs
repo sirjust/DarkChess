@@ -11,6 +11,7 @@ public class AllSkills : MonoBehaviour
     private TurnSystem turnSystem;
     private EditedGridGenerator gridGenerator;
     private int targets = 0;
+    private List<GameObject> parametersObjects = new List<GameObject>();
 
     private void Awake()
     {
@@ -23,7 +24,7 @@ public class AllSkills : MonoBehaviour
 
     #region cast methods
 
-    public bool cast(string skillname, int maxAmountofTargets, EditedGridGenerator _gridGenerator, GameObject _user, BattleStatus battleStatus)
+    public bool cast(string skillname, int maxAmountofTargets, EditedGridGenerator _gridGenerator, GameObject user, BattleStatus battleStatus)
     {
         gridGenerator = _gridGenerator;
 
@@ -39,7 +40,9 @@ public class AllSkills : MonoBehaviour
             {
                 if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
                 {
-                    this.SendMessage(skillname, tile);
+                    parametersObjects.Add(user);
+                    parametersObjects.Add(tile);
+                    this.SendMessage(skillname, parametersObjects);
                     targets++;
 
                     if (targets >= maxAmountofTargets) return true;
@@ -54,7 +57,7 @@ public class AllSkills : MonoBehaviour
         return false;
     }
 
-    public bool cast(string name, int maxAmountofTargets, List<GameObject> selectedTiles, List<GameObject> rangeTiles, GameObject _user, BattleStatus battleStatus)
+    public bool cast(string name, int maxAmountofTargets, List<GameObject> selectedTiles, List<GameObject> rangeTiles, GameObject user, BattleStatus battleStatus)
     {
         if (turnSystem.GetBattleStatus() != battleStatus)
         {
@@ -68,7 +71,9 @@ public class AllSkills : MonoBehaviour
             {
                 if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
                 {
-                    this.SendMessage(name, tile);
+                    parametersObjects.Add(user);
+                    parametersObjects.Add(tile);
+                    this.SendMessage(name, parametersObjects);
                     targets++;
 
                     if (targets >= maxAmountofTargets) return true;
@@ -83,7 +88,7 @@ public class AllSkills : MonoBehaviour
         return true;
     }
 
-    public bool cast(Card card, EditedGridGenerator _gridGenerator, GameObject _user, BattleStatus battleStatus)
+    public bool cast(Card card, EditedGridGenerator _gridGenerator, GameObject user, BattleStatus battleStatus)
     {
         gridGenerator = _gridGenerator;
 
@@ -99,7 +104,9 @@ public class AllSkills : MonoBehaviour
             {
                 if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
                 {
-                    this.SendMessage(card.skill.ToString(), tile);
+                    parametersObjects.Add(user);
+                    parametersObjects.Add(tile);
+                    this.SendMessage(card.skill.ToString(), parametersObjects);
                     targets++;
 
                     if (targets >= card.maxAmountOfTargets) return true;
@@ -114,7 +121,7 @@ public class AllSkills : MonoBehaviour
         return true;
     }
 
-    public bool cast(Card card, List<GameObject> selectedTiles, List<GameObject> rangeTiles, GameObject _user, BattleStatus battleStatus)
+    public bool cast(Card card, List<GameObject> selectedTiles, List<GameObject> rangeTiles, GameObject user, BattleStatus battleStatus)
     {
         if (turnSystem.GetBattleStatus() != battleStatus)
         {
@@ -128,7 +135,9 @@ public class AllSkills : MonoBehaviour
             {
                 if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
                 {
-                    this.SendMessage(card.skill.ToString(), tile);
+                    parametersObjects.Add(user);
+                    parametersObjects.Add(tile);
+                    this.SendMessage(card.skill.ToString(), parametersObjects);
                     targets++;
 
                     if (targets >= card.maxAmountOfTargets) return true;
@@ -145,15 +154,18 @@ public class AllSkills : MonoBehaviour
 
     #endregion
 
-    public void Strike(GameObject targetTile)
+    public void Strike(List<GameObject> parameters)
     {
         turnSystem.NextTurn();
-        Debug.Log($"strike at {targetTile.GetComponent<GetObjectonTile>().gameObjectOnTile.name}");
+        Debug.Log($"{parameters[0].GetComponent<GetStats>().character.charName} stroke at {parameters[1].GetComponent<GetObjectonTile>().gameObjectOnTile.name}");
+        parametersObjects.Clear();
     }
 
-    public void Move(GameObject targetTile)
+    public void Move(List<GameObject> parameters)
     {
         turnSystem.NextTurn();
-        Debug.Log($"move to P({targetTile.transform.position.x} | {targetTile.transform.position.y} | {targetTile.transform.position.z})");
+        parameters[0].transform.position = parameters[1].transform.position;
+        Debug.Log($"move to P({parameters[1].transform.position.x} | {parameters[1].transform.position.y} | {parameters[1].transform.position.z})");
+        parametersObjects.Clear();
     }
 }

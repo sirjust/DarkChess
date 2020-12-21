@@ -50,22 +50,22 @@ public class EditedMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             this.transform.localEulerAngles = left;
-            RefreshMoveTiles();
+            if(turnSystem.GetBattleStatus() == BattleStatus.PlayerMove) RefreshMoveTiles();
         }
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             this.transform.localEulerAngles = right;
-            RefreshMoveTiles();
+            if (turnSystem.GetBattleStatus() == BattleStatus.PlayerMove) RefreshMoveTiles();
         }
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
             this.transform.localEulerAngles = down;
-            RefreshMoveTiles();
+            if (turnSystem.GetBattleStatus() == BattleStatus.PlayerMove) RefreshMoveTiles();
         }
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             this.transform.localEulerAngles = up;
-            RefreshMoveTiles();
+            if (turnSystem.GetBattleStatus() == BattleStatus.PlayerMove) RefreshMoveTiles();
         }
     }
 
