@@ -22,7 +22,6 @@ public class EditedGridGenerator : MonoBehaviour
     public float timeBeforeDestroy = 0;
     public Vector3 gridstart;
     public Vector2 gridSize = new Vector2(8, 8);
-    public LayerMask layer;
     public KeyCode selectionkey;
     public KeyCode clearSelectionkey;
 
@@ -75,7 +74,7 @@ public class EditedGridGenerator : MonoBehaviour
     public void ClickHighlight()
     {
         RaycastHit hit;
-        if (Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out hit, layer) && Input.GetMouseButtonDown(0))
+        if (Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out hit) && Input.GetMouseButtonDown(0))
         {
             if (hit.collider.gameObject.name == tilePrefabclone.name && Input.GetMouseButtonDown(0))
             {
@@ -99,7 +98,7 @@ public class EditedGridGenerator : MonoBehaviour
     public void HoverHighlight()
     {
         RaycastHit hit;
-        if (Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out hit, layer))
+        if (Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out hit))
         {
             if (hit.collider.gameObject == tilePrefabclone)
             {

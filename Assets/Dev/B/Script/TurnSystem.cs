@@ -21,6 +21,11 @@ public class TurnSystem : MonoBehaviour
         index = (int)status;
     }
 
+    private void Update()
+    {
+        index = (int)status;
+    }
+
     public void NextTurn()
     {
         if (index < 3) index++;
