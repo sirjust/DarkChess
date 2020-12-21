@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,6 +30,7 @@ public class Character : ScriptableObject
     public int movement;
     public int critRate;
     public int dodgeRate;
+    public List<Vector3> moveRanges = new List<Vector3>();
 
     public HealthRepresentation healthRepresentation;
     public RealtionType realtion;

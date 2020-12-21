@@ -40,8 +40,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     {
         if (isSelected)
         {
-            gridGenerator.DestroySkillTiles();
-            gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, cardSystem.Player);
+            gridGenerator.DestroyTiles();
+            gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, cardSystem.Player, TypesofValue.relative);
         }
     }
 
@@ -61,11 +61,11 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void OnEndDrag(PointerEventData eventData)
     {
         skillInfo.SetCardID(getCardInfo.card);
-        successful = allSkills.cast(getCardInfo.card, gridGenerator, cardSystem.Player) && this.transform.position.y <= heightUI;
+        successful = allSkills.cast(getCardInfo.card, gridGenerator, cardSystem.Player, BattleStatus.PlayerCombat) && this.transform.position.y <= heightUI;
         if (successful)
         {
             SendMessageUpwards("PlayCard", index);
-            gridGenerator.DestroySkillTiles();
+            gridGenerator.DestroyTiles();
         }
         else
         {
@@ -83,21 +83,21 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void Select()
     {
         CardGameObject.transform.position += selectedPos;
-        gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, cardSystem.Player);
+        gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, cardSystem.Player, TypesofValue.relative);
         isSelected = true;
     }
 
     public void Deselect()
     {
         CardGameObject.transform.position -= selectedPos;
-        gridGenerator.DestroySkillTiles();
+        gridGenerator.DestroyTiles();
         isSelected = false;
     }
 
     public void ResetCardPos()
     {
         this.transform.position = lastPos;
-        gridGenerator.DestroySkillTiles();
+        gridGenerator.DestroyTiles();
         isSelected = false;
     }
 

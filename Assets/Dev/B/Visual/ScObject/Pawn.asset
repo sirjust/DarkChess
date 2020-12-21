@@ -26,5 +26,7 @@ MonoBehaviour:
   movement: 331
   critRate: 0
   dodgeRate: 0
+  moveRanges:
+  - {x: 1, y: 0, z: 3}
   healthRepresentation: 1
   realtion: 0

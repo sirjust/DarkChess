@@ -2951,7 +2951,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4739a33b680696042a0264ec7d328868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnSystem: {fileID: 1725547295}
 --- !u!1 &1140257040
 GameObject:
   m_ObjectHideFlags: 0
@@ -6666,7 +6665,7 @@ MonoBehaviour:
     type: 3}
   highlight: {fileID: 7369433659295709892, guid: dc527a0ec64aab543b3202d5b8731d47,
     type: 3}
-  player: {fileID: 0}
+  player: {fileID: 7125984659406494055}
   takeObjectTransform: 1
   destroy: 1
   timeBeforeDestroy: 1
@@ -6675,7 +6674,7 @@ MonoBehaviour:
   selectionkey: 113
   clearSelectionkey: 101
   selectedTiles: []
-  skillrangeTiles: []
+  rangeTiles: []
 --- !u!4 &3299004820945157935
 Transform:
   m_ObjectHideFlags: 0
@@ -7731,10 +7730,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7125984659406494055}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9171f3f986f518459d1745a4ddd1cef, type: 3}
+  m_Script: {fileID: 11500000, guid: bf4f9bc03c5995e4ea5a17bb515b0841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  mainCam: {fileID: 897177477}
 --- !u!1 &7125996790863275487
 GameObject:
   m_ObjectHideFlags: 0
