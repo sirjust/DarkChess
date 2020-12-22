@@ -124,7 +124,6 @@ Once you're done working on a certain issue submit a pull request, and link it t
 Note: The y-value of the `Gridstart` variable will be ignored, because we using the y-value of the `Player`s position, if the `take object transform` option is false
 
 Note: In sone function, you has to use a argument of the type `TypesofValue`. This is a enum set, which contains two values:
-
 - `relative`: the instantiated `highlight` objects adapt to the rotation of the player
 - `absolute`: the instantiated `highlight` object wont adapt to the rotation of the player
 
