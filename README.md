@@ -118,8 +118,8 @@ Once you're done working on a certain issue submit a pull request, and link it t
 - `Gridstart` The start position of the grid(lower right corner)
 - `GridSize`: The size of the grid
 - `Layer`: Every object with this layer will be ignored
--`SelectionKey`: The button that must be pressed so that the selected tiles are not destroyed
--`Clear SelectionKey`: The button that muss be pressed to delete all selected tiles
+- `SelectionKey`: The button that must be pressed so that the selected tiles are not destroyed
+- `Clear SelectionKey`: The button that muss be pressed to delete all selected tiles
 
 Note: The y-value of the `Gridstart` variable will be ignored, because we using the y-value of the `Player`s position, if the `take object transform` option is false
 
