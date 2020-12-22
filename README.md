@@ -44,7 +44,7 @@ __Inspired by games such as:__
 		- [**ObjectDetection**](#objectDetection)
 		- [**Important Notes**](#important-notes)
 	- [**Movement System**](#Movement-System)
-		- [**How to use**](#How-to-use)
+		- [**How to use**](#How-to-use(Movement-System))
 		- [**How it works**](#How-it-works(Movement-System))
 
 ## **Authors**
@@ -369,6 +369,6 @@ Note: Every [character object](#character-object) has to have a collider in orde
 
 The movement system interacts with the `TurnSystem.cs` and as soon as the `status` variable is equal to the value `PlayerMove`, almost the same thing happens as when [selecting a card](#Select-a-Card). The only difference is, that we use the relative position, which saved in the [character](#Character), instead the position, which are saved in the [cards](#Card). we using this movement system for the enenmies too, but we have to adapt some point. The enemies will use the same method to move, but the way how to trigger this method will be different. 
 
-#### **Player rotation(Movement Systm)**
+##### **Player rotation(Movement Systm)**
 To adapt the movement and the instantiated `highlight` objects to the current rotation of the [player](#Player), the `Update()` method triggers a method called `Rotate()` every frame. This method checks wheather the players press specific button, in order to rotate the [character object](#character-object) and is this the case, the `DestroyTiles()` in the `EditedGridGenerator.cs` will be triggered and clears all list and destroys all `hightlight` object. Afterwards the [character object](#character-object) will be rotate based on the pressed button and the `GenerateTiles()` will be method triggered again.  
 
