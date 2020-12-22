@@ -34,8 +34,8 @@ __Inspired by games such as:__
 	- [**Mechanics**](#mechanics)
 		- [**Title Screen**](#title-screen)
 		- [**Highlight Mechanic**](#highlight-mechanic)
-			- [**How To Use**](#how-to-use)
-			- [**How It Works**](#how-it-works)
+			- [**How To Use**](#how-to-use(Hightlight-Mechanic))
+			- [**How It Works**](#how-it-works(Hightlight-Mechanic))
 	- [**Battle Menu**](#Battle-Menu)
 		- [**CharInfo**](#charInfo)
 		- [**SkillInfo**](#skillInfo)
@@ -43,7 +43,9 @@ __Inspired by games such as:__
 		- [**CardHolding**](#cardHolding)
 		- [**ObjectDetection**](#objectDetection)
 		- [**Important Notes**](#important-notes)
-	 	
+	- [**Movement System**](#Movement-System)
+		- [**How to use**](#How-to-use)
+		- [**How it works**](#How-it-works(Movement-System))
 
 ## **Authors**
 
@@ -72,7 +74,7 @@ We plan to demo all features weekly.
 
 To keep our code homogenous, we'll use camel case for our variables (fields etc), like so: `private bool canAttack;`
 
-Variables for lists and arrays should be pluralized, even if it makes the variable read awkwardly, like so: `List<string> attackTypes` or `IEnumerable<PlayerStatistics> playerStats`
+Variables for lists and lists should be pluralized, even if it makes the variable read awkwardly, like so: `List<string> attackTypes` or `IEnumerable<PlayerStatistics> playerStats`
 
 Of particular note, we learned in Week 1 that due to how Unity works with `.meta` files, we should never commit an empty folder to source control. If we do, every other developer will have conflicts.
 
@@ -101,49 +103,38 @@ Once you're done working on a certain issue submit a pull request, and link it t
 
 ### **Highlight Mechanic**
 
-#### **How To Use**
+#### **How to use(Hightlight Mechanic)**
 
 1. Attach this script to the game object you want to highlight.
 
 2. Create a highlight prefab and assign it to the game object like so. Keep clone empty.
 
-![prefab image](https://i.ibb.co/FB33YT4/Screenshot-2020-12-05-141843.png)
+![prefab image](https://i.ibb.co/fY3Rbrt/Edited-Grid-Generator.png)
 
-#### **How It Works**
+- `Main Cam`: The camera, whereby the player sees the scene
+- `Player`: The y-component if the position of this object will be used when generating the grid and instantiate the  `highlight` object
+- `Take Object Transform`: An option to take the position of the game object, which has the script, as the start position
+- `Destroy`: An option to destroy the `highlight` objects
+- `Gridstart` The start position of the grid(lower right corner)
+- `GridSize`: The size of the grid
+- `Layer`: Every object with this layer will be ignored
+-`SelectionKey`: The button that must be pressed so that the selected tiles are not destroyed
+-`Clear SelectionKey`: The button that muss be pressed to delete all selected tiles
 
-This script clones a prefab called `highlight` on top of the GameObject this script is attached to using the `OnMouseEnter()` event.
+Note: The y-value of the `Gridstart` variable will be ignored, because we using the y-value of the `Player`s position, if the `take object transform` option is false
+
+Note: In sone function, you has to use a argument of the type `TypesofValue`. This is a enum set, which contains two values:
+
+- `relative`: the instantiated `highlight` objects adapt to the rotation of the player
+- `absolute`: the instantiated `highlight` object wont adapt to the rotation of the player
+
+#### **How it works(Hightlight Mechanic)**
+
+Once the scene is started, a grid is created from EditedInvisGridTile objects. Now the script checks whether the player presses a certain mouse button. If this is the case, a raycast is sent from the camera. As soon as this raycast hits an object, it checks whether it is an "EditedInvisGridTile" object. If so, a clone of the 'Hightlight' object is instantiated to the position of the EditedInvisGridTile object.
 
 In this case, I am cloning a quad that is emissive (looks like a highlight).
 
 ![highlight image](https://i.ibb.co/6vX1CkF/Screenshot-2020-12-05-144732.png)
-
-First I define my two variables.
-
-```cs
-public GameObject highlight;
-public GameObject clone;
-```
-
-Here I am taking the position of the game object and assigning it to `objectPosition` with a position slightly above it. `0.02f`
-
-I then `Instantiate` my highlight into the scene with the new `objectPosition` and set it equal to `clone` so I can destroy it later.
-
-```cs
-OnMouseEnter() {
-    Vector3 objectPosition = new Vector3(transform.position.x, 0.02f, transform.position.z);
-    clone = (GameObject)Instantiate(highlight, objectPosition, Quaternion.Euler(Vector3.right * 90));
-}
-```
-
-Destroy clone when mouse isn't hovering over object anymore.
-
-```cs
-OnMouseExit() {
-    Destroy(clone);
-}
-```
-
-If I tried to destroy the original "highlight" it would attempt to delete the prefab from our assets which would not work.
 
 ### **Battle Menu**
 
@@ -215,11 +206,11 @@ Note: There is a difference between [cards](#Card) and [card objects](#card-obje
 
 ##### **How it works**
 
-Once the scene starts, the `CardSystem.cs` instatiates empty objects. These empty objects (`place`) are saved in a array. Afterwards the script spawn a specific amount of [card object](#card-object) on the position of the empty objects in the array. In addition all card objects will receive a index which represent the index of the `place` which the [cards](#Card) are children of. These `place` object and the [cards](#Card) will be saved in a seperate array. 
+Once the scene starts, the `CardSystem.cs` instatiates empty objects. These empty objects (`place`) are saved in a list. Afterwards the script spawn a specific amount of [card object](#card-object) on the position of the empty objects in the list. In addition all card objects will receive a index which represent the index of the `place` which the [cards](#Card) are children of. These `place` object and the [cards](#Card) will be saved in a seperate list. 
 
 Note: All possible [cards](#Card) which can be played/drawed are saved in the [scriptableObject](#ScriptableObject) of the player. 
 
-![CardArrays Image](https://i.ibb.co/PxSJRR3/Card-Arrays.png)
+![CardArrays Image](https://i.ibb.co/PxSJRR3/Card-lists.png)
 
 ##### **Drag and Drop**
 In order to use the unity drag and drop functionality, I have to import the different Interfaces( `IPointerDownHandler`, `IBeginDragHandler`, `IEndDragHandler`, `IDragHandler` ). Each Interface add a new method into the `DragDrop.cs` script, which will triggered in the different stages in the drag and drop process. Now I can modify the different methods and add new functionalities in it. 
@@ -269,13 +260,13 @@ This process goes through each card until all have been moved
 
 In order to let the `cast()` method returns the bool value `true`, the player has to select the right tiles and there has to be at least one object which can be [detected](#objectDetection) by a tile e.g a other [character object](#character-object). 
 
-After the player [selected](#select-a-tile) some tiles and [played](#Play-a-Card) a [card](#Card). A method called `cast()` triggers. This method compares the positions of the `ranges` array with every positions of the [selected](#select-a-tile) tile array. Now if the compared tiles has the same position, then method of the skill will be triggered and the `cast()` method returns the bool value `true`. When there is no matches in the comparison, then the method will return the bool value `false`.
+After the player [selected](#select-a-tile) some tiles and [played](#Play-a-Card) a [card](#Card). A method called `cast()` triggers. This method compares the positions of the `ranges` list with every positions of the [selected](#select-a-tile) tile list. Now if the compared tiles has the same position, then method of the skill will be triggered and the `cast()` method returns the bool value `true`. When there is no matches in the comparison, then the method will return the bool value `false`.
 
 ##### **Draw a Card**
 
 ##### **How it works**
 
-As soon as the player presses on the `DrawButton`, it is checked whether the maximum number of [cards](#Card) is exceeded or not. If this is not the case, then the `PickRandCard()` method is called. This takes an array of [cards](#Card) and randomly picks one. This [card](#Card) is then returned. The linked card object of the returned [card](#Card) will then instantiated in first free `place` object. 
+As soon as the player presses on the `DrawButton`, it is checked whether the maximum number of [cards](#Card) is exceeded or not. If this is not the case, then the `PickRandCard()` method is called. This takes an list of [cards](#Card) and randomly picks one. This [card](#Card) is then returned. The linked card object of the returned [card](#Card) will then instantiated in first free `place` object. 
 
 Note: "Free" means that the object hasnt any [card object](#card-object) as a children
 
@@ -283,7 +274,7 @@ Note: "Free" means that the object hasnt any [card object](#card-object) as a ch
 
 ##### **How it works**
 
-The range of every [card](#Card) are saved in the [scriptableObject](#ScriptableObject) in a array. If the player only clicks on the [card object](#card-object) and does not move, it will be selected. This selected [card object](#card-object) then will trigger a method called ` GenerateSkillTiles()`. This method read the saved relative positions in the array of the [cards](#Card) and add them to the current position of the user. After the calculations the method instantiates the `highlight` object to the calculated position and save them into another  array called `skillrangeTiles`. This will be important for the Combat System
+The range of every [card](#Card) are saved in the [scriptableObject](#ScriptableObject) in a list. If the player only clicks on the [card object](#card-object) and does not move, it will be selected. This selected [card object](#card-object) then will trigger a method called ` GenerateTiles()`. This method read the saved relative positions in the list of the [cards](#Card), add them to the current position of the user and adapt these based on the current rotation of the user. After the calculations the method instantiates the `highlight` object to the calculated position and save them into another list called `rangeTiles`. If the player deselect a [card](#Card) the method called `DestroyTiles()` will be triggered, which clears all lists and destroy all `highlight` objects.
 
 #### **objectDetection**
 
@@ -319,7 +310,7 @@ In our case we using this script for the `EditedHighlight Quad` object and the `
 - `Template`: The linked [card object](#card-object)
 - `Skill`: The skill which will triggered if the [card object](#card-object) is played
 - `Max Amount Of Targets`: The highest number of targets(If the player select more targets, only the first selected will be count)
-- `Ranges`: An array of the relative position of the user e.g (1 | 0 | -1) means the tile before the user on the left side  
+- `Ranges`: An list of the relative position of the user e.g (1 | 0 | -1) means the tile before the user on the left side  
 - `Skill description`: A short description, which will be displayed on the [skillInfo](#skillInfo) display
 
 ### Character
@@ -351,16 +342,33 @@ In our case we using this script for the `EditedHighlight Quad` object and the `
 - `Character`: The linked [scriptableObject](#ScriptableObject)
 - `Have Body`: If the Prefab has a Body like in this example then make a check mark. Otherwise the `GetStats.cs` create the prefab, which is saved in the variable `model` 
 - `Normal Skills`: Collection of drawable [cards](#Card)
-- `Unique Skills`: Collection of unique drawable [cards](#Card), which can be only one time at the same time on the hand(has to be in the `Normal Skills` array to) 
+- `Unique Skills`: Collection of unique drawable [cards](#Card), which can be only one time at the same time on the hand(has to be in the `Normal Skills` list to) 
 
 Note: Every [character object](#character-object) has to have a collider in order to be [detected](#objectDetection)
 
 ##### Player
 - This variable has to contains a [scriptableObject](#ScriptableObject), which was created with the `character.cs`
 
-##### GridGenerator & AllSkills
-- Be sure that you only have one game Object in the scene which the `EditedGridGenerator.cs` script is attached to
-- The same applies to the `allSkills.cs`
+##### Other notes about the scripts
+- Be sure that you have one game Object in the scene which the `allSkills.cs`, `EditedScriptgenerator.cs`, `TurnSystem.cs` script is attached to
 - The name of the method and the name of the enums has to be the same e.g `strike()` and `strike`
 
+### **Movement System**
+
+#### **How To Use(Movement-System)**
+
+1. Attach this script to the game object which should be able to move
+
+2. Be sure that you implemented the `TurnSystem.cs` and the `EditedGridGenerator.cs` correctly
+
+![prefab image](https://i.ibb.co/mFMyTBw/Movement.png)
+
+- `Main Cam`: The camera, whereby the player sees the scene
+
+#### **How it works(Movement System)**
+
+The movement system interacts with the `TurnSystem.cs` and as soon as the `status` variable is equal to the value `PlayerMove`, almost the same thing happens as when [selecting a card](#Select-a-Card). The only difference is, that we use the relative position, which saved in the [character](#Character), instead the position, which are saved in the [cards](#Card). we using this movement system for the enenmies too, but we have to adapt some point. The enemies will use the same method to move, but the way how to trigger this method will be different. 
+
+#### **Player rotation(Movement Systm)**
+To adapt the movement and the instantiated `highlight` objects to the current rotation of the [player](#Player), the `Update()` method triggers a method called `Rotate()` every frame. This method checks wheather the players press specific button, in order to rotate the [character object](#character-object) and is this the case, the `DestroyTiles()` in the `EditedGridGenerator.cs` will be triggered and clears all list and destroys all `hightlight` object. Afterwards the [character object](#character-object) will be rotate based on the pressed button and the `GenerateTiles()` will be method triggered again.  
 
