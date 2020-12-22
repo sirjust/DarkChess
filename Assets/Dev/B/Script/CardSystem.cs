@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class CardSystem : MonoBehaviour
 {
-    [Header("Requiered")]
+    [Header("Required")]
     public GameObject Player;
     public int startingCardCount;
     public int maxCardCount;

@@ -1,11 +1,10 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(BoxCollider))]
 public class GetStats : MonoBehaviour
 {
-    [Header("Requiered")]
+    [Header("Required")]
     public Character character;
     public bool haveBody = false;
 
@@ -29,19 +28,17 @@ public class GetStats : MonoBehaviour
 
     private void Awake()
     {
+        healthbar = (GetComponentInChildren<Slider>()) ? GetComponentInChildren<Slider>() : null;
 
-        healthbar = GetComponentInChildren<Slider>();
-
-        if (character.healthRepresentation == HealthRepresentation.healthbar)
+        if (character.healthRepresentation == HealthRepresentation.healthbar && healthbar != null)
         {
             healthbar.maxValue = character.health;
             healthbar.value = character.currentHealth;
         }
-        else
+        else if(healthbar != null)
         {
             healthbar.gameObject.SetActive(false);
         }
-
 
         allObj = FindObjectsOfType<GameObject>();
 
