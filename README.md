@@ -107,43 +107,30 @@ Once you're done working on a certain issue submit a pull request, and link it t
 
 2. Create a highlight prefab and assign it to the game object like so. Keep clone empty.
 
-![prefab image](https://i.ibb.co/FB33YT4/Screenshot-2020-12-05-141843.png)
+![prefab image](https://i.ibb.co/fY3Rbrt/Edited-Grid-Generator.png)
+
+- `Main Cam`: The camera, whereby the player sees the scene
+- `Player`: The y-component if the position of this object will be used when generating the grid and instantiate the  `highlight` object
+- `Take Object Transform`: An option to take the position of the game object, which has the script, as the start position
+- `Destroy`: An option to destroy the `highlight` objects
+- `Gridstart` The start position of the grid(lower right corner)
+- `GridSize`: The size of the grid
+- `Layer`: Every object with this layer will be ignored
+-`SelectionKey`: The button that must be pressed so that the selected tiles are not destroyed
+-`Clear SelectionKey`: The button that muss be pressed to delete all selected tiles
+
+Note: The y-value of the `Gridstart` variable will be ignored, because we using the y-value of the `Player`s position, if the `take object transform` option is false.
 
 #### **How It Works**
 
-This script clones a prefab called `highlight` on top of the GameObject this script is attached to using the `OnMouseEnter()` event.
+Once the scene is started, a grid is created from EditedInvisGridTile objects. Now the script checks whether the player presses a certain mouse button. If this is the case, a raycast is sent from the camera. As soon as this raycast hits an object, it checks whether it is an "EditedInvisGridTile" object. If so, a clone of the 'Hightlight' object is instantiated to the position of the EditedInvisGridTile object.
 
 In this case, I am cloning a quad that is emissive (looks like a highlight).
 
 ![highlight image](https://i.ibb.co/6vX1CkF/Screenshot-2020-12-05-144732.png)
 
-First I define my two variables.
 
-```cs
-public GameObject highlight;
-public GameObject clone;
-```
 
-Here I am taking the position of the game object and assigning it to `objectPosition` with a position slightly above it. `0.02f`
-
-I then `Instantiate` my highlight into the scene with the new `objectPosition` and set it equal to `clone` so I can destroy it later.
-
-```cs
-OnMouseEnter() {
-    Vector3 objectPosition = new Vector3(transform.position.x, 0.02f, transform.position.z);
-    clone = (GameObject)Instantiate(highlight, objectPosition, Quaternion.Euler(Vector3.right * 90));
-}
-```
-
-Destroy clone when mouse isn't hovering over object anymore.
-
-```cs
-OnMouseExit() {
-    Destroy(clone);
-}
-```
-
-If I tried to destroy the original "highlight" it would attempt to delete the prefab from our assets which would not work.
 
 ### **Battle Menu**
 
