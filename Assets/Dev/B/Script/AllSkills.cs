@@ -88,7 +88,7 @@ public class AllSkills : MonoBehaviour
         if (targets == 0)
         {
             Debug.LogError("Select other tiles");
-            gridGenerator.DestroyTiles();
+            if(turnSystem.GetBattleStatus() != BattleStatus.PlayerMove) gridGenerator.DestroyTiles();
             return false;
         }
         return true;
@@ -100,6 +100,7 @@ public class AllSkills : MonoBehaviour
     {
         turnSystem.NextTurn();
         damageHandler.DealDamage(parameters[0].GetComponent<GetStats>().lastcastedSkill.damage, parameters[1].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character);
+        parameters[0].GetComponent<GetStats>().character.currentMana -= GetComponent<GetStats>().lastcastedSkill.manaCost;
         Debug.Log($"{parameters[0].GetComponent<GetStats>().character.charName} stroke at {parameters[1].GetComponent<GetObjectonTile>().gameObjectOnTile.name}");
         parametersObjects.Clear();
         gridGenerator.DestroyTiles();
@@ -108,8 +109,8 @@ public class AllSkills : MonoBehaviour
     public void Move(List<GameObject> parameters)
     {
         turnSystem.NextTurn();
-        Debug.Log($"damage: {parameters[0].GetComponent<GetStats>().lastcastedSkill.damage}");
         parameters[0].transform.position = parameters[1].transform.position;
+        Debug.Log($"damage: {parameters[0].GetComponent<GetStats>().lastcastedSkill.damage}");
         Debug.Log($"move to P({parameters[1].transform.position.x} | {parameters[1].transform.position.y} | {parameters[1].transform.position.z})");
         parametersObjects.Clear();
         gridGenerator.DestroyTiles();

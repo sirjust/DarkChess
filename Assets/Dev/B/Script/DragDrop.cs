@@ -19,20 +19,15 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private CardSystem cardSystem;
     private SkillInfo skillInfo;
     private AllSkills allSkills;
-
+    private GetBarInfo getBarInfo;
     private EditedGridGenerator gridGenerator;
 
     private void Awake()
     {
-        GameObject[] gameObjects = FindObjectsOfType<GameObject>();
-        foreach (GameObject gameObject in gameObjects)
-        {
-            if (gameObject.GetComponent<CardSystem>()) cardSystem = gameObject.GetComponent<CardSystem>();
-            if (gameObject.GetComponent<EditedGridGenerator>()) gridGenerator = gameObject.GetComponent<EditedGridGenerator>();
-            if (gameObject.GetComponent<AllSkills>()) allSkills = gameObject.GetComponent<AllSkills>();
-            if (gameObject.GetComponent<SkillInfo>()) skillInfo = gameObject.GetComponent<SkillInfo>();
-           // if (gameObject.GetComponent<TurnSystem>()) turnSystem = gameObject.GetComponent<TurnSystem>();
-        }
+        getBarInfo = FindObjectOfType<GetBarInfo>();
+        cardSystem = FindObjectOfType<CardSystem>();
+        skillInfo = FindObjectOfType<SkillInfo>();
+        allSkills = FindObjectOfType<AllSkills>();
         getCardInfo = GetComponent<GetCardInfo>();
     }
 
@@ -60,10 +55,11 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        skillInfo.SetCardID(getCardInfo.card);
         successful = allSkills.cast(getCardInfo.card, gridGenerator, cardSystem.Player, BattleStatus.PlayerCombat) && this.transform.position.y <= heightUI;
         if (successful)
         {
+            skillInfo.SetCardID(getCardInfo.card);
+            getBarInfo.RefreshBar();
             SendMessageUpwards("PlayCard", index);
         }
         else

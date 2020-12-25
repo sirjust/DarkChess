@@ -81,8 +81,10 @@ public class EditedGridGenerator : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out hit) && Input.GetMouseButtonDown(0))
         {
+            Debug.Log($"{hit.collider.gameObject.name}");
             if (hit.collider.gameObject.name == tilePrefabclone.name && Input.GetMouseButtonDown(0))
             {
+                Debug.Log("Click");
                 Vector3 objectPosition = new Vector3(hit.collider.gameObject.transform.position.x, gridstartY + 0.01f, hit.collider.gameObject.transform.position.z);
                 var clone = Instantiate(highlight, objectPosition, Quaternion.Euler(Vector3.right * 90));
                 clone.transform.SetParent(this.gameObject.transform);
@@ -105,7 +107,7 @@ public class EditedGridGenerator : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out hit))
         {
-            if (hit.collider.gameObject == tilePrefabclone)
+            if (hit.collider.gameObject.name == tilePrefabclone.name)
             {
                 Vector3 objectPosition = new Vector3(hit.collider.gameObject.transform.position.x, gridstartY + 0.01f, hit.collider.gameObject.transform.position.z);
                 var clone = Instantiate(highlight, objectPosition, Quaternion.Euler(Vector3.right * 90));
@@ -130,8 +132,8 @@ public class EditedGridGenerator : MonoBehaviour
                     else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
                     else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, realtiveposition.x);
 
-                    if(realtiveposition.x > realtiveposition.z) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
-                    if(realtiveposition.x < realtiveposition.z) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
+                    if (realtiveposition.x > realtiveposition.z) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
+                    if (realtiveposition.x < realtiveposition.z) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
                 }
                 if (user.transform.localEulerAngles == new Vector3(0, 270, 0) && typesofValue == TypesofValue.relative)
                 {
