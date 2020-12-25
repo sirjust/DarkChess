@@ -126,22 +126,25 @@ public class EditedGridGenerator : MonoBehaviour
 
                 if (user.transform.localEulerAngles == Vector3.zero && typesofValue == TypesofValue.relative)
                 {
-                    Debug.LogError("A");
                     if (realtiveposition.z > 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
                     else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
                     else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, realtiveposition.x);
+
+                    if(realtiveposition.x > realtiveposition.z) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
+                    if(realtiveposition.x < realtiveposition.z) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
                 }
                 if (user.transform.localEulerAngles == new Vector3(0, 270, 0) && typesofValue == TypesofValue.relative)
                 {
                     newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, -realtiveposition.z);
-                    Debug.LogError("B");
                 }
                 if (user.transform.localEulerAngles == new Vector3(0, 180, 0) && typesofValue == TypesofValue.relative)
                 {
-                    Debug.LogError("C");
                     if (realtiveposition.z > 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
                     else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
                     else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
+
+                    if (realtiveposition.x > realtiveposition.z) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
+                    if (realtiveposition.x < realtiveposition.z) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
                 }
 
                 var position = newRealtiveposition + user.transform.position;

@@ -65,7 +65,6 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         if (successful)
         {
             SendMessageUpwards("PlayCard", index);
-            gridGenerator.DestroyTiles();
         }
         else
         {

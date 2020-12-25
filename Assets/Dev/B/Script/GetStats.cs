@@ -15,16 +15,13 @@ public class GetStats : MonoBehaviour
     [Header("Optional")]
     public Vector3 collidersize = new Vector3(1, 1, 1);
     public bool health = false;
-    public float gapBeforeLast = 2;
-    public float multiplier = 2;
 
     [Header("Assigned Automatically")]
     public CharInfo charInfo;
+    public Card lastcastedSkill;
 
     private BoxCollider boxCollider;
-    private GameObject[] allObj;
     private Slider healthbar;
-
 
     private void Awake()
     {
@@ -40,15 +37,7 @@ public class GetStats : MonoBehaviour
             healthbar.gameObject.SetActive(false);
         }
 
-        allObj = FindObjectsOfType<GameObject>();
-
-        foreach (GameObject _gameObject in allObj)
-        {
-            if (_gameObject.GetComponent<CharInfo>())
-            {
-                charInfo = _gameObject.GetComponent<CharInfo>();
-            }
-        }
+        charInfo = FindObjectOfType<CharInfo>();
 
         boxCollider = GetComponent<BoxCollider>();
         boxCollider.size = collidersize;

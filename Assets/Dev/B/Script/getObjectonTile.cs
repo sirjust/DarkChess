@@ -13,9 +13,9 @@ public class GetObjectonTile : MonoBehaviour
     private void Update()
     {
         RaycastHit hit;
-        if (Physics.Raycast(this.gameObject.transform.position, new Vector3(0,1,0), out hit, layer))
+        if (Physics.Raycast(this.gameObject.transform.position, new Vector3(0,1,0), out hit))
         {
-            gameObjectOnTile = hit.collider.gameObject;
+                gameObjectOnTile = hit.collider.gameObject;
         }
     }
 }
