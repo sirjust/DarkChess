@@ -25,6 +25,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private void Awake()
     {
         getBarInfo = FindObjectOfType<GetBarInfo>();
+        gridGenerator = FindObjectOfType<EditedGridGenerator>();
         cardSystem = FindObjectOfType<CardSystem>();
         skillInfo = FindObjectOfType<SkillInfo>();
         allSkills = FindObjectOfType<AllSkills>();
@@ -35,7 +36,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     {
         if (isSelected)
         {
-            gridGenerator.DestroyTiles();
+            gridGenerator.DestroyTiles(DestroyOption.rangeTiles);
             gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, cardSystem.Player, TypesofValue.relative);
         }
     }
@@ -85,14 +86,14 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void Deselect()
     {
         CardGameObject.transform.position -= selectedPos;
-        gridGenerator.DestroyTiles();
+        gridGenerator.DestroyTiles(DestroyOption.rangeTiles);
         isSelected = false;
     }
 
     public void ResetCardPos()
     {
         this.transform.position = lastPos;
-        gridGenerator.DestroyTiles();
+        gridGenerator.DestroyTiles(DestroyOption.all);
         isSelected = false;
     }
 

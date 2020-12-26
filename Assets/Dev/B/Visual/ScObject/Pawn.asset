@@ -17,7 +17,7 @@ MonoBehaviour:
   charName: Pawn
   health: 100
   currentHealth: 100
-  mana: 40
+  mana: 50
   currentMana: 50
   strength: 50
   defense: 12

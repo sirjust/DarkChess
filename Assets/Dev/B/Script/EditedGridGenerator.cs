@@ -12,6 +12,11 @@ public enum TypesofValue
     absolute, relative
 }
 
+public enum DestroyOption
+{
+    all, selectedTiles, rangeTiles
+}
+
 public class EditedGridGenerator : MonoBehaviour
 {
     [Header("Required")]
@@ -48,7 +53,7 @@ public class EditedGridGenerator : MonoBehaviour
         if (mode == Mode.click) ClickHighlight();
         else HoverHighlight();
 
-        if (Input.GetKey(clearSelectionkey)) ResetSelection();
+        if (Input.GetKey(clearSelectionkey)) DestroyTiles(DestroyOption.selectedTiles);
     }
 
     public void GenerateMap()
@@ -81,24 +86,14 @@ public class EditedGridGenerator : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out hit) && Input.GetMouseButtonDown(0))
         {
-            Debug.Log($"{hit.collider.gameObject.name}");
             if (hit.collider.gameObject.name == tilePrefabclone.name && Input.GetMouseButtonDown(0))
             {
-                Debug.Log("Click");
                 Vector3 objectPosition = new Vector3(hit.collider.gameObject.transform.position.x, gridstartY + 0.01f, hit.collider.gameObject.transform.position.z);
                 var clone = Instantiate(highlight, objectPosition, Quaternion.Euler(Vector3.right * 90));
                 clone.transform.SetParent(this.gameObject.transform);
                 selectedTiles.Add(clone);
                 if (!Input.GetKey(selectionkey)) StartCoroutine(Wait(clone, destroy, timeBeforeDestroy));
             }
-        }
-    }
-
-    public void ResetSelection()
-    {
-        foreach (GameObject tile in selectedTiles)
-        {
-            Destroy(tile);
         }
     }
 
@@ -132,8 +127,8 @@ public class EditedGridGenerator : MonoBehaviour
                     else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
                     else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, realtiveposition.x);
 
-                    if (realtiveposition.x > realtiveposition.z) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
-                    if (realtiveposition.x < realtiveposition.z) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
+                    if (Mathf.Abs(realtiveposition.x) > Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
+                    if (Mathf.Abs(realtiveposition.x) < Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
                 }
                 if (user.transform.localEulerAngles == new Vector3(0, 270, 0) && typesofValue == TypesofValue.relative)
                 {
@@ -141,12 +136,13 @@ public class EditedGridGenerator : MonoBehaviour
                 }
                 if (user.transform.localEulerAngles == new Vector3(0, 180, 0) && typesofValue == TypesofValue.relative)
                 {
+                    Debug.Log("A");
                     if (realtiveposition.z > 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
                     else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
                     else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
 
-                    if (realtiveposition.x > realtiveposition.z) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
-                    if (realtiveposition.x < realtiveposition.z) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
+                    if (Mathf.Abs(realtiveposition.x) > Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
+                    if (Mathf.Abs(realtiveposition.x) < Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
                 }
 
                 var position = newRealtiveposition + user.transform.position;
@@ -162,13 +158,24 @@ public class EditedGridGenerator : MonoBehaviour
         return tilePrefabclone;
     }
 
-    public void DestroyTiles()
+    public void DestroyTiles(DestroyOption destroyOption)
     {
-        foreach (GameObject tile in rangeTiles)
+        if (destroyOption != DestroyOption.selectedTiles)
         {
-            Destroy(tile);
+            foreach (GameObject tile in rangeTiles)
+            {
+                Destroy(tile);
+            }
+            rangeTiles.Clear();
         }
-        rangeTiles.Clear();
+        if (destroyOption != DestroyOption.rangeTiles)
+        {
+            foreach (GameObject tile in selectedTiles)
+            {
+                Destroy(tile);
+            }
+            selectedTiles.Clear();
+        }
     }
 
     IEnumerator Wait(GameObject gameObject, bool _destroy, float _timeBeforeDestroy)

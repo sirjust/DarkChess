@@ -66,7 +66,7 @@ public class EditedMovement : MonoBehaviour
 
     public void RefreshMoveTiles()
     {
-        gridGenerator.DestroyTiles();
+        gridGenerator.DestroyTiles(DestroyOption.rangeTiles);
         gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, this.gameObject, TypesofValue.relative);
         tracked = false;
     }
@@ -83,7 +83,7 @@ public class EditedMovement : MonoBehaviour
                 if (allSkills.cast(getStats.character.movementCard, currentSelectedTiles, gridGenerator.rangeTiles, this.gameObject, BattleStatus.PlayerMove))
                 {
                     getStats.lastcastedSkill = getStats.character.movementCard;
-                    gridGenerator.DestroyTiles();
+                    gridGenerator.DestroyTiles(DestroyOption.all);
                     tracked = false;
                 }
             }
