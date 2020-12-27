@@ -24,6 +24,8 @@ MonoBehaviour:
   movement: 331
   critRate: 0
   dodgeRate: 0
+  moveRanges:
+  - {x: 2, y: 0, z: 0}
   healthRepresentation: 1
   realtion: 0
   movementCard: {fileID: 11400000, guid: 66952b6fa6dd5c643ac75f68fd0077d2, type: 2}

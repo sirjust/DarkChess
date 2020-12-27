@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -17,7 +17,7 @@ public class TurnSystem : MonoBehaviour
     public float time = 1;
     private int index = 0;
     private int battleStatusLastIndex = Enum.GetNames(typeof(BattleStatus)).Length - 1;
-
+    
     private void Awake()
     {
         index = (int)status;

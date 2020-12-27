@@ -13,6 +13,7 @@ public class AllSkills : MonoBehaviour
     private DamageHandler damageHandler;
     private EditedGridGenerator gridGenerator;
     private GetBarInfo getBarInfo;
+
     private List<GameObject> parametersObjects = new List<GameObject>();
 
     private void Awake()

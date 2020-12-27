@@ -19,7 +19,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private CardSystem cardSystem;
     private SkillInfo skillInfo;
     private AllSkills allSkills;
-    private GetBarInfo getBarInfo;
+
+private GetBarInfo getBarInfo;
     private EditedGridGenerator gridGenerator;
 
     private void Awake()

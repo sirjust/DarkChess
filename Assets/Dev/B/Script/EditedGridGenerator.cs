@@ -135,6 +135,7 @@ public class EditedGridGenerator : MonoBehaviour
                 {
                     //Left
                     newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, -realtiveposition.z);
+                    Debug.LogError("B");
                 }
                 if (user.transform.localEulerAngles == new Vector3(0, 180, 0) && typesofValue == TypesofValue.relative)
                 {
