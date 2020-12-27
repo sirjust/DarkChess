@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0339c0ee922dd941bf2c6c34754a865, type: 3}
+  m_Name: EnemySkeleton
+  m_EditorClassIdentifier: 
+  picture: {fileID: 21300000, guid: 3ea521e47a2287b4ba18208a1fca42c7, type: 3}
+  Model: {fileID: 100078, guid: a5ea117a2b123564a83a2dbd1c9ea4cf, type: 3}
+  charName: Skeleton
+  health: 50
+  currentHealth: 50
+  hearts: 0
+  currenthearts: 0
+  mana: 0
+  currentMana: 0
+  strength: 10
+  defense: 10
+  movement: 2
+  critRate: 0
+  dodgeRate: 0
+  healthRepresentation: 0
+  realtion: 2
