@@ -7,6 +7,11 @@ public enum Mode
     hover, click
 }
 
+public enum TypesofValue
+{
+    absolute, relative
+}
+
 public class EditedGridGenerator : MonoBehaviour
 {
     [Header("Required")]
@@ -27,7 +32,7 @@ public class EditedGridGenerator : MonoBehaviour
 
     [Header("Assigned Automatically")]
     public List<GameObject> selectedTiles = new List<GameObject>();
-    public List<GameObject> skillrangeTiles = new List<GameObject>();
+    public List<GameObject> rangeTiles = new List<GameObject>();
     private GameObject tilePrefabclone;
     private float gridstartX;
     private float gridstartY;
@@ -111,7 +116,7 @@ public class EditedGridGenerator : MonoBehaviour
         }
     }
 
-    public void GenerateSkillTiles(List<Vector3> relativepositions, GameObject user)
+    public void GenerateSkillTiles(List<Vector3> relativepositions, GameObject user, TypesofValue typesofValue)
     {
         if (user.transform.position.x % 0.5f == 0 && user.transform.position.z % 0.5f == 0)
         {
@@ -119,36 +124,46 @@ public class EditedGridGenerator : MonoBehaviour
             {
                 var newRealtiveposition = realtiveposition;
 
-                if (user.transform.localEulerAngles == Vector3.zero)
+                if (user.transform.localEulerAngles == Vector3.zero && typesofValue == TypesofValue.relative)
                 {
+                    Debug.LogError("A");
                     if (realtiveposition.z > 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
                     else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
+                    else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, realtiveposition.x);
                 }
-                if (user.transform.localEulerAngles == new Vector3(0, 270, 0))
+                if (user.transform.localEulerAngles == new Vector3(0, 270, 0) && typesofValue == TypesofValue.relative)
                 {
                     newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, -realtiveposition.z);
+                    Debug.LogError("B");
                 }
-                if (user.transform.localEulerAngles == new Vector3(0, 180, 0))
+                if (user.transform.localEulerAngles == new Vector3(0, 180, 0) && typesofValue == TypesofValue.relative)
                 {
+                    Debug.LogError("C");
                     if (realtiveposition.z > 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
                     else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
+                    else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
                 }
 
                 var position = newRealtiveposition + user.transform.position;
                 var tile = Instantiate(highlight, new Vector3(position.x, gridstartY + 0.01f, position.z), Quaternion.Euler(Vector3.right * 90));
                 tile.transform.SetParent(this.gameObject.transform);
-                skillrangeTiles.Add(tile);
+                rangeTiles.Add(tile);
             }
         }
     }
 
-    public void DestroySkillTiles()
+    public GameObject GetTilePrefabClone()
     {
-        foreach (GameObject tile in skillrangeTiles)
+        return tilePrefabclone;
+    }
+
+    public void DestroyTiles()
+    {
+        foreach (GameObject tile in rangeTiles)
         {
             Destroy(tile);
         }
-        skillrangeTiles.Clear();
+        rangeTiles.Clear();
     }
 
     IEnumerator Wait(GameObject gameObject, bool _destroy, float _timeBeforeDestroy)
