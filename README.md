@@ -167,7 +167,7 @@ Display the name and description of the last played [card](#Card) in the scene.
 ##### **How to use**
 
 1. Attach `SkillInfo.cs` to the game object you want to use as a display for the [card](#Card) informations
-2. Then assign the different components to the variables under the `Requiered` header
+2. Then assign the different components to the variables under the `Required` header
 
 ![skillInfo image](https://i.ibb.co/BfZhB15/Skill-Info.png)
 
@@ -180,7 +180,7 @@ Display the players healthbar and manabar.
 ##### **How to use**
 
 1. Attach `GetBarInfo.cs` to the game object you want to use as a display the character's health and mana
-2. Then assign the different components to the variables under the `Requiered` header  
+2. Then assign the different components to the variables under the `Required` header  
 
 ![skillInfo image](https://i.ibb.co/s3Z64Fx/Health.png)
 
