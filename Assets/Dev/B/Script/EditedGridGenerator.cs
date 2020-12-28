@@ -186,12 +186,12 @@ public class EditedGridGenerator : MonoBehaviour
                             {
                                 Destroy(tile);
                                 rangeTiles.Remove(rangeTiles[i]);
-                            }
-                            else
-                            {
-                                Destroy(tile);
-                                rangeTiles.Remove(rangeTiles[i]);
-                            }
+                            }  
+                        }
+                        else
+                        {
+                            Destroy(tile);
+                            rangeTiles.Remove(rangeTiles[i]);
                         }
                     }
                 }
