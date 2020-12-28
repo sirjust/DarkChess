@@ -26,7 +26,7 @@ public class AllSkills : MonoBehaviour
 
     #region cast methods
 
-    public bool cast(Card card, EditedGridGenerator _gridGenerator, GameObject user, BattleStatus battleStatus)
+    public bool cast(Card card, EditedGridGenerator _gridGenerator, GameObject user, BattleStatus battleStatus, bool canTargetEnemy)
     {
         gridGenerator = _gridGenerator;
 
@@ -43,6 +43,14 @@ public class AllSkills : MonoBehaviour
                 {
                     if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
                     {
+                        if (!canTargetEnemy)
+                            if (tile1.GetComponent<GetObjectonTile>().gameObjectOnTile != null)
+                            {
+                                Debug.Log("There is an eneny");
+                                continue;
+                            }
+
+
                         parametersObjects.Add(user);
                         parametersObjects.Add(tile);
                         user.GetComponent<GetStats>().lastcastedSkill = card;
@@ -68,7 +76,7 @@ public class AllSkills : MonoBehaviour
         return true;
     }
 
-    public bool cast(Card card, List<GameObject> selectedTiles, List<GameObject> rangeTiles, GameObject user, BattleStatus battleStatus)
+    public bool cast(Card card, List<GameObject> selectedTiles, List<GameObject> rangeTiles, GameObject user, BattleStatus battleStatus, bool canTargetEnemy)
     {
         if (turnSystem.GetBattleStatus() != battleStatus)
         {
@@ -84,6 +92,13 @@ public class AllSkills : MonoBehaviour
                 {
                     if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
                     {
+                        if (!canTargetEnemy)
+                            if (tile1.GetComponent<GetObjectonTile>().gameObjectOnTile != null)
+                            {
+                                Debug.Log("There is an eneny");
+                                continue;
+                            }
+
                         parametersObjects.Add(user);
                         parametersObjects.Add(tile);
                         user.GetComponent<GetStats>().lastcastedSkill = card;
@@ -123,6 +138,7 @@ public class AllSkills : MonoBehaviour
 
     public void Move(List<GameObject> parameters)
     {
+
         turnSystem.NextTurn();
         parameters[0].transform.position = parameters[1].transform.position;
         parametersObjects.Clear();
