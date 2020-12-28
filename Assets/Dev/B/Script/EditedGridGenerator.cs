@@ -12,14 +12,11 @@ public enum TypesofValue
     absolute, relative
 }
 
-<<<<<<< HEAD
-=======
 public enum DestroyOption
 {
     all, selectedTiles, rangeTiles
 }
 
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
 public class EditedGridGenerator : MonoBehaviour
 {
     [Header("Required")]
@@ -126,12 +123,6 @@ public class EditedGridGenerator : MonoBehaviour
 
                 if (user.transform.localEulerAngles == Vector3.zero && typesofValue == TypesofValue.relative)
                 {
-<<<<<<< HEAD
-                    Debug.LogError("A");
-                    if (realtiveposition.z > 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
-                    else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
-                    else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, realtiveposition.x);
-=======
                     //Up
                     if (realtiveposition.z > 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
                     else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
@@ -139,7 +130,6 @@ public class EditedGridGenerator : MonoBehaviour
 
                     if (Mathf.Abs(realtiveposition.x) > Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
                     if (Mathf.Abs(realtiveposition.x) < Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
                 }
                 if (user.transform.localEulerAngles == new Vector3(0, 270, 0) && typesofValue == TypesofValue.relative)
                 {
@@ -149,12 +139,7 @@ public class EditedGridGenerator : MonoBehaviour
                 }
                 if (user.transform.localEulerAngles == new Vector3(0, 180, 0) && typesofValue == TypesofValue.relative)
                 {
-<<<<<<< HEAD
-                    Debug.LogError("C");
-                    if (realtiveposition.z > 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
-                    else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
-                    else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
-=======
+
                     //Back
                     if (realtiveposition.z > 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
                     else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
@@ -162,7 +147,6 @@ public class EditedGridGenerator : MonoBehaviour
 
                     if (Mathf.Abs(realtiveposition.x) > Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
                     if (Mathf.Abs(realtiveposition.x) < Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
                 }
 
                 var position = newRealtiveposition + user.transform.position;
@@ -178,15 +162,10 @@ public class EditedGridGenerator : MonoBehaviour
         return tilePrefabclone;
     }
 
-<<<<<<< HEAD
-    public void DestroyTiles()
-    {
-        foreach (GameObject tile in rangeTiles)
-=======
+
     public void DestroyTiles(DestroyOption destroyOption)
     {
         if (destroyOption != DestroyOption.selectedTiles)
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
         {
             foreach (GameObject tile in rangeTiles)
             {
@@ -202,10 +181,6 @@ public class EditedGridGenerator : MonoBehaviour
             }
             selectedTiles.Clear();
         }
-<<<<<<< HEAD
-        rangeTiles.Clear();
-=======
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
     }
 
     IEnumerator Wait(GameObject gameObject, bool _destroy, float _timeBeforeDestroy)

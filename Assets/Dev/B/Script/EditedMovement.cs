@@ -19,20 +19,9 @@ public class EditedMovement : MonoBehaviour
 
     private void Awake()
     {
-<<<<<<< HEAD
-        GameObject[] gameObjects = FindObjectsOfType<GameObject>();
-        foreach (GameObject gameObject in gameObjects)
-        {
-            if (gameObject.GetComponent<EditedGridGenerator>()) gridGenerator = gameObject.GetComponent<EditedGridGenerator>();
-            if (gameObject.GetComponent<AllSkills>()) allSkills = gameObject.GetComponent<AllSkills>();
-            if (gameObject.GetComponent<TurnSystem>()) turnSystem = gameObject.GetComponent<TurnSystem>();
-        }
-
-=======
         gridGenerator = FindObjectOfType<EditedGridGenerator>();
         allSkills = FindObjectOfType<AllSkills>();
         turnSystem = FindObjectOfType<TurnSystem>();
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
         getStats = GetComponent<GetStats>();
     }
 
@@ -44,11 +33,7 @@ public class EditedMovement : MonoBehaviour
         {
             if (!tracked)
             {
-<<<<<<< HEAD
                 gridGenerator.GenerateSkillTiles(getStats.character.moveRanges, this.gameObject, TypesofValue.relative);
-=======
-                gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, this.gameObject, TypesofValue.relative);
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
                 tracked = true;
             }
             checkRayCast();
@@ -81,13 +66,8 @@ public class EditedMovement : MonoBehaviour
 
     public void RefreshMoveTiles()
     {
-<<<<<<< HEAD
-        gridGenerator.DestroyTiles();
-        gridGenerator.GenerateSkillTiles(getStats.character.moveRanges, this.gameObject, TypesofValue.relative);
-=======
         gridGenerator.DestroyTiles(DestroyOption.rangeTiles);
         gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, this.gameObject, TypesofValue.relative);
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
         tracked = false;
     }
 
@@ -100,16 +80,10 @@ public class EditedMovement : MonoBehaviour
             {
                 List<GameObject> currentSelectedTiles = gridGenerator.selectedTiles; 
 
-<<<<<<< HEAD
-                if (allSkills.cast("Move", 1, currentSelectedTiles, gridGenerator.rangeTiles, this.gameObject, BattleStatus.PlayerMove))
-                {
-                    gridGenerator.DestroyTiles();
-=======
                 if (allSkills.cast(getStats.character.movementCard, currentSelectedTiles, gridGenerator.rangeTiles, this.gameObject, BattleStatus.PlayerMove))
                 {
                     getStats.lastcastedSkill = getStats.character.movementCard;
                     gridGenerator.DestroyTiles(DestroyOption.all);
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
                     tracked = false;
                 }
             }

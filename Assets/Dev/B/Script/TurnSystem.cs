@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-﻿using System.Collections;
-=======
 using System;
 using System.Collections;
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
 using UnityEngine;
 
 public enum BattleStatus
@@ -20,10 +16,8 @@ public class TurnSystem : MonoBehaviour
     [Header("Optional")]
     public float time = 1;
     private int index = 0;
-<<<<<<< HEAD
-=======
+
     private int battleStatusLastIndex = Enum.GetNames(typeof(BattleStatus)).Length - 1;
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
     
     private void Awake()
     {
@@ -37,11 +31,7 @@ public class TurnSystem : MonoBehaviour
 
     public void NextTurn()
     {
-<<<<<<< HEAD
-        if (index < 3) 
-=======
         if (index < battleStatusLastIndex) 
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
         {
             index++;
         }
@@ -58,11 +48,7 @@ public class TurnSystem : MonoBehaviour
     public void BackTurn()
     {
         if (index > 0) index--;
-<<<<<<< HEAD
-        else index = 3;
-=======
         else index = battleStatusLastIndex;
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
 
         status = (BattleStatus)index;
     }
