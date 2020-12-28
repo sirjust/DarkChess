@@ -50,7 +50,6 @@ public class AllSkills : MonoBehaviour
                                 continue;
                             }
 
-
                         parametersObjects.Add(user);
                         parametersObjects.Add(tile);
                         user.GetComponent<GetStats>().lastcastedSkill = card;
@@ -138,7 +137,6 @@ public class AllSkills : MonoBehaviour
 
     public void Move(List<GameObject> parameters)
     {
-
         turnSystem.NextTurn();
         parameters[0].transform.position = parameters[1].transform.position;
         parametersObjects.Clear();
