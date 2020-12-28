@@ -132,9 +132,8 @@ public class CardSystem : MonoBehaviour
             try
             {
                 if (place.GetComponentInChildren<DragDrop>().GetSelectionStatus() && place.GetComponentInChildren<DragDrop>().index != index)
-                {
                     place.GetComponentInChildren<DragDrop>().Deselect();
-                }
+                
             }
             catch (Exception)
             {

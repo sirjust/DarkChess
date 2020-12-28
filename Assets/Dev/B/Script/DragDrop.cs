@@ -20,10 +20,15 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private SkillInfo skillInfo;
     private AllSkills allSkills;
 
+<<<<<<< HEAD
+=======
+private GetBarInfo getBarInfo;
+>>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
     private EditedGridGenerator gridGenerator;
 
     private void Awake()
     {
+<<<<<<< HEAD
         GameObject[] gameObjects = FindObjectsOfType<GameObject>();
         foreach (GameObject gameObject in gameObjects)
         {
@@ -33,6 +38,13 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
             if (gameObject.GetComponent<SkillInfo>()) skillInfo = gameObject.GetComponent<SkillInfo>();
            // if (gameObject.GetComponent<TurnSystem>()) turnSystem = gameObject.GetComponent<TurnSystem>();
         }
+=======
+        getBarInfo = FindObjectOfType<GetBarInfo>();
+        gridGenerator = FindObjectOfType<EditedGridGenerator>();
+        cardSystem = FindObjectOfType<CardSystem>();
+        skillInfo = FindObjectOfType<SkillInfo>();
+        allSkills = FindObjectOfType<AllSkills>();
+>>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
         getCardInfo = GetComponent<GetCardInfo>();
     }
 
@@ -40,7 +52,11 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     {
         if (isSelected)
         {
+<<<<<<< HEAD
             gridGenerator.DestroyTiles();
+=======
+            gridGenerator.DestroyTiles(DestroyOption.rangeTiles);
+>>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
             gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, cardSystem.Player, TypesofValue.relative);
         }
     }
@@ -60,12 +76,21 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
+<<<<<<< HEAD
         skillInfo.SetCardID(getCardInfo.card);
         successful = allSkills.cast(getCardInfo.card, gridGenerator, cardSystem.Player, BattleStatus.PlayerCombat) && this.transform.position.y <= heightUI;
         if (successful)
         {
             SendMessageUpwards("PlayCard", index);
             gridGenerator.DestroyTiles();
+=======
+        successful = allSkills.cast(getCardInfo.card, gridGenerator, cardSystem.Player, BattleStatus.PlayerCombat) && this.transform.position.y <= heightUI;
+        if (successful)
+        {
+            skillInfo.SetCardID(getCardInfo.card);
+            getBarInfo.RefreshBar();
+            SendMessageUpwards("PlayCard", index);
+>>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
         }
         else
         {
@@ -90,14 +115,22 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void Deselect()
     {
         CardGameObject.transform.position -= selectedPos;
+<<<<<<< HEAD
         gridGenerator.DestroyTiles();
+=======
+        gridGenerator.DestroyTiles(DestroyOption.rangeTiles);
+>>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
         isSelected = false;
     }
 
     public void ResetCardPos()
     {
         this.transform.position = lastPos;
+<<<<<<< HEAD
         gridGenerator.DestroyTiles();
+=======
+        gridGenerator.DestroyTiles(DestroyOption.all);
+>>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
         isSelected = false;
     }
 
