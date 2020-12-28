@@ -50,7 +50,7 @@ public class AllSkills : MonoBehaviour
                                 continue;
                             }
 
-                        
+
                         parametersObjects.Add(user);
                         parametersObjects.Add(tile);
                         user.GetComponent<GetStats>().lastcastedSkill = card;
@@ -138,15 +138,9 @@ public class AllSkills : MonoBehaviour
 
     public void Move(List<GameObject> parameters)
     {
-        if (parameters[1].GetComponent<GetObjectonTile>().gameObjectOnTile == null)
-        {
-            turnSystem.NextTurn();
-            parameters[0].transform.position = parameters[1].transform.position;
-        }
-        else
-        {
-            Debug.Log("There is already an enemy");
-        }
+
+        turnSystem.NextTurn();
+        parameters[0].transform.position = parameters[1].transform.position;
         parametersObjects.Clear();
         gridGenerator.DestroyTiles(DestroyOption.all);
     }
