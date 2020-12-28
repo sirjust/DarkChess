@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class GetObjectonTile : MonoBehaviour
 {
-    [Header("Optional")]
-    public LayerMask layer;
-
     [Header("Assigned Automatically")]
     public GameObject gameObjectOnTile;
 
     private void Update()
     {
         RaycastHit hit;
-        if (Physics.Raycast(this.gameObject.transform.position, new Vector3(0,1,0), out hit, layer))
+        Debug.DrawRay(this.gameObject.transform.position, new Vector3(0, 1, 0));
+        if (Physics.Raycast(this.gameObject.transform.position, new Vector3(0,1,0), out hit, 100f))
         {
-            gameObjectOnTile = hit.collider.gameObject;
+                gameObjectOnTile = hit.collider.gameObject;
         }
     }
 }

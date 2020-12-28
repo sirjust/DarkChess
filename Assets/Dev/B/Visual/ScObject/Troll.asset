@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: Troll
   m_EditorClassIdentifier: 
   picture: {fileID: 21300000, guid: 1a6b1a590869f034c8a3b7e7f60b9db0, type: 3}
-  Model: {fileID: 2582797683533289831, guid: 2f6fb5d74051cc6458d5c67c68397ccd, type: 3}
+  Model: {fileID: 919132149155446097, guid: 30ddd6a3f528f2b4490a1f69a33cefcb, type: 3}
   charName: Troll
   health: 100
   currentHealth: 100
-  hearts: 5
-  currenthearts: 5
   mana: 10
   currentMana: 1
   strength: 0
@@ -26,6 +24,6 @@ MonoBehaviour:
   movement: 11
   critRate: 13
   dodgeRate: 0
-  actionAmount: 1
   healthRepresentation: 0
   realtion: 2
+  movementCard: {fileID: 0}

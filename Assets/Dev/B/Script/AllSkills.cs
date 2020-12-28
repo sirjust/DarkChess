@@ -3,90 +3,28 @@ using UnityEngine;
 
 public enum Skills
 {
-    Strike
+    Strike, Move
 }
 
 public class AllSkills : MonoBehaviour
 {
-    private TurnSystem turnSystem;
-    private EditedGridGenerator gridGenerator;
     private int targets = 0;
+    private TurnSystem turnSystem;
+    private DamageHandler damageHandler;
+    private EditedGridGenerator gridGenerator;
+    private GetBarInfo getBarInfo;
+
     private List<GameObject> parametersObjects = new List<GameObject>();
 
     private void Awake()
     {
-        GameObject[] gameObjects = FindObjectsOfType<GameObject>();
-        foreach (GameObject gameObject in gameObjects)
-        {
-            if (gameObject.GetComponent<TurnSystem>()) turnSystem = gameObject.GetComponent<TurnSystem>();
-        }
+        getBarInfo = FindObjectOfType<GetBarInfo>();
+        turnSystem = FindObjectOfType<TurnSystem>();
+        damageHandler = FindObjectOfType<DamageHandler>();
+        gridGenerator = FindObjectOfType<EditedGridGenerator>();
     }
 
     #region cast methods
-
-    public bool cast(string skillname, int maxAmountofTargets, EditedGridGenerator _gridGenerator, GameObject user, BattleStatus battleStatus)
-    {
-        gridGenerator = _gridGenerator;
-
-        if (turnSystem.GetBattleStatus() != battleStatus)
-        {
-            Debug.Log("Its not your turn");
-            return false;
-        }
-
-        foreach (GameObject tile in gridGenerator.selectedTiles)
-        {
-            foreach (GameObject tile1 in gridGenerator.rangeTiles)
-            {
-                if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
-                {
-                    parametersObjects.Add(user);
-                    parametersObjects.Add(tile);
-                    this.SendMessage(skillname, parametersObjects);
-                    targets++;
-
-                    if (targets >= maxAmountofTargets) return true;
-                }
-            }
-        }
-        if (targets == 0)
-        {
-            Debug.LogError("Select other tiles");
-            return false;
-        }
-        return false;
-    }
-
-    public bool cast(string name, int maxAmountofTargets, List<GameObject> selectedTiles, List<GameObject> rangeTiles, GameObject user, BattleStatus battleStatus)
-    {
-        if (turnSystem.GetBattleStatus() != battleStatus)
-        {
-            Debug.Log("Its not your turn");
-            return false;
-        }
-
-        foreach (GameObject tile in selectedTiles)
-        {
-            foreach (GameObject tile1 in rangeTiles)
-            {
-                if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
-                {
-                    parametersObjects.Add(user);
-                    parametersObjects.Add(tile);
-                    this.SendMessage(name, parametersObjects);
-                    targets++;
-
-                    if (targets >= maxAmountofTargets) return true;
-                }
-            }
-        }
-        if (targets == 0)
-        {
-            Debug.LogError("Select other tiles");
-            return false;
-        }
-        return true;
-    }
 
     public bool cast(Card card, EditedGridGenerator _gridGenerator, GameObject user, BattleStatus battleStatus)
     {
@@ -97,26 +35,35 @@ public class AllSkills : MonoBehaviour
             Debug.Log("Its not your turn");
             return false;
         }
-
-        foreach (GameObject tile in gridGenerator.selectedTiles)
+        if (user.GetComponent<GetStats>().character.currentHealth >= card.manaCost)
         {
-            foreach (GameObject tile1 in gridGenerator.rangeTiles)
+            foreach (GameObject tile in gridGenerator.selectedTiles)
             {
-                if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
+                foreach (GameObject tile1 in gridGenerator.rangeTiles)
                 {
-                    parametersObjects.Add(user);
-                    parametersObjects.Add(tile);
-                    this.SendMessage(card.skill.ToString(), parametersObjects);
-                    targets++;
+                    if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
+                    {
+                        parametersObjects.Add(user);
+                        parametersObjects.Add(tile);
+                        user.GetComponent<GetStats>().lastcastedSkill = card;
+                        this.SendMessage(card.skill.ToString(), parametersObjects);
+                        targets++;
 
-                    if (targets >= card.maxAmountOfTargets) return true;
+                        if (targets >= card.maxAmountOfTargets)
+                            return true;
+                    }
                 }
             }
+            if (targets == 0)
+            {
+                Debug.LogError("Select other tiles");
+                if (turnSystem.GetBattleStatus() != BattleStatus.PlayerMove) gridGenerator.DestroyTiles(DestroyOption.all);
+                return false;
+            }
         }
-        if (targets == 0)
+        else
         {
-            Debug.LogError("Select other tiles");
-            return false;
+            Debug.Log("You dont have enough mana for this ability");
         }
         return true;
     }
@@ -129,25 +76,35 @@ public class AllSkills : MonoBehaviour
             return false;
         }
 
-        foreach (GameObject tile in selectedTiles)
+        if (user.GetComponent<GetStats>().character.currentHealth >= card.manaCost)
         {
-            foreach (GameObject tile1 in rangeTiles)
+            foreach (GameObject tile in selectedTiles)
             {
-                if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
+                foreach (GameObject tile1 in rangeTiles)
                 {
-                    parametersObjects.Add(user);
-                    parametersObjects.Add(tile);
-                    this.SendMessage(card.skill.ToString(), parametersObjects);
-                    targets++;
+                    if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
+                    {
+                        parametersObjects.Add(user);
+                        parametersObjects.Add(tile);
+                        user.GetComponent<GetStats>().lastcastedSkill = card;
+                        this.SendMessage(card.skill.ToString(), parametersObjects);
+                        targets++;
 
-                    if (targets >= card.maxAmountOfTargets) return true;
+                        if (targets >= card.maxAmountOfTargets)
+                            return true;
+                    }
                 }
             }
-        }
-        if (targets == 0)
-        {
-            Debug.LogError("Select other tiles");
-            return false;
+            if (targets == 0)
+            {
+                Debug.Log("Select valid targets");
+                if (turnSystem.GetBattleStatus() != BattleStatus.PlayerMove) gridGenerator.DestroyTiles(DestroyOption.all);
+                return false;
+            }
+            else
+            {
+                Debug.Log("You dont have enough mana for this ability");
+            }
         }
         return true;
     }
@@ -157,15 +114,18 @@ public class AllSkills : MonoBehaviour
     public void Strike(List<GameObject> parameters)
     {
         turnSystem.NextTurn();
-        Debug.Log($"{parameters[0].GetComponent<GetStats>().character.charName} stroke at {parameters[1].GetComponent<GetObjectonTile>().gameObjectOnTile.name}");
+        damageHandler.DealDamage(parameters[0].GetComponent<GetStats>().lastcastedSkill.damage, parameters[1].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character);
+        parameters[0].GetComponent<GetStats>().character.currentMana -= parameters[0].GetComponent<GetStats>().lastcastedSkill.manaCost;
+        getBarInfo.RefreshBar();
         parametersObjects.Clear();
+        gridGenerator.DestroyTiles(DestroyOption.all);
     }
 
     public void Move(List<GameObject> parameters)
     {
         turnSystem.NextTurn();
         parameters[0].transform.position = parameters[1].transform.position;
-        Debug.Log($"move to P({parameters[1].transform.position.x} | {parameters[1].transform.position.y} | {parameters[1].transform.position.z})");
         parametersObjects.Clear();
+        gridGenerator.DestroyTiles(DestroyOption.all);
     }
 }

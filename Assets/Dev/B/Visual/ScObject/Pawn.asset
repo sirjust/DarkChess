@@ -16,12 +16,10 @@ MonoBehaviour:
   Model: {fileID: 5403002427580834744, guid: 8361691f425fb7f44a02419bf45f5154, type: 3}
   charName: Pawn
   health: 100
-  currentHealth: 50
-  hearts: 8
-  currenthearts: 8
-  mana: 40
-  currentMana: 0
-  strength: 0
+  currentHealth: 100
+  mana: 50
+  currentMana: 50
+  strength: 50
   defense: 12
   movement: 331
   critRate: 0
@@ -30,3 +28,4 @@ MonoBehaviour:
   - {x: 2, y: 0, z: 0}
   healthRepresentation: 1
   realtion: 0
+  movementCard: {fileID: 11400000, guid: 66952b6fa6dd5c643ac75f68fd0077d2, type: 2}
