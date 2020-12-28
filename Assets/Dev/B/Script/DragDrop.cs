@@ -37,7 +37,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         if (isSelected)
         {
             gridGenerator.DestroyTiles(DestroyOption.rangeTiles);
-            gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, getCardInfo.card.canTargetObjects, cardSystem.Player, TypesofValue.relative);
+            gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, getCardInfo.card.targetType, cardSystem.Player, TypesofValue.relative);
         }
     }
 
@@ -79,7 +79,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void Select()
     {
         CardGameObject.transform.position += selectedPos;
-        gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, getCardInfo.card.canTargetObjects, cardSystem.Player, TypesofValue.relative);
+        gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, getCardInfo.card.targetType, cardSystem.Player, TypesofValue.relative);
         isSelected = true;
     }
 

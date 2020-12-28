@@ -113,7 +113,7 @@ public class EditedGridGenerator : MonoBehaviour
         }
     }
 
-    public void GenerateSkillTiles(List<Vector3> relativepositions, bool canTargetObjects, GameObject user, TypesofValue typesofValue)
+    public void GenerateSkillTiles(List<Vector3> relativepositions, TargetType targetType, GameObject user, TypesofValue typesofValue)
     {
         if (user.transform.position.x % 0.5f == 0 && user.transform.position.z % 0.5f == 0)
         {
@@ -135,7 +135,6 @@ public class EditedGridGenerator : MonoBehaviour
                 {
                     //Left
                     newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, -realtiveposition.z);
-                    Debug.LogError("B");
                 }
                 if (user.transform.localEulerAngles == new Vector3(0, 180, 0) && typesofValue == TypesofValue.relative)
                 {
@@ -154,14 +153,50 @@ public class EditedGridGenerator : MonoBehaviour
                 tile.transform.SetParent(this.gameObject.transform);
                 rangeTiles.Add(tile);
 
+
                 for (int i = 0; i < rangeTiles.Count; i++)
                 {
-                    if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
+                    if (targetType == TargetType.tiles)
                     {
-                        Destroy(tile);
-                        rangeTiles.Remove(rangeTiles[i]);
+                        if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
+                        {
+                            Destroy(tile);
+                            rangeTiles.Remove(rangeTiles[i]);
+                        }
+                    }
+                    else if (targetType == TargetType.enemies)
+                    {
+                        if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null) {
+                            if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.realtion != RealtionType.Enemy)
+                            {
+                                Destroy(tile);
+                                rangeTiles.Remove(rangeTiles[i]);
+                            }
+                        }
+                        else
+                        {
+                            Destroy(tile);
+                            rangeTiles.Remove(rangeTiles[i]);
+                        }
+                    }
+                    else if (targetType == TargetType.alias)
+                    {
+                        if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
+                        {
+                            if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.realtion != RealtionType.Friendly)
+                            {
+                                Destroy(tile);
+                                rangeTiles.Remove(rangeTiles[i]);
+                            }
+                            else
+                            {
+                                Destroy(tile);
+                                rangeTiles.Remove(rangeTiles[i]);
+                            }
+                        }
                     }
                 }
+
             }
         }
     }

@@ -6,6 +6,11 @@ public enum Skills
     Strike, Move
 }
 
+public enum TargetType
+{
+    alias, enemies, tiles
+}
+
 public class AllSkills : MonoBehaviour
 {
     private int targets = 0;
@@ -35,7 +40,7 @@ public class AllSkills : MonoBehaviour
             Debug.Log("Its not your turn");
             return false;
         }
-        if (user.GetComponent<GetStats>().character.currentHealth >= card.manaCost)
+        if (user.GetComponent<GetStats>().character.currentMana >= card.manaCost)
         {
             foreach (GameObject tile in gridGenerator.selectedTiles)
             {
@@ -64,6 +69,7 @@ public class AllSkills : MonoBehaviour
         else
         {
             Debug.Log("You dont have enough mana for this ability");
+            return false;
         }
         return true;
     }
@@ -76,20 +82,23 @@ public class AllSkills : MonoBehaviour
             return false;
         }
 
-        if (user.GetComponent<GetStats>().character.currentHealth >= card.manaCost)
+        if (user.GetComponent<GetStats>().character.currentMana >= card.manaCost)
         {
             foreach (GameObject tile in selectedTiles)
             {
                 foreach (GameObject tile1 in rangeTiles)
                 {
-                    parametersObjects.Add(user);
-                    parametersObjects.Add(tile);
-                    user.GetComponent<GetStats>().lastcastedSkill = card;
-                    this.SendMessage(card.skill.ToString(), parametersObjects);
-                    targets++;
+                    if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
+                    {
+                        parametersObjects.Add(user);
+                        parametersObjects.Add(tile);
+                        user.GetComponent<GetStats>().lastcastedSkill = card;
+                        this.SendMessage(card.skill.ToString(), parametersObjects);
+                        targets++;
 
-                    if (targets >= card.maxAmountOfTargets)
-                        return true;
+                        if (targets >= card.maxAmountOfTargets)
+                            return true;
+                    }
                 }
             }
             if (targets == 0)
@@ -98,10 +107,11 @@ public class AllSkills : MonoBehaviour
                 if (turnSystem.GetBattleStatus() != BattleStatus.PlayerMove) gridGenerator.DestroyTiles(DestroyOption.all);
                 return false;
             }
-            else
-            {
-                Debug.Log("You dont have enough mana for this ability");
-            }
+        }
+        else
+        {
+            Debug.Log("You dont have enough mana for this ability");
+            return false;
         }
         return true;
     }
@@ -120,7 +130,6 @@ public class AllSkills : MonoBehaviour
 
     public void Move(List<GameObject> parameters)
     {
-
         turnSystem.NextTurn();
         parameters[0].transform.position = parameters[1].transform.position;
         parametersObjects.Clear();
