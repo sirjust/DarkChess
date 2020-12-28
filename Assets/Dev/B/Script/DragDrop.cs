@@ -37,7 +37,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         if (isSelected)
         {
             gridGenerator.DestroyTiles(DestroyOption.rangeTiles);
-            gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, cardSystem.Player, TypesofValue.relative);
+            gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, getCardInfo.card.canTargetObjects, cardSystem.Player, TypesofValue.relative);
         }
     }
 
@@ -56,7 +56,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        successful = allSkills.cast(getCardInfo.card, gridGenerator, cardSystem.Player, BattleStatus.PlayerCombat, true) && this.transform.position.y <= heightUI;
+        successful = allSkills.cast(getCardInfo.card, gridGenerator, cardSystem.Player, BattleStatus.PlayerCombat) && this.transform.position.y <= heightUI;
         if (successful)
         {
             skillInfo.SetCardID(getCardInfo.card);
@@ -79,7 +79,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void Select()
     {
         CardGameObject.transform.position += selectedPos;
-        gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, cardSystem.Player, TypesofValue.relative);
+        gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, getCardInfo.card.canTargetObjects, cardSystem.Player, TypesofValue.relative);
         isSelected = true;
     }
 
