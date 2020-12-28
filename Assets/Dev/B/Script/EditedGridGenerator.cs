@@ -143,11 +143,7 @@ public class EditedGridGenerator : MonoBehaviour
                     if (realtiveposition.z > 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
                     else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
                     else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
-<<<<<<< HEAD
 
-=======
-                    
->>>>>>> a6029b8a993a568eb83213dae96186572f343795
                     if (Mathf.Abs(realtiveposition.x) > Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
                     else if (Mathf.Abs(realtiveposition.x) < Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
 
