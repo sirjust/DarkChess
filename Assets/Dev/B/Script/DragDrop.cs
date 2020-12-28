@@ -56,7 +56,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        successful = allSkills.cast(getCardInfo.card, gridGenerator, cardSystem.Player, BattleStatus.PlayerCombat, true) && this.transform.position.y >= heightUI;
+        successful = allSkills.cast(getCardInfo.card, gridGenerator, cardSystem.Player, BattleStatus.PlayerCombat) && this.transform.position.y >= heightUI;
         if (successful)
         {
             skillInfo.SetCardID(getCardInfo.card);
