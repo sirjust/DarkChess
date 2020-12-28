@@ -92,7 +92,7 @@ public class EditedGridGenerator : MonoBehaviour
                 var clone = Instantiate(highlight, objectPosition, Quaternion.Euler(Vector3.right * 90));
                 clone.transform.SetParent(this.gameObject.transform);
                 selectedTiles.Add(clone);
-                if (!Input.GetKey(selectionkey)) StartCoroutine(Wait(clone, destroy, timeBeforeDestroy));
+                if (!Input.GetKey(selectionkey)) StartCoroutine(WaitUntilDestroy(clone, destroy, timeBeforeDestroy));
             }
         }
     }
@@ -108,12 +108,12 @@ public class EditedGridGenerator : MonoBehaviour
                 var clone = Instantiate(highlight, objectPosition, Quaternion.Euler(Vector3.right * 90));
                 clone.transform.SetParent(this.gameObject.transform);
                 selectedTiles.Add(clone);
-                StartCoroutine(Wait(clone, destroy, timeBeforeDestroy));
+                StartCoroutine(WaitUntilDestroy(clone, destroy, timeBeforeDestroy));
             }
         }
     }
 
-    public void GenerateSkillTiles(List<Vector3> relativepositions, GameObject user, TypesofValue typesofValue)
+    public void GenerateSkillTiles(List<Vector3> relativepositions, bool canTargetObjects, GameObject user, TypesofValue typesofValue)
     {
         if (user.transform.position.x % 0.5f == 0 && user.transform.position.z % 0.5f == 0)
         {
@@ -135,23 +135,33 @@ public class EditedGridGenerator : MonoBehaviour
                 {
                     //Left
                     newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, -realtiveposition.z);
+                    Debug.LogError("B");
                 }
                 if (user.transform.localEulerAngles == new Vector3(0, 180, 0) && typesofValue == TypesofValue.relative)
                 {
-
                     //Back
                     if (realtiveposition.z > 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
                     else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
                     else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
-                    
-                   if (Mathf.Abs(realtiveposition.x) > Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
+
+                    if (Mathf.Abs(realtiveposition.x) > Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
                     else if (Mathf.Abs(realtiveposition.x) < Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
+
                 }
 
                 var position = newRealtiveposition + user.transform.position;
                 var tile = Instantiate(highlight, new Vector3(position.x, gridstartY + 0.01f, position.z), Quaternion.Euler(Vector3.right * 90));
                 tile.transform.SetParent(this.gameObject.transform);
                 rangeTiles.Add(tile);
+
+                for (int i = 0; i < rangeTiles.Count; i++)
+                {
+                    if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
+                    {
+                        Destroy(tile);
+                        rangeTiles.Remove(rangeTiles[i]);
+                    }
+                }
             }
         }
     }
@@ -160,7 +170,6 @@ public class EditedGridGenerator : MonoBehaviour
     {
         return tilePrefabclone;
     }
-
 
     public void DestroyTiles(DestroyOption destroyOption)
     {
@@ -182,7 +191,7 @@ public class EditedGridGenerator : MonoBehaviour
         }
     }
 
-    IEnumerator Wait(GameObject gameObject, bool _destroy, float _timeBeforeDestroy)
+    IEnumerator WaitUntilDestroy(GameObject gameObject, bool _destroy, float _timeBeforeDestroy)
     {
         yield return new WaitForSecondsRealtime(_timeBeforeDestroy);
         if (_destroy)

@@ -24,29 +24,6 @@ __Inspired by games such as:__
 
 ## Table of Contents
 
-<<<<<<< HEAD
-- [**Dark Chess**](#dark-chess)
-	- [Table of Contents](#table-of-contents)
-	- [**Authors**](#authors)
-	- [**Technologies Used**](#technologies-used)
-	- [**Developer Notes**](#developer-notes)
-		- [**Git Notes**](#git-notes)
-	- [**Mechanics**](#mechanics)
-		- [**Title Screen**](#title-screen)
-		- [**Highlight Mechanic**](#highlight-mechanic)
-			- [**How To Use**](#how-to-use(Hightlight-Mechanic))
-			- [**How It Works**](#how-it-works(Hightlight-Mechanic))
-	- [**Battle Menu**](#Battle-Menu)
-		- [**CharInfo**](#charInfo)
-		- [**SkillInfo**](#skillInfo)
-		- [**Health**](#health)
-		- [**CardHolding**](#cardHolding)
-		- [**ObjectDetection**](#objectDetection)
-		- [**Important Notes**](#important-notes)
-	- [**Movement System**](#Movement-System)
-		- [**How to use**](#How-to-use(Movement-System))
-		- [**How it works**](#How-it-works(Movement-System))
-=======
 - [Table of Contents](#table-of-contents)
 - [**Authors**](#authors)
 - [**Technologies Used**](#technologies-used)
@@ -64,7 +41,6 @@ __Inspired by games such as:__
     - [**Important Notes**](#important-notes)
   - [**Turn System**](#turn-system)
   - [**Movement System**](#Movement-System)
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
 
 ## **Authors**
 
@@ -123,16 +99,6 @@ Once you're done working on an issue submit a pull request, and link it to that 
 
 ### **Highlight Mechanic**
 
-<<<<<<< HEAD
-#### **How to use(Hightlight Mechanic)**
-
-1. Attach this script to the game object you want to highlight.
-
-2. Create a highlight prefab and assign it to the game object like so. Keep clone empty.
-
-![prefab image](https://i.ibb.co/fY3Rbrt/Edited-Grid-Generator.png)
-
-=======
 #### **How to use(Highlight Mechanic)**
 
 1. Attach this script to the `GameObject` you want to highlight.
@@ -141,7 +107,6 @@ Once you're done working on an issue submit a pull request, and link it to that 
 
 ![prefab image](https://i.ibb.co/fY3Rbrt/Edited-Grid-Generator.png)
 
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
 - `Main Cam`: The camera, whereby the player sees the scene
 - `Player`: The y-component if the position of this object will be used when generating the grid and instantiate the  `highlight` object
 - `Take Object Transform`: An option to take the position of the game object, which has the script, as the start position
@@ -151,18 +116,11 @@ Once you're done working on an issue submit a pull request, and link it to that 
 - `Layer`: Every object with this layer will be ignored
 - `SelectionKey`: The button that must be pressed so that the selected tiles are not destroyed
 - `Clear SelectionKey`: The button that muss be pressed to delete all selected tiles
-<<<<<<< HEAD
-
-Note: The y-value of the `Gridstart` variable will be ignored, because we using the y-value of the `Player`s position, if the `take object transform` option is false
-
-Note: In sone function, you has to use a argument of the type `TypesofValue`. This is a enum set, which contains two values:
-=======
 
 Note: The y-value of the `Gridstart` variable will be ignored, because we using the y-value of the `Player`s position, if the `take object transform` option is false
 
 Note: In sone function, you has to use a argument of the type `TypesofValue`. This is a enum set, which contains two values:
 
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
 - `relative`: the instantiated `highlight` objects adapt to the rotation of the player
 - `absolute`: the instantiated `highlight` object wont adapt to the rotation of the player
 
@@ -254,11 +212,7 @@ Note: There is a difference between [cards](#Card) and [card objects](#card-obje
 
 ##### **How it works**
 
-<<<<<<< HEAD
-Once the scene starts, the `CardSystem.cs` instatiates empty objects. These empty objects (`place`) are saved in a list. Afterwards the script spawn a specific amount of [card object](#card-object) on the position of the empty objects in the list. In addition all card objects will receive a index which represent the index of the `place` which the [cards](#Card) are children of. These `place` object and the [cards](#Card) will be saved in a seperate list. 
-=======
 Once the scene starts, the `CardSystem.cs` instatiates empty objects. These empty objects (`place`) are saved in a list. Afterwards the script spawn a specific amount of [card object](#card-object) on the position of the empty objects in the list. In addition all card objects will receive a index which represent the index of the `place` which the [cards](#Card) are children of. These `place` object and the [cards](#Card) will be saved in a seperate list.
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
 
 Note: All possible [cards](#Card) which can be played/drawed are saved in the [scriptableObject](#ScriptableObject) of the player.
 
@@ -315,7 +269,7 @@ This process goes through each card until all have been moved
 
 In order to let the `cast()` method returns the bool value `true`, the player has to select the right tiles and there has to be at least one object which can be [detected](#objectDetection) by a tile e.g a other [character object](#character-object).
 
-After the player [selected](#select-a-tile) some tiles and [played](#Play-a-Card) a [card](#Card). A method called `cast()` triggers. This method compares the positions of the `ranges` list with every positions of the [selected](#select-a-tile) tile list. Now if the compared tiles has the same position, then method of the skill will be triggered and the `cast()` method returns the bool value `true`. When there is no matches in the comparison, then the method will return the bool value `false`.
+After the player [selected](#select-a-tile) some tiles and [played](#Play-a-Card) a [card](#Card). A method called `cast()` triggers. This method checks the `currentMana` with `manaCost` of the [card](#Card) first and if the user has enought Mana the method going on and compares the positions of the `ranges` list with every positions of the [selected](#select-a-tile) tile list. Now if the compared tiles has the same position, then method of the skill will be triggered and the `cast()` method returns the bool value `true`. When there is no matches in the comparison, then the method will return the bool value `false`.
 
 ##### **Draw a Card**
 
@@ -329,11 +283,7 @@ Note: "Free" means that the object hasnt any [card object](#card-object) as a ch
 
 ##### **How it works**
 
-<<<<<<< HEAD
-The range of every [card](#Card) are saved in the [scriptableObject](#ScriptableObject) in a list. If the player only clicks on the [card object](#card-object) and does not move, it will be selected. This selected [card object](#card-object) then will trigger a method called ` GenerateTiles()`. This method read the saved relative positions in the list of the [cards](#Card), add them to the current position of the user and adapt these based on the current rotation of the user. After the calculations the method instantiates the `highlight` object to the calculated position and save them into another list called `rangeTiles`. If the player deselect a [card](#Card) the method called `DestroyTiles()` will be triggered, which clears all lists and destroy all `highlight` objects.
-=======
 The range of every [card](#Card) are saved in the [scriptableObject](#ScriptableObject) in a list. If the player only clicks on the [card object](#card-object) and does not move, it will be selected. This selected [card object](#card-object) then will trigger a method called `GenerateTiles()`. This method read the saved relative positions in the list of the [cards](#Card), add them to the current position of the user and adapt these based on the current rotation of the user. After the calculations the method instantiates the `highlight` object to the calculated position and save them into another list called `rangeTiles`. If the player deselect a [card](#Card) the method called `DestroyTiles()` will be triggered, which clears all lists and destroy all `highlight` objects.
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
 
 #### **objectDetection**
 
@@ -362,7 +312,7 @@ In our case we using this script for the `EditedHighlight Quad` object and the `
 
 ### Card
 
-![CardScObject Image](https://i.ibb.co/3rQ7j1N/Strike-Sc-Object.png)
+![CardScObject Image](https://i.ibb.co/80Y93XQ/Strike-Sc-Object.png)
 
 - `Skill Name`: The name which will displayed on the [skillInfo](#skillInfo) display(the name doesnt have to be the same as the name of the object)
 - `Mana Cost`: The amount of mana which will be consumed if the card Object is played
@@ -371,6 +321,7 @@ In our case we using this script for the `EditedHighlight Quad` object and the `
 - `Template`: The linked [card object](#card-object)
 - `Skill`: The skill which will triggered if the [card object](#card-object) is played
 - `Max Amount Of Targets`: The highest number of targets(If the player select more targets, only the first selected will be count)
+- `canTargetObjects`: A bool, which decides whether the user is able to select objects e.g enemies as targets or not 
 - `Ranges`: An list of the relative position of the user e.g (1 | 0 | -1) means the tile before the user on the left side  
 - `Skill description`: A short description, which will be displayed on the [skillInfo](#skillInfo) display
 
@@ -404,22 +355,12 @@ In our case we using this script for the `EditedHighlight Quad` object and the `
 - `Character`: The linked [scriptableObject](#ScriptableObject)
 - `Have Body`: If the Prefab has a Body like in this example then make a check mark. Otherwise the `GetStats.cs` create the prefab, which is saved in the variable `model`
 - `Normal Skills`: Collection of drawable [cards](#Card)
-<<<<<<< HEAD
-- `Unique Skills`: Collection of unique drawable [cards](#Card), which can be only one time at the same time on the hand(has to be in the `Normal Skills` list to) 
-=======
 - `Unique Skills`: Collection of unique drawable [cards](#Card), which can be only one time at the same time on the hand(has to be in the `Normal Skills` list to)
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
 
 Note: Every [character object](#character-object) has to have a collider in order to be [detected](#objectDetection)
 
 ##### Player
 
-<<<<<<< HEAD
-##### Other notes about the scripts
-- Be sure that you have one game Object in the scene which the `allSkills.cs`, `EditedScriptgenerator.cs`, `TurnSystem.cs` script is attached to
-- The name of the method and the name of the enums has to be the same e.g `strike()` and `strike`
-
-=======
 - This variable has to contain a [scriptableObject](#ScriptableObject), which was created with the `character.cs`
 
 ##### Other notes about the scripts
@@ -440,7 +381,6 @@ The `TurnSystem.cs` script is referenced by the `AllSkills.cs` script. When the 
 
 The turns are cycled through step by step. Since we don't currently have enemy functionality, we log the `Enemy Move` and `Enemy Combat` steps in the console. When we get to the end of the last step in the enum, `NextTurn()` brings us back to the beginning.
 
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
 ### **Movement System**
 
 #### **How To Use(Movement-System)**
@@ -455,15 +395,8 @@ The turns are cycled through step by step. Since we don't currently have enemy f
 
 #### **How it works(Movement System)**
 
-<<<<<<< HEAD
-The movement system interacts with the `TurnSystem.cs` and as soon as the `status` variable is equal to the value `PlayerMove`, almost the same thing happens as when [selecting a card](#Select-a-Card). The only difference is, that we use the relative position, which saved in the [character](#Character), instead the position, which are saved in the [cards](#Card). we using this movement system for the enenmies too, but we have to adapt some point. The enemies will use the same method to move, but the way how to trigger this method will be different. 
-
-##### **Player rotation(Movement Systm)**
-To adapt the movement and the instantiated `highlight` objects to the current rotation of the [player](#Player), the `Update()` method triggers a method called `Rotate()` every frame. This method checks wheather the players press specific button, in order to rotate the [character object](#character-object) and is this the case, the `DestroyTiles()` in the `EditedGridGenerator.cs` will be triggered and clears all list and destroys all `hightlight` object. Afterwards the [character object](#character-object) will be rotate based on the pressed button and the `GenerateTiles()` will be method triggered again.  
-=======
 The movement system interacts with the `TurnSystem.cs` and as soon as the `status` variable is equal to the value `PlayerMove`, almost the same thing happens as when [selecting a card](#Select-a-Card). The only difference is, that we use the relative position, which saved in the [character](#Character), instead the position, which are saved in the [cards](#Card). we using this movement system for the enenmies too, but we have to adapt some point. The enemies will use the same method to move, but the way how to trigger this method will be different.
 
 ##### **Player rotation(Movement Systm)**
->>>>>>> b509ddc8d8322b376f23c874791c023ceeeae1ef
 
 To adapt the movement and the instantiated `highlight` objects to the current rotation of the [player](#Player), the `Update()` method triggers a method called `Rotate()` every frame. This method checks wheather the players press specific button, in order to rotate the [character object](#character-object) and is this the case, the `DestroyTiles()` in the `EditedGridGenerator.cs` will be triggered and clears all list and destroys all `hightlight` object. Afterwards the [character object](#character-object) will be rotate based on the pressed button and the `GenerateTiles()` will be method triggered again.  

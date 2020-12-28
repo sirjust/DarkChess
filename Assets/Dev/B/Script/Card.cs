@@ -11,6 +11,7 @@ public class Card : ScriptableObject
     public GameObject template;
     public Skills skill;
     public int maxAmountOfTargets;
+    public bool canTargetObjects;
     public List<Vector3> ranges = new List<Vector3>();
     [TextArea(1, 50)]
     public string skillDesciption;

@@ -20,6 +20,7 @@ MonoBehaviour:
     type: 3}
   skill: 0
   maxAmountOfTargets: 1
+  canTargetObjects: 1
   ranges:
   - {x: 1, y: 0, z: -1}
   - {x: 1, y: 0, z: 1}
