@@ -43,6 +43,16 @@ public class AllSkills : MonoBehaviour
                 {
                     if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
                     {
+<<<<<<< HEAD
+=======
+                        if (!canTargetEnemy)
+                            if (tile1.GetComponent<GetObjectonTile>().gameObjectOnTile != null)
+                            {
+                                Debug.Log("There is an eneny");
+                                continue;
+                            }
+
+>>>>>>> a6029b8a993a568eb83213dae96186572f343795
                         parametersObjects.Add(user);
                         parametersObjects.Add(tile);
                         user.GetComponent<GetStats>().lastcastedSkill = card;
