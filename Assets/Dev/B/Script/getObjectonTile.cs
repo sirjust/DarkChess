@@ -13,7 +13,7 @@ public class GetObjectonTile : MonoBehaviour
         Debug.DrawRay(this.gameObject.transform.position, new Vector3(0, 1, 0));
         if (Physics.Raycast(this.gameObject.transform.position, new Vector3(0, 1, 0), out hit, 100f))
         {
-            gameObjectOnTile = hit.collider.gameObject;
+                gameObjectOnTile = hit.collider.gameObject;
         }
         else
         {

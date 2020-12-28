@@ -20,7 +20,7 @@ public class AllSkills : MonoBehaviour
     private GetBarInfo getBarInfo;
 
     private List<GameObject> parametersObjects = new List<GameObject>();
-
+    
     private void Awake()
     {
         getBarInfo = FindObjectOfType<GetBarInfo>();
@@ -30,7 +30,6 @@ public class AllSkills : MonoBehaviour
     }
 
     #region cast methods
-
     public bool cast(Card card, EditedGridGenerator _gridGenerator, GameObject user, BattleStatus battleStatus)
     {
         gridGenerator = _gridGenerator;
@@ -115,7 +114,6 @@ public class AllSkills : MonoBehaviour
         }
         return true;
     }
-
     #endregion
 
     public void Strike(List<GameObject> parameters)

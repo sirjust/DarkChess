@@ -46,6 +46,7 @@ public class EditedMovement : MonoBehaviour
         {
             this.transform.localEulerAngles = left;
             if (turnSystem.GetBattleStatus() == BattleStatus.PlayerMove) RefreshMoveTiles();
+
         }
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {

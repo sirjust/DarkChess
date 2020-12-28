@@ -16,7 +16,6 @@ public class TurnSystem : MonoBehaviour
     [Header("Optional")]
     public float time = 1;
     private int index = 0;
-
     private int battleStatusLastIndex = Enum.GetNames(typeof(BattleStatus)).Length - 1;
     
     private void Awake()

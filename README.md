@@ -321,7 +321,7 @@ In our case we using this script for the `EditedHighlight Quad` object and the `
 - `Template`: The linked [card object](#card-object)
 - `Skill`: The skill which will triggered if the [card object](#card-object) is played
 - `Max Amount Of Targets`: The highest number of targets(If the player select more targets, only the first selected will be count)
-- `canTargetObjects`: A bool, which decides whether the user is able to select objects e.g enemies as targets or not 
+- `canTargetObjects`: A bool, which determines whether the user is able to select objects e.g enemies as targets or not 
 - `Ranges`: An list of the relative position of the user e.g (1 | 0 | -1) means the tile before the user on the left side  
 - `Skill description`: A short description, which will be displayed on the [skillInfo](#skillInfo) display
 

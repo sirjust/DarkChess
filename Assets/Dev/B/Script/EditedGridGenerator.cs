@@ -135,6 +135,7 @@ public class EditedGridGenerator : MonoBehaviour
                 {
                     //Left
                     newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, -realtiveposition.z);
+                    Debug.LogError("B");
                 }
                 if (user.transform.localEulerAngles == new Vector3(0, 180, 0) && typesofValue == TypesofValue.relative)
                 {
@@ -145,14 +146,12 @@ public class EditedGridGenerator : MonoBehaviour
 
                     if (Mathf.Abs(realtiveposition.x) > Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
                     else if (Mathf.Abs(realtiveposition.x) < Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
-
                 }
 
                 var position = newRealtiveposition + user.transform.position;
                 var tile = Instantiate(highlight, new Vector3(position.x, gridstartY + 0.01f, position.z), Quaternion.Euler(Vector3.right * 90));
                 tile.transform.SetParent(this.gameObject.transform);
                 rangeTiles.Add(tile);
-
 
                 for (int i = 0; i < rangeTiles.Count; i++)
                 {
@@ -196,7 +195,6 @@ public class EditedGridGenerator : MonoBehaviour
                         }
                     }
                 }
-
             }
         }
     }
