@@ -19,11 +19,13 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private CardSystem cardSystem;
     private SkillInfo skillInfo;
     private AllSkills allSkills;
+    private TurnSystem turnSystem;
     private GetBarInfo getBarInfo;
     private EditedGridGenerator gridGenerator;
 
     private void Awake()
     {
+        turnSystem = FindObjectOfType<TurnSystem>();
         getBarInfo = FindObjectOfType<GetBarInfo>();
         gridGenerator = FindObjectOfType<EditedGridGenerator>();
         cardSystem = FindObjectOfType<CardSystem>();
@@ -34,10 +36,10 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     private void Update()
     {
-        if (isSelected)
+        if (isSelected && turnSystem.GetBattleStatus() == BattleStatus.PlayerCombat) 
         {
             gridGenerator.DestroyTiles(DestroyOption.rangeTiles);
-            gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, getCardInfo.card.targetType, cardSystem.Player, TypesofValue.relative);
+            gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, getCardInfo.card.targetType, cardSystem.Player, TypesofValue.relative, true);
         }
     }
 
@@ -79,14 +81,16 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void Select()
     {
         CardGameObject.transform.position += selectedPos;
-        gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, getCardInfo.card.targetType, cardSystem.Player, TypesofValue.relative);
+        if (turnSystem.GetBattleStatus() == BattleStatus.PlayerCombat)
+            gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, getCardInfo.card.targetType, cardSystem.Player, TypesofValue.relative, true);
         isSelected = true;
     }
 
     public void Deselect()
     {
         CardGameObject.transform.position -= selectedPos;
-        gridGenerator.DestroyTiles(DestroyOption.rangeTiles);
+        if (turnSystem.GetBattleStatus() == BattleStatus.PlayerCombat)
+            gridGenerator.DestroyTiles(DestroyOption.rangeTiles);
         isSelected = false;
     }
 

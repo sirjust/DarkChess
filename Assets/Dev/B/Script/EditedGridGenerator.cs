@@ -42,6 +42,7 @@ public class EditedGridGenerator : MonoBehaviour
     private float gridstartX;
     private float gridstartY;
     private float gridstartZ;
+    private GameObject tile;
 
     void Start()
     {
@@ -113,7 +114,9 @@ public class EditedGridGenerator : MonoBehaviour
         }
     }
 
-    public void GenerateSkillTiles(List<Vector3> relativepositions, TargetType targetType, GameObject user, TypesofValue typesofValue)
+    #region GenerateSkillTiles methods
+
+    public void GenerateSkillTiles(List<Vector3> relativepositions, TargetType targetType, GameObject user, TypesofValue typesofValue, bool visible)
     {
         if (user.transform.position.x % 0.5f == 0 && user.transform.position.z % 0.5f == 0)
         {
@@ -135,7 +138,6 @@ public class EditedGridGenerator : MonoBehaviour
                 {
                     //Left
                     newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, -realtiveposition.z);
-                    Debug.LogError("B");
                 }
                 if (user.transform.localEulerAngles == new Vector3(0, 180, 0) && typesofValue == TypesofValue.relative)
                 {
@@ -149,51 +151,107 @@ public class EditedGridGenerator : MonoBehaviour
                 }
 
                 var position = newRealtiveposition + user.transform.position;
-                var tile = Instantiate(highlight, new Vector3(position.x, gridstartY + 0.01f, position.z), Quaternion.Euler(Vector3.right * 90));
+                tile = Instantiate(highlight, new Vector3(position.x, gridstartY + 0.01f, position.z), Quaternion.Euler(Vector3.right * 90));
                 tile.transform.SetParent(this.gameObject.transform);
+                if (!visible)
+                    tile.GetComponent<MeshRenderer>().enabled = false;
                 rangeTiles.Add(tile);
 
-                for (int i = 0; i < rangeTiles.Count; i++)
+                CheckTargetType(targetType);
+            }
+        }
+    }
+
+    public void GenerateSkillTiles(List<Vector3> relativepositions, TargetType targetType, Vector3 userPosition, Vector3 userRotation, TypesofValue typesofValue, bool visible)
+    {
+        if (userPosition.x % 0.5f == 0 && userPosition.z % 0.5f == 0)
+        {
+            foreach (Vector3 realtiveposition in relativepositions)
+            {
+                var newRealtiveposition = realtiveposition;
+
+                if (userRotation == Vector3.zero && typesofValue == TypesofValue.relative)
                 {
-                    if (targetType == TargetType.tiles)
+                    //Up
+                    if (realtiveposition.z > 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
+                    else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
+                    else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, realtiveposition.x);
+
+                    if (Mathf.Abs(realtiveposition.x) > Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
+                    else if (Mathf.Abs(realtiveposition.x) < Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
+                }
+                if (userRotation == new Vector3(0, 270, 0) && typesofValue == TypesofValue.relative)
+                {
+                    //Left
+                    newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, -realtiveposition.z);
+                }
+                if (userRotation == new Vector3(0, 180, 0) && typesofValue == TypesofValue.relative)
+                {
+                    //Back
+                    if (realtiveposition.z > 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
+                    else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
+                    else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
+
+                    if (Mathf.Abs(realtiveposition.x) > Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
+                    else if (Mathf.Abs(realtiveposition.x) < Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
+                }
+
+                var position = newRealtiveposition + userPosition;
+                tile = Instantiate(highlight, new Vector3(position.x, gridstartY + 0.01f, position.z), Quaternion.Euler(Vector3.right * 90));
+                tile.transform.SetParent(this.gameObject.transform);
+                if (!visible)
+                    tile.GetComponent<MeshRenderer>().enabled = false;
+                rangeTiles.Add(tile);
+
+                CheckTargetType(targetType);
+            }
+        }
+    }
+
+    #endregion
+
+    public void CheckTargetType(TargetType targetType)
+    {
+        for (int i = 0; i < rangeTiles.Count; i++)
+        {
+            if (targetType == TargetType.tiles)
+            {
+                if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
+                {
+                    Destroy(tile);
+                    rangeTiles.Remove(rangeTiles[i]);
+                }
+            }
+            else if (targetType == TargetType.enemies)
+            {
+                if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
+                {
+                    if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.realtion != RealtionType.Enemy)
                     {
-                        if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
-                        {
-                            Destroy(tile);
-                            rangeTiles.Remove(rangeTiles[i]);
-                        }
+                        Destroy(tile);
+                        rangeTiles.Remove(rangeTiles[i]);
                     }
-                    else if (targetType == TargetType.enemies)
+                }
+                else
+                {
+                    Destroy(tile);
+                    rangeTiles.Remove(rangeTiles[i]);
+                }
+            }
+            else if (targetType == TargetType.alias)
+            {
+                if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
+                {
+                    if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.realtion != RealtionType.Friendly)
                     {
-                        if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null) {
-                            if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.realtion != RealtionType.Enemy)
-                            {
-                                Destroy(tile);
-                                rangeTiles.Remove(rangeTiles[i]);
-                            }
-                        }
-                        else
-                        {
-                            Destroy(tile);
-                            rangeTiles.Remove(rangeTiles[i]);
-                        }
+                        Destroy(tile);
+                        rangeTiles.Remove(rangeTiles[i]);
                     }
-                    else if (targetType == TargetType.alias)
-                    {
-                        if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
-                        {
-                            if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.realtion != RealtionType.Friendly)
-                            {
-                                Destroy(tile);
-                                rangeTiles.Remove(rangeTiles[i]);
-                            }  
-                        }
-                        else
-                        {
-                            Destroy(tile);
-                            rangeTiles.Remove(rangeTiles[i]);
-                        }
-                    }
+                }
+                else
+                {
+                    Destroy(tile);
+                    rangeTiles.Remove(rangeTiles[i]);
                 }
             }
         }

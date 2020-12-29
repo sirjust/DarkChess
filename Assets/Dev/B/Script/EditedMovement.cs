@@ -33,7 +33,7 @@ public class EditedMovement : MonoBehaviour
         {
             if (!tracked)
             {
-                gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, getStats.character.movementCard.targetType, this.gameObject, TypesofValue.relative);
+                gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, getStats.character.movementCard.targetType, this.gameObject, TypesofValue.relative, true);
                 tracked = true;
             }
             checkRayCast();

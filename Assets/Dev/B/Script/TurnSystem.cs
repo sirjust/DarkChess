@@ -66,13 +66,11 @@ public class TurnSystem : MonoBehaviour
     {
         Debug.Log("Enemy is moving...");
         yield return new WaitForSecondsRealtime(_time);
-        NextTurn();
     }
 
     IEnumerator EnemyFight(float _time)
     {
         Debug.Log("Enemy is fighting...");
         yield return new WaitForSecondsRealtime(_time);
-        NextTurn();
     }
 }
