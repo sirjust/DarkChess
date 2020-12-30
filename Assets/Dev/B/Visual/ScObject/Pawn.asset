@@ -15,8 +15,8 @@ MonoBehaviour:
   picture: {fileID: 21300000, guid: 1a6b1a590869f034c8a3b7e7f60b9db0, type: 3}
   Model: {fileID: 5403002427580834744, guid: 8361691f425fb7f44a02419bf45f5154, type: 3}
   charName: Pawn
-  health: 100
-  currentHealth: 20
+  health: 200
+  currentHealth: 200
   mana: 1000
   currentMana: 901
   strength: 50

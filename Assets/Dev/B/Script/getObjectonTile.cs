@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GetObjectonTile : MonoBehaviour
 {
@@ -10,10 +8,10 @@ public class GetObjectonTile : MonoBehaviour
     private void Awake()
     {
         RaycastHit hit;
-        Debug.DrawRay(this.gameObject.transform.position, new Vector3(0, 1, 0));
+        //Debug.DrawRay(this.gameObject.transform.position, new Vector3(0, 1, 0));
         if (Physics.Raycast(this.gameObject.transform.position, new Vector3(0, 1, 0), out hit, 100f))
         {
-                gameObjectOnTile = hit.collider.gameObject;
+            gameObjectOnTile = hit.collider.gameObject;
         }
         else
         {
@@ -24,11 +22,12 @@ public class GetObjectonTile : MonoBehaviour
     private void Update()
     {
         RaycastHit hit;
-        Debug.DrawRay(this.gameObject.transform.position, new Vector3(0, 1, 0));
-        if (Physics.Raycast(this.gameObject.transform.position, new Vector3(0,1,0), out hit, 100f))
+        //Debug.DrawRay(this.gameObject.transform.position, new Vector3(0, 1, 0));
+        if (Physics.Raycast(this.gameObject.transform.position, new Vector3(0, 1, 0), out hit, 100f))
         {
-                gameObjectOnTile = hit.collider.gameObject;
-        }else
+            gameObjectOnTile = hit.collider.gameObject;
+        }
+        else
         {
             gameObjectOnTile = null;
         }
