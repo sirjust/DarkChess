@@ -38,7 +38,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     {
         if (isSelected && turnSystem.GetBattleStatus() == BattleStatus.PlayerCombat) 
         {
-            gridGenerator.DestroyTiles(DestroyOption.rangeTiles);
+            gridGenerator.DestroyTiles(DestroyOption.rangeTiles, true, true);
             gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, getCardInfo.card.targetType, cardSystem.Player, TypesofValue.relative, true);
         }
     }
@@ -90,14 +90,14 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     {
         CardGameObject.transform.position -= selectedPos;
         if (turnSystem.GetBattleStatus() == BattleStatus.PlayerCombat)
-            gridGenerator.DestroyTiles(DestroyOption.rangeTiles);
+            gridGenerator.DestroyTiles(DestroyOption.rangeTiles, true, true);
         isSelected = false;
     }
 
     public void ResetCardPos()
     {
         this.transform.position = lastPos;
-        gridGenerator.DestroyTiles(DestroyOption.all);
+        gridGenerator.DestroyTiles(DestroyOption.all, true, true);
         isSelected = false;
     }
 

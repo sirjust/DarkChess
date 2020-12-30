@@ -20,7 +20,7 @@ public class AllSkills : MonoBehaviour
     private GetBarInfo getBarInfo;
 
     private List<GameObject> parametersObjects = new List<GameObject>();
-    
+
     private void Awake()
     {
         getBarInfo = FindObjectOfType<GetBarInfo>();
@@ -45,6 +45,7 @@ public class AllSkills : MonoBehaviour
             {
                 foreach (GameObject tile1 in gridGenerator.rangeTiles)
                 {
+                    Debug.Log($"{tile.transform.position.x} == {tile1.transform.position.x} && {tile.transform.position.z} == {tile1.transform.position.z} ");
                     if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
                     {
                         parametersObjects.Add(user);
@@ -61,7 +62,7 @@ public class AllSkills : MonoBehaviour
             if (targets == 0)
             {
                 Debug.LogError("Select other tiles");
-                if (turnSystem.GetBattleStatus() != BattleStatus.PlayerMove) gridGenerator.DestroyTiles(DestroyOption.all);
+                if (turnSystem.GetBattleStatus() != BattleStatus.PlayerMove) gridGenerator.DestroyTiles(DestroyOption.all, true, true);
                 return false;
             }
         }
@@ -103,7 +104,7 @@ public class AllSkills : MonoBehaviour
             if (targets == 0)
             {
                 Debug.Log("Select valid targets");
-                if (turnSystem.GetBattleStatus() != BattleStatus.PlayerMove) gridGenerator.DestroyTiles(DestroyOption.all);
+                if (turnSystem.GetBattleStatus() != BattleStatus.PlayerMove) gridGenerator.DestroyTiles(DestroyOption.all, true, true);
                 return false;
             }
         }
@@ -123,7 +124,7 @@ public class AllSkills : MonoBehaviour
         parameters[0].GetComponent<GetStats>().character.currentMana -= parameters[0].GetComponent<GetStats>().lastcastedSkill.manaCost;
         getBarInfo.RefreshBar();
         parametersObjects.Clear();
-        gridGenerator.DestroyTiles(DestroyOption.all);
+        gridGenerator.DestroyTiles(DestroyOption.all, true, true);
     }
 
     public void Move(List<GameObject> parameters)
@@ -131,6 +132,6 @@ public class AllSkills : MonoBehaviour
         turnSystem.NextTurn();
         parameters[0].transform.position = parameters[1].transform.position;
         parametersObjects.Clear();
-        gridGenerator.DestroyTiles(DestroyOption.all);
+        gridGenerator.DestroyTiles(DestroyOption.all, true, true);
     }
 }

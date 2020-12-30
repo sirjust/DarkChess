@@ -54,7 +54,7 @@ public class EditedGridGenerator : MonoBehaviour
         if (mode == Mode.click) ClickHighlight();
         else HoverHighlight();
 
-        if (Input.GetKey(clearSelectionkey)) DestroyTiles(DestroyOption.selectedTiles);
+        if (Input.GetKey(clearSelectionkey)) DestroyTiles(DestroyOption.selectedTiles, true, true);
     }
 
     public void GenerateMap()
@@ -114,8 +114,6 @@ public class EditedGridGenerator : MonoBehaviour
         }
     }
 
-    #region GenerateSkillTiles methods
-
     public void GenerateSkillTiles(List<Vector3> relativepositions, TargetType targetType, GameObject user, TypesofValue typesofValue, bool visible)
     {
         if (user.transform.position.x % 0.5f == 0 && user.transform.position.z % 0.5f == 0)
@@ -161,54 +159,6 @@ public class EditedGridGenerator : MonoBehaviour
             }
         }
     }
-
-    public void GenerateSkillTiles(List<Vector3> relativepositions, TargetType targetType, Vector3 userPosition, Vector3 userRotation, TypesofValue typesofValue, bool visible)
-    {
-        if (userPosition.x % 0.5f == 0 && userPosition.z % 0.5f == 0)
-        {
-            foreach (Vector3 realtiveposition in relativepositions)
-            {
-                var newRealtiveposition = realtiveposition;
-
-                if (userRotation == Vector3.zero && typesofValue == TypesofValue.relative)
-                {
-                    //Up
-                    if (realtiveposition.z > 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
-                    else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
-                    else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, realtiveposition.x);
-
-                    if (Mathf.Abs(realtiveposition.x) > Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
-                    else if (Mathf.Abs(realtiveposition.x) < Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
-                }
-                if (userRotation == new Vector3(0, 270, 0) && typesofValue == TypesofValue.relative)
-                {
-                    //Left
-                    newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, -realtiveposition.z);
-                }
-                if (userRotation == new Vector3(0, 180, 0) && typesofValue == TypesofValue.relative)
-                {
-                    //Back
-                    if (realtiveposition.z > 0) newRealtiveposition = new Vector3(realtiveposition.x, realtiveposition.y, -realtiveposition.z);
-                    else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
-                    else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
-
-                    if (Mathf.Abs(realtiveposition.x) > Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
-                    else if (Mathf.Abs(realtiveposition.x) < Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
-                }
-
-                var position = newRealtiveposition + userPosition;
-                tile = Instantiate(highlight, new Vector3(position.x, gridstartY + 0.01f, position.z), Quaternion.Euler(Vector3.right * 90));
-                tile.transform.SetParent(this.gameObject.transform);
-                if (!visible)
-                    tile.GetComponent<MeshRenderer>().enabled = false;
-                rangeTiles.Add(tile);
-
-                CheckTargetType(targetType);
-            }
-        }
-    }
-
-    #endregion
 
     public void CheckTargetType(TargetType targetType)
     {
@@ -262,23 +212,27 @@ public class EditedGridGenerator : MonoBehaviour
         return tilePrefabclone;
     }
 
-    public void DestroyTiles(DestroyOption destroyOption)
+    public void DestroyTiles(DestroyOption destroyOption, bool clearList, bool destroyTiles)
     {
         if (destroyOption != DestroyOption.selectedTiles)
         {
-            foreach (GameObject tile in rangeTiles)
-            {
-                Destroy(tile);
-            }
-            rangeTiles.Clear();
+            if(destroyTiles)
+                foreach (GameObject tile in rangeTiles)
+                {
+                    Destroy(tile);
+                }
+            if(clearList)
+                rangeTiles.Clear();
         }
         if (destroyOption != DestroyOption.rangeTiles)
         {
-            foreach (GameObject tile in selectedTiles)
-            {
-                Destroy(tile);
-            }
-            selectedTiles.Clear();
+            if(destroyTiles)
+                foreach (GameObject tile in selectedTiles)
+                {
+                    Destroy(tile);
+                }
+            if(clearList)
+                selectedTiles.Clear();
         }
     }
 

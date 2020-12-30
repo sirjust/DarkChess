@@ -37,11 +37,27 @@ public class TurnSystem : MonoBehaviour
         else index = 0;
 
         status = (BattleStatus)index;
+        if (status == BattleStatus.EnemyMove || status == BattleStatus.PlayerMove) 
+            SwitchRelation();
 
+        /*
         if (status == BattleStatus.EnemyMove) StartCoroutine(EnemyMove(time));
         if (status == BattleStatus.EnemyCombat) StartCoroutine(EnemyFight(time));
-
+        */
         PrintBattleStatus();
+    }
+
+    public void SwitchRelation()
+    {
+        GetStats[] characters = FindObjectsOfType<GetStats>();
+
+        foreach(GetStats character in characters)
+        {
+            if (character.character.realtion == RealtionType.Enemy)
+                character.character.realtion = RealtionType.Friendly;
+            else if(character.character.realtion == RealtionType.Friendly)
+                character.character.realtion = RealtionType.Enemy;
+        }
     }
 
     public void BackTurn()

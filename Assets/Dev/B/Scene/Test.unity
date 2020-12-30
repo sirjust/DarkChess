@@ -1269,6 +1269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80093d3d14cd08344ad3e4ae8232d2c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tempList: []
+  tempList2: []
 --- !u!1 &553659290
 GameObject:
   m_ObjectHideFlags: 0
@@ -4131,7 +4133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bf8ca9e329a3546a3ac81248911957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 0
+  status: 2
   time: 1
 --- !u!4 &1725547296
 Transform:

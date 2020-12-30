@@ -1,20 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class TestScript : MonoBehaviour
 {
-    public List<GameObject> h = new List<GameObject>();
-    public List<GameObject> n = new List<GameObject>();
-    
+    public List<GameObject> oldList = new List<GameObject>();
+    public List<GameObject> newList = new List<GameObject>();
+
     private void Awake()
     {
-        n = h;
+        newList.AddRange(oldList.ToArray());
     }
 
     public void Change()
     {
-        h.Add(new GameObject());
+        oldList.Add(new GameObject());
     }
 
+    public void Delete()
+    {
+        oldList.RemoveAt(0);
+    }
 }
