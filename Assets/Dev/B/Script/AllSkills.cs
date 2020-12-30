@@ -32,6 +32,7 @@ public class AllSkills : MonoBehaviour
     #region cast methods
     public bool cast(Card card, EditedGridGenerator _gridGenerator, GameObject user, BattleStatus battleStatus)
     {
+        targets = 0;
         gridGenerator = _gridGenerator;
 
         if (turnSystem.GetBattleStatus() != battleStatus)
@@ -71,7 +72,7 @@ public class AllSkills : MonoBehaviour
             Debug.Log("You dont have enough mana for this ability");
             return false;
         }
-        return true;
+        return false;
     }
 
     public bool cast(Card card, List<GameObject> selectedTiles, List<GameObject> rangeTiles, GameObject user, BattleStatus battleStatus)

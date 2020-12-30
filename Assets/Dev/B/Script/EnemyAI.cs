@@ -10,8 +10,9 @@ public class EnemyAI : MonoBehaviour
     private GetStats getStats;
     private EditedGridGenerator gridGenerator;
     private AllSkills allSkills;
-    private GameObject selectedTile;
+    private Card usedCard;
     private bool tracked = false;
+    private int rotation = 0;
 
     private void Awake()
     {
@@ -25,10 +26,12 @@ public class EnemyAI : MonoBehaviour
     {
         if (turnSystem.GetBattleStatus() == BattleStatus.EnemyMove && !tracked)
         {
+            usedCard = PickRndCard(getStats.normalskills);
             ClearLists();
             EnemyMove();
+            tracked = false;
         }
-        else if (turnSystem.GetBattleStatus() == BattleStatus.EnemyCombat)
+        else if (turnSystem.GetBattleStatus() == BattleStatus.EnemyCombat && !tracked)
         {
             ClearLists();
             EnemyCombat();
@@ -48,8 +51,9 @@ public class EnemyAI : MonoBehaviour
 
             tempList.AddRange(gridGenerator.rangeTiles.ToArray());
 
-            RemoveDuplicates(tempList);
-            CheckRotation(rotation, gameObject);
+            RemoveDuplictas(tempList);
+
+            CheckRotation(gameObject);
         }
         gridGenerator.DestroyTiles(DestroyOption.rangeTiles, true, false);
 
@@ -60,7 +64,7 @@ public class EnemyAI : MonoBehaviour
             for (int m = 0; m < 4; m++)
             {
                 placeHolder.transform.position = temptile.transform.position;
-                gridGenerator.GenerateSkillTiles(getStats.normalskills[0].ranges, getStats.normalskills[0].targetType, placeHolder, TypesofValue.relative, true);
+                gridGenerator.GenerateSkillTiles(usedCard.ranges, usedCard.targetType, placeHolder, TypesofValue.relative, false);
                 foreach (GameObject rangeTile in gridGenerator.rangeTiles)
                 {
                     if (rangeTile.GetComponent<GetObjectonTile>().gameObjectOnTile != null)
@@ -70,46 +74,73 @@ public class EnemyAI : MonoBehaviour
                         }
                 }
                 gridGenerator.DestroyTiles(DestroyOption.rangeTiles, true, false);
-                CheckRotation(rotation, placeHolder);
+
+                CheckRotation(placeHolder);
+
             }
             placeHolder.transform.localEulerAngles = new Vector3(0, 270, 0);
         }
-
         tempList2.AddRange(gridGenerator.selectedTiles.ToArray());
-
-        RemoveDuplicates(tempList2);
+        RemoveDuplictas(tempList2);
 
         gridGenerator.DestroyTiles(DestroyOption.all, true, false);
-
         for (int i = 0; i < 4; i++)
         {
-            int index = Random.Range(0, tempList2.Count);
+            int index = Random.Range(0, tempList2.Count - 1);
             rotation = (360 - (360 - (int)this.transform.localEulerAngles.y)) / 90;
 
             gridGenerator.selectedTiles.Add(tempList2[index]);
-            gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, getStats.character.movementCard.targetType, gameObject, TypesofValue.relative, true);
+            gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, getStats.character.movementCard.targetType, gameObject, TypesofValue.relative, false);
             if (allSkills.cast(getStats.character.movementCard, gridGenerator, gameObject, BattleStatus.EnemyMove))
             {
+                tempList2.RemoveAt(index);
                 break;
             }
-            CheckRotation(rotation, gameObject);
+            CheckRotation(gameObject);
         }
     }
 
     private void EnemyCombat()
     {
+        rotation = (360 - (360 - (int)this.transform.localEulerAngles.y)) / 90;
 
+        for (int i = 0; i < 4; i++)
+        {
+            gridGenerator.GenerateSkillTiles(usedCard.ranges, usedCard.targetType, gameObject, TypesofValue.relative, false);
+            tempList.AddRange(gridGenerator.rangeTiles.ToArray());
+            foreach(GameObject rangeTile in tempList)
+            {
+                if(rangeTile.GetComponent<GetObjectonTile>().gameObjectOnTile != null)
+                {
+                    if (rangeTile.GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>())
+                    {
+                        gridGenerator.selectedTiles.Add(rangeTile);
+                    }
+                }
+            }
+            if(allSkills.cast(usedCard, gridGenerator, gameObject, BattleStatus.EnemyCombat))
+            {
+                tracked = true;
+                break;
+            }
+            CheckRotation(gameObject);
+        }
     }
 
-    public void CheckRotation(int rotation, GameObject target)
+    public Card PickRndCard(Card[] cards)
+    {
+        int index = Random.Range(0, cards.Length - 1);
+        return cards[index];
+    }
+
+    public void CheckRotation(GameObject target)
     {
         rotation++;
         if ((90 * rotation) > 270) rotation = 0;
-
         target.transform.localEulerAngles = new Vector3(0, 90 * rotation, 0);
     }
 
-    public void RemoveDuplicates(List<GameObject> list)
+    public void RemoveDuplictas(List<GameObject> list)
     {
         for (int m = 0; m < list.Count; m++)
         {
