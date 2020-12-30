@@ -10,20 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0339c0ee922dd941bf2c6c34754a865, type: 3}
-  m_Name: Troll
+  m_Name: EnemySkeleton
   m_EditorClassIdentifier: 
-  picture: {fileID: 21300000, guid: 1a6b1a590869f034c8a3b7e7f60b9db0, type: 3}
-  Model: {fileID: 919132149155446097, guid: 30ddd6a3f528f2b4490a1f69a33cefcb, type: 3}
-  charName: Troll
-  health: 100
-  currentHealth: 100
-  mana: 10
-  currentMana: 1
-  strength: 0
-  defense: 22
-  movement: 11
-  critRate: 13
+  picture: {fileID: 21300000, guid: 3ea521e47a2287b4ba18208a1fca42c7, type: 3}
+  Model: {fileID: 100078, guid: a5ea117a2b123564a83a2dbd1c9ea4cf, type: 3}
+  charName: Skeleton
+  health: 50
+  currentHealth: 50
+  hearts: 0
+  currenthearts: 0
+  mana: 0
+  currentMana: 0
+  strength: 10
+  defense: 10
+  movement: 2
+  critRate: 0
   dodgeRate: 0
   healthRepresentation: 0
   realtion: 2
-  movementCard: {fileID: 0}

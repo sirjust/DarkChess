@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Card", menuName = "ScObject/Card")]
+[CreateAssetMenu(fileName = "New Card", menuName = "Card")]
 public class Card : ScriptableObject
 {
     public string skillName;
     public int manaCost;
-    public float damage;
+    public int damage;
     public Sprite skillPic;
     public GameObject template;
     public Skills skill;

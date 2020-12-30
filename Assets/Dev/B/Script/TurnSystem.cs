@@ -1,4 +1,5 @@
-﻿using System.Collections;
+using System;
+using System.Collections;
 using UnityEngine;
 
 public enum BattleStatus
@@ -15,15 +16,24 @@ public class TurnSystem : MonoBehaviour
     [Header("Optional")]
     public float time = 1;
     private int index = 0;
+    private int battleStatusLastIndex = Enum.GetNames(typeof(BattleStatus)).Length - 1;
     
     private void Awake()
     {
         index = (int)status;
     }
 
+    private void Update()
+    {
+        index = (int)status;
+    }
+
     public void NextTurn()
     {
-        if (index < 3) index++;
+        if (index < battleStatusLastIndex) 
+        {
+            index++;
+        }
         else index = 0;
 
         status = (BattleStatus)index;
@@ -37,7 +47,7 @@ public class TurnSystem : MonoBehaviour
     public void BackTurn()
     {
         if (index > 0) index--;
-        else index = 3;
+        else index = battleStatusLastIndex;
 
         status = (BattleStatus)index;
     }
