@@ -77,6 +77,8 @@ public class AllSkills : MonoBehaviour
 
     public bool cast(Card card, List<GameObject> selectedTiles, List<GameObject> rangeTiles, GameObject user, BattleStatus battleStatus)
     {
+        targets = 0;
+
         if (turnSystem.GetBattleStatus() != battleStatus)
         {
             Debug.Log("Its not your turn");

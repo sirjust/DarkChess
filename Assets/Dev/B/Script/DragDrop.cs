@@ -97,7 +97,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void ResetCardPos()
     {
         this.transform.position = lastPos;
-        gridGenerator.DestroyTiles(DestroyOption.all, true, true);
+        if(turnSystem.GetBattleStatus() == BattleStatus.PlayerCombat)
+            gridGenerator.DestroyTiles(DestroyOption.all, true, true);
         isSelected = false;
     }
 

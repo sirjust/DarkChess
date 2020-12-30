@@ -81,8 +81,14 @@ public class EnemyAI : MonoBehaviour
             placeHolder.transform.localEulerAngles = new Vector3(0, 270, 0);
         }
         tempList2.AddRange(gridGenerator.selectedTiles.ToArray());
-        RemoveDuplictas(tempList2);
 
+        if (tempList2.Count == 0)
+        {
+            //Placeholder
+            tempList2.Add(tempList[Random.Range(0, tempList.Count - 1)]);
+        }
+
+        RemoveDuplictas(tempList2);
         gridGenerator.DestroyTiles(DestroyOption.all, true, false);
         for (int i = 0; i < 4; i++)
         {
@@ -120,7 +126,7 @@ public class EnemyAI : MonoBehaviour
             }
             if(allSkills.cast(usedCard, gridGenerator, gameObject, BattleStatus.EnemyCombat))
             {
-                tracked = true;
+                tracked = false;
                 break;
             }
             CheckRotation(gameObject);

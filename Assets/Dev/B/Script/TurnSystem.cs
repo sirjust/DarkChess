@@ -39,11 +39,6 @@ public class TurnSystem : MonoBehaviour
         status = (BattleStatus)index;
         if (status == BattleStatus.EnemyMove || status == BattleStatus.PlayerMove) 
             SwitchRelation();
-
-        /*
-        if (status == BattleStatus.EnemyMove) StartCoroutine(EnemyMove(time));
-        if (status == BattleStatus.EnemyCombat) StartCoroutine(EnemyFight(time));
-        */
         PrintBattleStatus();
     }
 
