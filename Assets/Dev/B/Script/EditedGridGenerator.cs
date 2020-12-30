@@ -188,7 +188,7 @@ public class EditedGridGenerator : MonoBehaviour
                     rangeTiles.Remove(rangeTiles[i]);
                 }
             }
-            else if (targetType == TargetType.alias)
+            else if (targetType == TargetType.ally)
             {
                 if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
                 {
