@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public enum RealtionType
 {
-    Friendly, Neutral, Enemy
+    Friendly, Enemy
 }
 
 public enum HealthRepresentation
@@ -28,7 +28,6 @@ public class Character : ScriptableObject, IDamageable<int>
     public int movement;
     public int critRate;
     public int dodgeRate;
-    public List<Vector3> moveRanges = new List<Vector3>();
 
     public HealthRepresentation healthRepresentation;
     public RealtionType realtion;

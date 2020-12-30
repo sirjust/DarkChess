@@ -33,7 +33,7 @@ public class EditedMovement : MonoBehaviour
         {
             if (!tracked)
             {
-                gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, getStats.character.movementCard.targetType, this.gameObject, TypesofValue.relative);
+                gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, getStats.character.movementCard.targetType, this.gameObject, TypesofValue.relative, true);
                 tracked = true;
             }
             checkRayCast();
@@ -67,7 +67,7 @@ public class EditedMovement : MonoBehaviour
 
     public void RefreshMoveTiles()
     {
-        gridGenerator.DestroyTiles(DestroyOption.rangeTiles);
+        gridGenerator.DestroyTiles(DestroyOption.rangeTiles, true, true);
         tracked = false;
     }
 
@@ -83,7 +83,7 @@ public class EditedMovement : MonoBehaviour
                 if (allSkills.cast(getStats.character.movementCard, currentSelectedTiles, gridGenerator.rangeTiles, this.gameObject, BattleStatus.PlayerMove))
                 {
                     getStats.lastcastedSkill = getStats.character.movementCard;
-                    gridGenerator.DestroyTiles(DestroyOption.all);
+                    gridGenerator.DestroyTiles(DestroyOption.all, true, true);
                     tracked = false;
                 }
             }

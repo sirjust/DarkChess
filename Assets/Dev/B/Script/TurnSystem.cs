@@ -37,11 +37,22 @@ public class TurnSystem : MonoBehaviour
         else index = 0;
 
         status = (BattleStatus)index;
-
-        if (status == BattleStatus.EnemyMove) StartCoroutine(EnemyMove(time));
-        if (status == BattleStatus.EnemyCombat) StartCoroutine(EnemyFight(time));
-
+        if (status == BattleStatus.EnemyMove || status == BattleStatus.PlayerMove) 
+            SwitchRelation();
         PrintBattleStatus();
+    }
+
+    public void SwitchRelation()
+    {
+        GetStats[] characters = FindObjectsOfType<GetStats>();
+
+        foreach(GetStats character in characters)
+        {
+            if (character.character.realtion == RealtionType.Enemy)
+                character.character.realtion = RealtionType.Friendly;
+            else if(character.character.realtion == RealtionType.Friendly)
+                character.character.realtion = RealtionType.Enemy;
+        }
     }
 
     public void BackTurn()
@@ -66,13 +77,11 @@ public class TurnSystem : MonoBehaviour
     {
         Debug.Log("Enemy is moving...");
         yield return new WaitForSecondsRealtime(_time);
-        NextTurn();
     }
 
     IEnumerator EnemyFight(float _time)
     {
         Debug.Log("Enemy is fighting...");
         yield return new WaitForSecondsRealtime(_time);
-        NextTurn();
     }
 }
