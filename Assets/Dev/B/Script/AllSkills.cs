@@ -8,7 +8,7 @@ public enum Skills
 
 public enum TargetType
 {
-    alias, enemies, tiles
+    ally, enemies, tiles
 }
 
 public class AllSkills : MonoBehaviour
