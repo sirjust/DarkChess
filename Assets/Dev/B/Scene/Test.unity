@@ -4133,7 +4133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bf8ca9e329a3546a3ac81248911957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 2
+  status: 0
   time: 1
 --- !u!4 &1725547296
 Transform:
