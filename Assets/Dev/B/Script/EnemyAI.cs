@@ -49,11 +49,7 @@ public class EnemyAI : MonoBehaviour
             tempList.AddRange(gridGenerator.rangeTiles.ToArray());
 
             RemoveDuplicates(tempList);
-
-            rotation++;
-            if ((90 * rotation) > 270) rotation = 0;
-
-            this.transform.localEulerAngles = new Vector3(0, 90 * rotation, 0);
+            CheckRotation(rotation, gameObject);
         }
         gridGenerator.DestroyTiles(DestroyOption.rangeTiles, true, false);
 
@@ -74,10 +70,7 @@ public class EnemyAI : MonoBehaviour
                         }
                 }
                 gridGenerator.DestroyTiles(DestroyOption.rangeTiles, true, false);
-
-                rotation++;
-                if ((90 * rotation) > 270) rotation = 0;
-                placeHolder.transform.localEulerAngles = new Vector3(0, 90 * m, 0);
+                CheckRotation(rotation, placeHolder);
             }
             placeHolder.transform.localEulerAngles = new Vector3(0, 270, 0);
         }
@@ -99,16 +92,21 @@ public class EnemyAI : MonoBehaviour
             {
                 break;
             }
-            rotation++;
-            if ((90 * rotation) > 270) rotation = 0;
-
-            this.transform.localEulerAngles = new Vector3(0, 90 * rotation, 0);
+            CheckRotation(rotation, gameObject);
         }
     }
 
     private void EnemyCombat()
     {
 
+    }
+
+    public void CheckRotation(int rotation, GameObject target)
+    {
+        rotation++;
+        if ((90 * rotation) > 270) rotation = 0;
+
+        target.transform.localEulerAngles = new Vector3(0, 90 * rotation, 0);
     }
 
     public void RemoveDuplicates(List<GameObject> list)
@@ -131,25 +129,3 @@ public class EnemyAI : MonoBehaviour
         tempList2.Clear();
     }
 }
-
-/*
- *   gridGenerator.GenerateSkillTiles(tempList, getStats.character.movementCard.targetType, gameObject, TypesofValue.relative, true);
-
-            for (int m = 0; m < 4; m++)
-            {
-                int rotation2 = (360 - (360 - (int)this.transform.localEulerAngles.y)) / 90;
-                foreach (GameObject rangeTiles in gridGenerator.rangeTiles)
-                {
-                    if (rangeTiles.GetComponent<GetObjectonTile>().gameObjectOnTile != null)
-                    {
-                        if (rangeTiles.GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.realtion != RealtionType.Enemy)
-                        {
-                            gridGenerator.selectedTiles.Add(rangeTiles);
-                        }
-                    }
-
-                }
-                if (90 * m > 360) m = 0;
-                this.transform.localEulerAngles = new Vector3(0, 90 * m, 0);
-            }
-*/
