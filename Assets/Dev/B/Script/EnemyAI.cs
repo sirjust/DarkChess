@@ -62,8 +62,6 @@ public class EnemyAI : MonoBehaviour
         }
         gridGenerator.DestroyTiles(DestroyOption.rangeTiles, true, false);
 
-        rotation = (360 - (360 - (int)this.transform.localEulerAngles.y)) / 90;
-
         foreach (GameObject temptile in tempList)
         {
             for (int m = 0; m < 4; m++)
@@ -75,7 +73,6 @@ public class EnemyAI : MonoBehaviour
                     if (rangeTile.GetComponent<GetObjectonTile>().gameObjectOnTile != null)
                         if (rangeTile.GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>())
                         {
-                            Debug.Log("Found enenmy");
                             gridGenerator.selectedTiles.Add(temptile);
                         }
                 }
@@ -113,33 +110,29 @@ public class EnemyAI : MonoBehaviour
             }
             if (limitHealthPercent != 0)
             {
-                Debug.LogError((getStats.character.health / 100) * limitHealthPercent);
                 if (getStats.character.currentHealth < (getStats.character.health / 100) * limitHealthPercent)
                 {
                     tempList2.Add(furthermostTile);
-                    Debug.Log("Defense");
                 }
                 else
                 {
                     tempList2.Add(closestTile);
-                    Debug.Log("Aggresiv");
                 }
             }
         }
 
         RemoveDuplictas(tempList2);
-        
         gridGenerator.DestroyTiles(DestroyOption.all, true, false);
-        
+
         for (int i = 0; i < 4; i++)
         {
             int index = Random.Range(0, tempList2.Count - 1);
-            rotation = (360 - (360 - (int)this.transform.localEulerAngles.y)) / 90;
 
             gridGenerator.selectedTiles.Add(tempList2[index]);
             gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, getStats.character.movementCard.targetType, gameObject, TypesofValue.relative, false);
             if (allSkills.cast(getStats.character.movementCard, gridGenerator, gameObject, BattleStatus.EnemyMove))
             {
+                tracked = false;
                 break;
             }
             CheckRotation(gameObject);
@@ -171,13 +164,18 @@ public class EnemyAI : MonoBehaviour
             }
             CheckRotation(gameObject);
         }
+        if (gridGenerator.selectedTiles.Count == 0)
+        {
+            tracked = false;
+            turnSystem.NextTurn();
+        }
     }
 
     public List<Vector3> FindEnemyPos()
     {
         List<Vector3> positions = new List<Vector3>();
         List<GetObjectonTile> getObjectonTiles = new List<GetObjectonTile>();
-        
+
         getObjectonTiles.AddRange(FindObjectsOfType<GetObjectonTile>());
 
         foreach (GetObjectonTile getObjectonTile in getObjectonTiles)
@@ -224,5 +222,6 @@ public class EnemyAI : MonoBehaviour
     {
         tempList.Clear();
         tempList2.Clear();
+        playerPos.Clear();
     }
 }
