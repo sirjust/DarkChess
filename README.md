@@ -293,19 +293,17 @@ The range of every [card](#Card) are saved in the [scriptableObject](#Scriptable
 
 ![objectDetection Image](https://i.ibb.co/P65X4q2/Get-Objecton-Tile.png)
 
-- `Layer`: Every object with this layer will be ignored
-
 ##### **How it works**
 
 The script will send a raycast upwards every frame  and once the raycast hits a collider, the game object will be saved in a variable called `gameObjectOnTile`.
 
-In our case we using this script for the `EditedHighlight Quad` object and the `EditedInvisGridTile` object 
+In our case we using this script for the `EditedHighlight Quad` object and the `EditedInvisGridTile` object .
 
 ### **Important notes**
 
 ### ScriptableObject
 
-- In this project work with scriptableObjects
+- In this project we are working with scriptableObjects
 - Currently there are two types of scriptableObjects([Character](#Character), [Card](#Card))
 - ScriptableObject are containers for different values e.g health or mana cost
 - These scriptableObject also contains some other scripts
@@ -333,7 +331,7 @@ In our case we using this script for the `EditedHighlight Quad` object and the `
 
 - `Skill Pic`: The picture, which is displayed on the [charInfo](#charInfo) display
 
-- `Health Representation`: Specify the way how the haelth be showed in the game. Currently there are two options: None, Healthbar
+- `Health Representation`: Specify the way how the health be showed in the game. Currently there are two options: None, Healthbar
 
 - `Realtion`: Specify the relation to the player. Currently there are three options: friendly, enenmy, neutral 
 
