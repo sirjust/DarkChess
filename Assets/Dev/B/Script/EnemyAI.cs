@@ -81,43 +81,43 @@ public class EnemyAI : MonoBehaviour
             }
             placeHolder.transform.localEulerAngles = new Vector3(0, 270, 0);
         }
-        tempList2.AddRange(gridGenerator.selectedTiles.ToArray());
-        gridGenerator.DestroyTiles(DestroyOption.selectedTiles, true, false);
 
-        if (tempList2.Count == 0)
+        playerPos = FindEnemyPos();
+
+        int indexPlayerPos = Random.Range(0, playerPos.Count - 1);
+
+        closestTile = tempList[0];
+        furthermostTile = tempList[0];
+        smallestDistance = Vector3.Distance(closestTile.transform.position, playerPos[indexPlayerPos]);
+        largestDistance = Vector3.Distance(furthermostTile.transform.position, playerPos[indexPlayerPos]);
+
+        foreach (GameObject rangeTile in tempList)
         {
-            playerPos = FindEnemyPos();
-
-            int index = Random.Range(0, playerPos.Count - 1);
-
-            closestTile = tempList[0];
-            furthermostTile = tempList[0];
-            smallestDistance = Vector3.Distance(closestTile.transform.position, playerPos[index]);
-            largestDistance = Vector3.Distance(furthermostTile.transform.position, playerPos[index]);
-
-            foreach (GameObject rangeTile in tempList)
+            if (Vector3.Distance(rangeTile.transform.position, playerPos[indexPlayerPos]) < smallestDistance)
             {
-                if (Vector3.Distance(rangeTile.transform.position, playerPos[index]) < smallestDistance)
-                {
-                    smallestDistance = Vector3.Distance(rangeTile.transform.position, playerPos[index]);
-                    closestTile = rangeTile;
-                }
-                if (Vector3.Distance(rangeTile.transform.position, playerPos[index]) > largestDistance)
-                {
-                    largestDistance = Vector3.Distance(rangeTile.transform.position, playerPos[index]);
-                    furthermostTile = rangeTile;
-                }
+                smallestDistance = Vector3.Distance(rangeTile.transform.position, playerPos[indexPlayerPos]);
+                closestTile = rangeTile;
             }
-            if (limitHealthPercent != 0)
+            if (Vector3.Distance(rangeTile.transform.position, playerPos[indexPlayerPos]) > largestDistance)
             {
-                if (getStats.character.currentHealth < (getStats.character.health / 100) * limitHealthPercent)
-                {
-                    tempList2.Add(furthermostTile);
-                }
-                else
-                {
+                largestDistance = Vector3.Distance(rangeTile.transform.position, playerPos[indexPlayerPos]);
+                furthermostTile = rangeTile;
+            }
+        }
+
+        if (limitHealthPercent != 0)
+        {
+            if (getStats.character.currentHealth < (getStats.character.health / 100) * limitHealthPercent)
+            {
+                tempList2.Add(furthermostTile);
+            }
+            else
+            {
+                if (gridGenerator.selectedTiles.Count == 0)
                     tempList2.Add(closestTile);
-                }
+
+                tempList2.AddRange(gridGenerator.selectedTiles.ToArray());
+
             }
         }
 
@@ -126,9 +126,9 @@ public class EnemyAI : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            int index = Random.Range(0, tempList2.Count - 1);
+            int indexTempList2 = Random.Range(0, tempList2.Count - 1);
 
-            gridGenerator.selectedTiles.Add(tempList2[index]);
+            gridGenerator.selectedTiles.Add(tempList2[indexTempList2]);
             gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, getStats.character.movementCard.targetType, gameObject, TypesofValue.relative, false);
             if (allSkills.cast(getStats.character.movementCard, gridGenerator, gameObject, BattleStatus.EnemyMove))
             {
@@ -225,3 +225,4 @@ public class EnemyAI : MonoBehaviour
         playerPos.Clear();
     }
 }
+
