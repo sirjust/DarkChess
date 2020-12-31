@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class CharInfo : MonoBehaviour
 {
     [Header("Required")]
+    public GameObject player;
+    
     public TMP_Text charName;
     public TMP_Text charValues;
     public TMP_Text charStats;
@@ -15,6 +17,12 @@ public class CharInfo : MonoBehaviour
 
     private Image[] allImages;
     private TextMeshProUGUI[] allGUI;
+
+    private void Awake()
+    {
+        character = player.GetComponent<GetStats>().character;
+        RefreshStats(character);
+    }
 
     public void DisableMenu(bool mode)
     {
@@ -31,6 +39,7 @@ public class CharInfo : MonoBehaviour
             UGUI.enabled = mode;
         }
     }
+
 
     public void RefreshStats(Character _character)
     {

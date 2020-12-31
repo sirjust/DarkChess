@@ -42,6 +42,20 @@ public class TurnSystem : MonoBehaviour
         PrintBattleStatus();
     }
 
+    public void BackTurn()
+    {
+        if (index > 0) index--;
+        else index = battleStatusLastIndex;
+
+        status = (BattleStatus)index;
+    }
+
+    public void SkipPlayerTurn()
+    {
+        if (status == BattleStatus.PlayerMove || status == BattleStatus.PlayerCombat)
+            NextTurn();
+    }
+
     public void SwitchRelation()
     {
         GetStats[] characters = FindObjectsOfType<GetStats>();
@@ -53,14 +67,6 @@ public class TurnSystem : MonoBehaviour
             else if(character.character.realtion == RealtionType.Friendly)
                 character.character.realtion = RealtionType.Enemy;
         }
-    }
-
-    public void BackTurn()
-    {
-        if (index > 0) index--;
-        else index = battleStatusLastIndex;
-
-        status = (BattleStatus)index;
     }
 
     public void PrintBattleStatus()
