@@ -13,14 +13,24 @@ public class TurnSystem : MonoBehaviour
     [SerializeField]
     private BattleStatus status;
 
-    [Header("Optional")]
-    public float time = 1;
+    [Header("Assigned Automatically")]
+    private EditedGridGenerator gridGenerator;
+
     private int index = 0;
     private int battleStatusLastIndex = Enum.GetNames(typeof(BattleStatus)).Length - 1;
-    
+    private GetStats[] getStats;
+
     private void Awake()
     {
+        gridGenerator = FindObjectOfType<EditedGridGenerator>();
         index = (int)status;
+
+        getStats = FindObjectsOfType<GetStats>();
+
+        foreach (GetStats getStat in getStats)
+        {
+            getStat.character.realtion = getStat.character.startRelationType;
+        }
     }
 
     private void Update()
@@ -30,6 +40,11 @@ public class TurnSystem : MonoBehaviour
 
     public void NextTurn()
     {
+        if (status == BattleStatus.PlayerCombat || status == BattleStatus.EnemyCombat) 
+            SwitchRelation();
+
+        gridGenerator.DestroyTiles(DestroyOption.all, true, true);
+
         if (index < battleStatusLastIndex) 
         {
             index++;
@@ -37,13 +52,16 @@ public class TurnSystem : MonoBehaviour
         else index = 0;
 
         status = (BattleStatus)index;
-        if (status == BattleStatus.EnemyMove || status == BattleStatus.PlayerMove) 
-            SwitchRelation();
+
         PrintBattleStatus();
     }
 
     public void BackTurn()
     {
+        gridGenerator.DestroyTiles(DestroyOption.all, true, true);
+        if (status == BattleStatus.PlayerMove || status == BattleStatus.EnemyMove)
+            SwitchRelation();
+
         if (index > 0) index--;
         else index = battleStatusLastIndex;
 
@@ -59,7 +77,6 @@ public class TurnSystem : MonoBehaviour
     public void SwitchRelation()
     {
         GetStats[] characters = FindObjectsOfType<GetStats>();
-
         foreach(GetStats character in characters)
         {
             if (character.character.realtion == RealtionType.Enemy)
@@ -77,17 +94,5 @@ public class TurnSystem : MonoBehaviour
     public BattleStatus GetBattleStatus()
     {
         return status;
-    }
-
-    IEnumerator EnemyMove(float _time)
-    {
-        Debug.Log("Enemy is moving...");
-        yield return new WaitForSecondsRealtime(_time);
-    }
-
-    IEnumerator EnemyFight(float _time)
-    {
-        Debug.Log("Enemy is fighting...");
-        yield return new WaitForSecondsRealtime(_time);
     }
 }
