@@ -18,12 +18,13 @@ MonoBehaviour:
   health: 100
   currentHealth: 100
   mana: 1000
-  currentMana: 802
+  currentMana: 252
   strength: 0
   defense: 22
   movement: 11
   critRate: 13
   dodgeRate: 0
   healthRepresentation: 0
+  startRelationType: 1
   realtion: 1
   movementCard: {fileID: 11400000, guid: 66952b6fa6dd5c643ac75f68fd0077d2, type: 2}
