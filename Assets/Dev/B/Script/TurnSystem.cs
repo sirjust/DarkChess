@@ -58,9 +58,10 @@ public class TurnSystem : MonoBehaviour
 
     public void BackTurn()
     {
-        gridGenerator.DestroyTiles(DestroyOption.all, true, true);
         if (status == BattleStatus.PlayerMove || status == BattleStatus.EnemyMove)
             SwitchRelation();
+
+        gridGenerator.DestroyTiles(DestroyOption.all, true, true);
 
         if (index > 0) index--;
         else index = battleStatusLastIndex;
