@@ -132,6 +132,31 @@ In this case, I am cloning a quad that is emissive (looks like a highlight).
 
 ![highlight image](https://i.ibb.co/6vX1CkF/Screenshot-2020-12-05-144732.png)
 
+### **Audio Manager**
+
+#### **What is it?**
+
+![audio manager](https://i.ibb.co/4KKx6BL/image.png)
+
+A library of audio clips that we can call on demand throughout our game. By developing a strong audio manager, we should be able to control different sounds in various ways.
+
+#### **How To Use**
+
+The `Audio Manager` prefab should be placed in every scene. It comes with  `AudioManager.cs` preloaded. 
+
+To add your audio clip:
+1. Increase the size by +1
+2. Name the added audio element
+3. Drag your audio clip into `Clip`
+
+To play your audio clip on demand, use:
+
+`FindObjectOfType<AudioManager>().Play("INSERT_NAME");`
+
+We can alter the properties of each audio clip, such as `Volume`, `Pitch`, or `Loop`. If necessary, we can add more parameters to each audio source to have more control. This can be done by altering the `Sound.cs` script which displays the parameters in the inspector for each sound.
+
+![sound.cs](https://i.ibb.co/99xMqf0/image.png)
+
 ### **Battle Menu**
 
 #### **Components / Sections**
@@ -358,8 +383,10 @@ In our case we using this script for the `EditedHighlight Quad` object and the `
 
 Note: Every [character object](#character-object) has to have a collider in order to be [detected](#objectDetection)
 
-##### Player
-
+##### GridGenerator & AllSkills
+- Be sure that you only have one game Object in the scene which the `EditedGridGenerator.cs` script is attached to
+- The same applies to the `allSkills.cs`
+- The name of the method and the name of the enums has to be the same e.g `strike()` and `strike`
 - This variable has to contain a [scriptableObject](#ScriptableObject), which was created with the `character.cs`
 
 ##### Other notes about the scripts
