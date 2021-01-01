@@ -62,7 +62,7 @@ public class TurnSystem : MonoBehaviour
             SwitchRelation();
 
         gridGenerator.DestroyTiles(DestroyOption.all, true, true);
-
+        
         if (index > 0) index--;
         else index = battleStatusLastIndex;
 
