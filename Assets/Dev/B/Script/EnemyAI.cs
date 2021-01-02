@@ -19,6 +19,7 @@ public class EnemyAI : MonoBehaviour
     private Card usedCard;
     private bool tracked = false;
     private int rotation = 0;
+    private GameObject placeHolder;
 
     private void Awake()
     {
@@ -26,6 +27,8 @@ public class EnemyAI : MonoBehaviour
         turnSystem = FindObjectOfType<TurnSystem>();
         gridGenerator = FindObjectOfType<EditedGridGenerator>();
         getStats = GetComponent<GetStats>();
+
+        placeHolder = new GameObject();
     }
 
     private void Update()
@@ -45,7 +48,6 @@ public class EnemyAI : MonoBehaviour
 
     private void EnemyMove()
     {
-        GameObject placeHolder = new GameObject();
         tracked = true;
 
         int rotation = (360 - (360 - (int)this.transform.localEulerAngles.y)) / 90;

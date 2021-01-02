@@ -41,7 +41,11 @@ public class AllSkills : MonoBehaviour
         if (turnSystem.GetBattleStatus() != battleStatus && currentTurn == turnSystem.currentTurn)
         {
             if (turnSystem.currentTurn == player.GetComponent<GetStats>())
-                Debug.Log("Its not your turn");
+            {
+                gridGenerator.DestroyTiles(DestroyOption.selectedTiles, true, true);
+                Debug.Log("Its not the right stage to play a card");
+            }
+
             return false;
         }
         if (user.GetComponent<GetStats>().character.currentMana >= card.manaCost)
@@ -67,7 +71,7 @@ public class AllSkills : MonoBehaviour
             if (targets == 0)
             {
                 if (turnSystem.currentTurn == player.GetComponent<GetStats>())
-                    Debug.LogError("Select other tiles");
+                    Debug.Log("Select valid targets");
                 return false;
             }
         }
@@ -87,7 +91,10 @@ public class AllSkills : MonoBehaviour
         if (turnSystem.GetBattleStatus() != battleStatus && currentTurn == turnSystem.currentTurn)
         {
             if (turnSystem.currentTurn == player.GetComponent<GetStats>())
-                Debug.Log("Its not your turn");
+            {
+                gridGenerator.DestroyTiles(DestroyOption.selectedTiles, true, true);
+                Debug.Log("Its not the right stage to play a card");
+            }
             return false;
         }
 

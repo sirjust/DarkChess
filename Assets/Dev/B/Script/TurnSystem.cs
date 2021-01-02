@@ -18,7 +18,7 @@ public class TurnSystem : MonoBehaviour
     public GetStats lastTurn;
     public List<GetStats> turnOrder = new List<GetStats>();
 
-    public int currentTurnIndex = 0;
+    private int currentTurnIndex = 0;
     private int index = 0;
     private int battleStatusLastIndex = Enum.GetNames(typeof(BattleStatus)).Length - 1;
     private GetStats[] getStats;
