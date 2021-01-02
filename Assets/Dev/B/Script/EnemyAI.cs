@@ -160,7 +160,7 @@ public class EnemyAI : MonoBehaviour
             if (allSkills.cast(usedCard, gridGenerator, gameObject, BattleStatus.EnemyCombat))
             {
                 tracked = false;
-                break;
+                return;
             }
             CheckRotation(gameObject);
         }
@@ -182,7 +182,7 @@ public class EnemyAI : MonoBehaviour
         {
             if (getObjectonTile.gameObjectOnTile != null)
             {
-                if (getObjectonTile.gameObjectOnTile.GetComponent<GetStats>().character.realtion != RealtionType.Friendly)
+                if (getObjectonTile.gameObjectOnTile.GetComponent<GetStats>().character.relation != RelationType.Friendly)
                 {
                     positions.Add(getObjectonTile.gameObjectOnTile.transform.localPosition);
                 }

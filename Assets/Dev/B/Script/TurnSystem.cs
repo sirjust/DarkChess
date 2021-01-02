@@ -41,12 +41,6 @@ public class TurnSystem : MonoBehaviour
             SwitchRelation();
         
         PrintBattleStatus();
-
-        if (status == BattleStatus.EnemyMove)
-            StartCoroutine(EnemyMove(time));
-        else if (status == BattleStatus.EnemyCombat)
-            StartCoroutine(EnemyFight(time));
-
     }
 
     public void SkipPlayerTurn()
@@ -76,19 +70,5 @@ public class TurnSystem : MonoBehaviour
     public BattleStatus GetBattleStatus()
     {
         return status;
-    }
-
-    IEnumerator EnemyMove(float _time)
-    {
-        Debug.Log("Enemy is moving...");
-        yield return new WaitForSecondsRealtime(_time);
-        NextTurn();
-    }
-
-    IEnumerator EnemyFight(float _time)
-    {
-        Debug.Log("Enemy is fighting...");
-        yield return new WaitForSecondsRealtime(_time);
-        NextTurn();
     }
 }
