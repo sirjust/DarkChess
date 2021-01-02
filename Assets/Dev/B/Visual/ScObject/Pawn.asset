@@ -18,7 +18,7 @@ MonoBehaviour:
   health: 200
   currentHealth: 200
   mana: 1000
-  currentMana: 901
+  currentMana: 879
   strength: 50
   defense: 12
   movement: 331
