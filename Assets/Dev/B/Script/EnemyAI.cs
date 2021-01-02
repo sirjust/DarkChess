@@ -30,13 +30,13 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        if (turnSystem.GetBattleStatus() == BattleStatus.EnemyMove && !tracked)
+        if (turnSystem.currentTurn == getStats && turnSystem.GetBattleStatus() == BattleStatus.Move && !tracked)
         {
             usedCard = PickRndCard(getStats.normalskills);
             ClearLists();
             EnemyMove();
         }
-        else if (turnSystem.GetBattleStatus() == BattleStatus.EnemyCombat && !tracked)
+        else if (turnSystem.currentTurn == getStats && turnSystem.GetBattleStatus() == BattleStatus.Combat && !tracked)
         {
             ClearLists();
             EnemyCombat();
@@ -130,7 +130,7 @@ public class EnemyAI : MonoBehaviour
 
             gridGenerator.selectedTiles.Add(tempList2[indexTempList2]);
             gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, getStats.character.movementCard.targetType, gameObject, TypesofValue.relative, false);
-            if (allSkills.cast(getStats.character.movementCard, gridGenerator, gameObject, BattleStatus.EnemyMove))
+            if (allSkills.cast(getStats.character.movementCard, gridGenerator, gameObject, BattleStatus.Move, getStats))
             {
                 tracked = false;
                 break;
@@ -157,7 +157,7 @@ public class EnemyAI : MonoBehaviour
                     }
                 }
             }
-            if (allSkills.cast(usedCard, gridGenerator, gameObject, BattleStatus.EnemyCombat))
+            if (allSkills.cast(usedCard, gridGenerator, gameObject, BattleStatus.Combat, getStats))
             {
                 tracked = false;
                 break;

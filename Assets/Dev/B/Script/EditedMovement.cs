@@ -29,7 +29,7 @@ public class EditedMovement : MonoBehaviour
     {
         Rotate();
 
-        if (turnSystem.GetBattleStatus() == BattleStatus.PlayerMove)
+        if (turnSystem.GetBattleStatus() == BattleStatus.Move && turnSystem.currentTurn == getStats)
         {
             if (!tracked)
             {
@@ -45,23 +45,27 @@ public class EditedMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             this.transform.localEulerAngles = left;
-            if (turnSystem.GetBattleStatus() == BattleStatus.PlayerMove) RefreshMoveTiles();
+            if (turnSystem.GetBattleStatus() == BattleStatus.Move && turnSystem.currentTurn == getStats)
+                RefreshMoveTiles();
 
         }
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             this.transform.localEulerAngles = right;
-            if (turnSystem.GetBattleStatus() == BattleStatus.PlayerMove) RefreshMoveTiles();
+            if (turnSystem.GetBattleStatus() == BattleStatus.Move && turnSystem.currentTurn == getStats)
+                RefreshMoveTiles();
         }
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
             this.transform.localEulerAngles = down;
-            if (turnSystem.GetBattleStatus() == BattleStatus.PlayerMove) RefreshMoveTiles();
+            if (turnSystem.GetBattleStatus() == BattleStatus.Move && turnSystem.currentTurn == getStats)
+                RefreshMoveTiles();
         }
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             this.transform.localEulerAngles = up;
-            if (turnSystem.GetBattleStatus() == BattleStatus.PlayerMove) RefreshMoveTiles();
+            if (turnSystem.GetBattleStatus() == BattleStatus.Move && turnSystem.currentTurn == getStats)
+                RefreshMoveTiles();
         }
     }
 
@@ -80,7 +84,7 @@ public class EditedMovement : MonoBehaviour
             {
                 List<GameObject> currentSelectedTiles = gridGenerator.selectedTiles;
 
-                if (allSkills.cast(getStats.character.movementCard, currentSelectedTiles, gridGenerator.rangeTiles, this.gameObject, BattleStatus.PlayerMove))
+                if (allSkills.cast(getStats.character.movementCard, currentSelectedTiles, gridGenerator.rangeTiles, this.gameObject, BattleStatus.Move, getStats))
                 {
                     getStats.lastcastedSkill = getStats.character.movementCard;
                     gridGenerator.DestroyTiles(DestroyOption.all, true, true);
