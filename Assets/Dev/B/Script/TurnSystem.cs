@@ -39,15 +39,14 @@ public class TurnSystem : MonoBehaviour
         status = (BattleStatus)index;
         if (status == BattleStatus.EnemyMove || status == BattleStatus.PlayerMove) 
             SwitchRelation();
+        
         PrintBattleStatus();
-    }
 
-    public void BackTurn()
-    {
-        if (index > 0) index--;
-        else index = battleStatusLastIndex;
+        if (status == BattleStatus.EnemyMove)
+            StartCoroutine(EnemyMove(time));
+        else if (status == BattleStatus.EnemyCombat)
+            StartCoroutine(EnemyFight(time));
 
-        status = (BattleStatus)index;
     }
 
     public void SkipPlayerTurn()
@@ -62,10 +61,10 @@ public class TurnSystem : MonoBehaviour
 
         foreach(GetStats character in characters)
         {
-            if (character.character.realtion == RealtionType.Enemy)
-                character.character.realtion = RealtionType.Friendly;
-            else if(character.character.realtion == RealtionType.Friendly)
-                character.character.realtion = RealtionType.Enemy;
+            if (character.character.relation == RelationType.Enemy)
+                character.character.relation = RelationType.Friendly;
+            else if(character.character.relation == RelationType.Friendly)
+                character.character.relation = RelationType.Enemy;
         }
     }
 
@@ -83,11 +82,13 @@ public class TurnSystem : MonoBehaviour
     {
         Debug.Log("Enemy is moving...");
         yield return new WaitForSecondsRealtime(_time);
+        NextTurn();
     }
 
     IEnumerator EnemyFight(float _time)
     {
         Debug.Log("Enemy is fighting...");
         yield return new WaitForSecondsRealtime(_time);
+        NextTurn();
     }
 }
