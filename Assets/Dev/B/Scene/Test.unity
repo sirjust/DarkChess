@@ -1199,6 +1199,7 @@ GameObject:
   - component: {fileID: 553377460}
   - component: {fileID: 553377461}
   - component: {fileID: 553377462}
+  - component: {fileID: 553377463}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Player
@@ -1256,6 +1257,26 @@ MonoBehaviour:
   health: 0
   charInfo: {fileID: 0}
   lastcastedSkill: {fileID: 0}
+--- !u!114 &553377463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 553377459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80093d3d14cd08344ad3e4ae8232d2c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tempList: []
+  tempList2: []
+  playerPos: []
+  limitHealthPercent: 20
+  closestTile: {fileID: 0}
+  furthermostTile: {fileID: 0}
+  smallestDistance: 0
+  largestDistance: 0
 --- !u!1 &553659290
 GameObject:
   m_ObjectHideFlags: 0

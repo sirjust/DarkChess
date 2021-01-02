@@ -6,7 +6,7 @@ public class EnemyAI : MonoBehaviour
     public List<GameObject> tempList = new List<GameObject>();
     public List<GameObject> tempList2 = new List<GameObject>();
     public List<Vector3> playerPos = new List<Vector3>();
-    public int limitHealthPercent;
+    public int limitHealthPercent = 20;
     public GameObject closestTile;
     public GameObject furthermostTile;
     public float smallestDistance;
@@ -17,7 +17,7 @@ public class EnemyAI : MonoBehaviour
     private EditedGridGenerator gridGenerator;
     private AllSkills allSkills;
     private Card usedCard;
-    private bool tracked = false;
+    private bool alreadyWent = false;
     private int rotation = 0;
 
     private void Awake()
@@ -30,13 +30,13 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        if (turnSystem.GetBattleStatus() == BattleStatus.EnemyMove && !tracked)
+        if (turnSystem.GetBattleStatus() == BattleStatus.EnemyMove && !alreadyWent)
         {
             usedCard = PickRndCard(getStats.normalskills);
             ClearLists();
             EnemyMove();
         }
-        else if (turnSystem.GetBattleStatus() == BattleStatus.EnemyCombat && !tracked)
+        else if (turnSystem.GetBattleStatus() == BattleStatus.EnemyCombat && !alreadyWent)
         {
             ClearLists();
             EnemyCombat();
@@ -46,7 +46,7 @@ public class EnemyAI : MonoBehaviour
     private void EnemyMove()
     {
         GameObject placeHolder = new GameObject();
-        tracked = true;
+        alreadyWent = true;
 
         int rotation = (360 - (360 - (int)this.transform.localEulerAngles.y)) / 90;
 
@@ -132,7 +132,7 @@ public class EnemyAI : MonoBehaviour
             gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, getStats.character.movementCard.targetType, gameObject, TypesofValue.relative, false);
             if (allSkills.cast(getStats.character.movementCard, gridGenerator, gameObject, BattleStatus.EnemyMove))
             {
-                tracked = false;
+                alreadyWent = false;
                 break;
             }
             CheckRotation(gameObject);
@@ -159,14 +159,14 @@ public class EnemyAI : MonoBehaviour
             }
             if (allSkills.cast(usedCard, gridGenerator, gameObject, BattleStatus.EnemyCombat))
             {
-                tracked = false;
+                alreadyWent = false;
                 return;
             }
             CheckRotation(gameObject);
         }
         if (gridGenerator.selectedTiles.Count == 0)
         {
-            tracked = false;
+            alreadyWent = false;
             turnSystem.NextTurn();
         }
     }
