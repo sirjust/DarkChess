@@ -13,24 +13,14 @@ public class TurnSystem : MonoBehaviour
     [SerializeField]
     private BattleStatus status;
 
-    [Header("Assigned Automatically")]
-    private EditedGridGenerator gridGenerator;
-
+    [Header("Optional")]
+    public float time = 1;
     private int index = 0;
     private int battleStatusLastIndex = Enum.GetNames(typeof(BattleStatus)).Length - 1;
-    private GetStats[] getStats;
-
+    
     private void Awake()
     {
-        gridGenerator = FindObjectOfType<EditedGridGenerator>();
         index = (int)status;
-
-        getStats = FindObjectsOfType<GetStats>();
-
-        foreach (GetStats getStat in getStats)
-        {
-            getStat.character.realtion = getStat.character.startRelationType;
-        }
     }
 
     private void Update()
@@ -40,11 +30,6 @@ public class TurnSystem : MonoBehaviour
 
     public void NextTurn()
     {
-        if (status == BattleStatus.PlayerCombat || status == BattleStatus.EnemyCombat) 
-            SwitchRelation();
-
-        gridGenerator.DestroyTiles(DestroyOption.all, true, true);
-
         if (index < battleStatusLastIndex) 
         {
             index++;
@@ -52,21 +37,16 @@ public class TurnSystem : MonoBehaviour
         else index = 0;
 
         status = (BattleStatus)index;
-
-        PrintBattleStatus();
-    }
-
-    public void BackTurn()
-    {
-        if (status == BattleStatus.PlayerMove || status == BattleStatus.EnemyMove)
+        if (status == BattleStatus.EnemyMove || status == BattleStatus.PlayerMove) 
             SwitchRelation();
-
-        gridGenerator.DestroyTiles(DestroyOption.all, true, true);
         
-        if (index > 0) index--;
-        else index = battleStatusLastIndex;
+        PrintBattleStatus();
 
-        status = (BattleStatus)index;
+        if (status == BattleStatus.EnemyMove)
+            StartCoroutine(EnemyMove(time));
+        else if (status == BattleStatus.EnemyCombat)
+            StartCoroutine(EnemyFight(time));
+
     }
 
     public void SkipPlayerTurn()
@@ -78,12 +58,13 @@ public class TurnSystem : MonoBehaviour
     public void SwitchRelation()
     {
         GetStats[] characters = FindObjectsOfType<GetStats>();
+
         foreach(GetStats character in characters)
         {
-            if (character.character.realtion == RealtionType.Enemy)
-                character.character.realtion = RealtionType.Friendly;
-            else if(character.character.realtion == RealtionType.Friendly)
-                character.character.realtion = RealtionType.Enemy;
+            if (character.character.relation == RelationType.Enemy)
+                character.character.relation = RelationType.Friendly;
+            else if(character.character.relation == RelationType.Friendly)
+                character.character.relation = RelationType.Enemy;
         }
     }
 
@@ -95,5 +76,19 @@ public class TurnSystem : MonoBehaviour
     public BattleStatus GetBattleStatus()
     {
         return status;
+    }
+
+    IEnumerator EnemyMove(float _time)
+    {
+        Debug.Log("Enemy is moving...");
+        yield return new WaitForSecondsRealtime(_time);
+        NextTurn();
+    }
+
+    IEnumerator EnemyFight(float _time)
+    {
+        Debug.Log("Enemy is fighting...");
+        yield return new WaitForSecondsRealtime(_time);
+        NextTurn();
     }
 }

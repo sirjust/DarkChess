@@ -49,7 +49,7 @@ public class CharInfo : MonoBehaviour
         
         charValues.SetText($"{_character.currentHealth} / {_character.health} \n {_character.currentMana} / {_character.mana}");
 
-        if (_character.realtion == RealtionType.Enemy) charPic.color = Color.red;
+        if (_character.relation == RelationType.Enemy) charPic.color = Color.red;
         else charPic.color = Color.green;
     }
 

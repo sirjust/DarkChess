@@ -46,7 +46,7 @@ public class AllSkills : MonoBehaviour
             {
                 foreach (GameObject tile1 in gridGenerator.rangeTiles)
                 {
-                    //Debug.Log($"{tile.transform.position.x} == {tile1.transform.position.x} && {tile.transform.position.z} == {tile1.transform.position.z} ");
+                    Debug.Log($"{tile.transform.position.x} == {tile1.transform.position.x} && {tile.transform.position.z} == {tile1.transform.position.z} ");
                     if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
                     {
                         parametersObjects.Add(user);
@@ -91,7 +91,6 @@ public class AllSkills : MonoBehaviour
             {
                 foreach (GameObject tile1 in rangeTiles)
                 {
-                    //Debug.Log($"{tile.transform.position.x} == {tile1.transform.position.x} && {tile.transform.position.z} == {tile1.transform.position.z} ");
                     if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
                     {
                         parametersObjects.Add(user);

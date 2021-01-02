@@ -38,14 +38,12 @@ public class EditedGridGenerator : MonoBehaviour
     [Header("Assigned Automatically")]
     public List<GameObject> selectedTiles = new List<GameObject>();
     public List<GameObject> rangeTiles = new List<GameObject>();
-
-    private List<GameObject> invisGridTiles = new List<GameObject>();    
     private GameObject tilePrefabclone;
     private float gridstartX;
     private float gridstartY;
     private float gridstartZ;
     private GameObject tile;
-    private bool valid = false;
+
     void Start()
     {
         GenerateMap();
@@ -80,7 +78,6 @@ public class EditedGridGenerator : MonoBehaviour
                 Vector3 tilePosition = new Vector3(0.5f + x, gridstartY + 0.01f, 0.5f + z);
                 tilePrefabclone = Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 0));
                 tilePrefabclone.transform.SetParent(this.gameObject.transform);
-                invisGridTiles.Add(tilePrefabclone);
             }
         }
     }
@@ -124,7 +121,6 @@ public class EditedGridGenerator : MonoBehaviour
             foreach (Vector3 realtiveposition in relativepositions)
             {
                 var newRealtiveposition = realtiveposition;
-                valid = false;
 
                 if (user.transform.localEulerAngles == Vector3.zero && typesofValue == TypesofValue.relative)
                 {
@@ -154,29 +150,12 @@ public class EditedGridGenerator : MonoBehaviour
 
                 var position = newRealtiveposition + user.transform.position;
                 tile = Instantiate(highlight, new Vector3(position.x, gridstartY + 0.01f, position.z), Quaternion.Euler(Vector3.right * 90));
+                tile.transform.SetParent(this.gameObject.transform);
+                if (!visible)
+                    tile.GetComponent<MeshRenderer>().enabled = false;
+                rangeTiles.Add(tile);
 
-                foreach (GameObject invisGridTile  in invisGridTiles)
-                {
-                    if(invisGridTile.transform.position == tile.transform.position)
-                    {
-                        valid = true;
-                    }
-                }
-
-                if (valid)
-                {
-                    tile.transform.SetParent(this.gameObject.transform);
-
-                    if (!visible)
-                        tile.GetComponent<MeshRenderer>().enabled = false;
-
-                    rangeTiles.Add(tile);
-                    CheckTargetType(targetType);
-                }
-                else
-                {
-                    Destroy(tile);
-                }
+                CheckTargetType(targetType);
             }
         }
     }
@@ -197,7 +176,7 @@ public class EditedGridGenerator : MonoBehaviour
             {
                 if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
                 {
-                    if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.realtion != RealtionType.Enemy)
+                    if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.relation != RelationType.Enemy)
                     {
                         Destroy(tile);
                         rangeTiles.Remove(rangeTiles[i]);
@@ -213,7 +192,7 @@ public class EditedGridGenerator : MonoBehaviour
             {
                 if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
                 {
-                    if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.realtion != RealtionType.Friendly)
+                    if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.relation != RelationType.Friendly)
                     {
                         Destroy(tile);
                         rangeTiles.Remove(rangeTiles[i]);

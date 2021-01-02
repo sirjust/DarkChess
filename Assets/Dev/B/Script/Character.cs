@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum RealtionType
+public enum RelationType
 {
     Friendly, Enemy
 }
@@ -30,8 +30,7 @@ public class Character : ScriptableObject, IDamageable<int>
     public int dodgeRate;
 
     public HealthRepresentation healthRepresentation;
-    public RealtionType startRelationType;
-    public RealtionType realtion;
+    public RelationType relation;
 
     public Card movementCard;
 
