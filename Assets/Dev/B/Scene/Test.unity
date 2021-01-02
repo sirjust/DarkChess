@@ -3037,6 +3037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4739a33b680696042a0264ec7d328868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 7125984659406494055}
 --- !u!1 &1140257040
 GameObject:
   m_ObjectHideFlags: 0
@@ -4272,8 +4273,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   status: 0
   currentTurn: {fileID: 0}
+  lastTurn: {fileID: 0}
   turnOrder: []
-  currentTurnIndex: 0
 --- !u!4 &1725547296
 Transform:
   m_ObjectHideFlags: 0
