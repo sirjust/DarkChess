@@ -84,7 +84,7 @@ public class CardSystem : MonoBehaviour
     {
         if (turnSystem.GetBattleStatus() == BattleStatus.PlayerCombat)
         {
-            turnSystem.NextTurn();
+            //turnSystem.NextTurn();
             if (lastIndex != maxCardCount)
             {
                 InstantiateCard(lastIndex);
