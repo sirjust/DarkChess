@@ -37,19 +37,35 @@ public class TurnSystem : MonoBehaviour
         else index = 0;
 
         status = (BattleStatus)index;
-
-        if (status == BattleStatus.EnemyMove) StartCoroutine(EnemyMove(time));
-        if (status == BattleStatus.EnemyCombat) StartCoroutine(EnemyFight(time));
-
+        if (status == BattleStatus.EnemyMove || status == BattleStatus.PlayerMove) 
+            SwitchRelation();
+        
         PrintBattleStatus();
+
+        if (status == BattleStatus.EnemyMove)
+            StartCoroutine(EnemyMove(time));
+        else if (status == BattleStatus.EnemyCombat)
+            StartCoroutine(EnemyFight(time));
+
     }
 
-    public void BackTurn()
+    public void SkipPlayerTurn()
     {
-        if (index > 0) index--;
-        else index = battleStatusLastIndex;
+        if (status == BattleStatus.PlayerMove || status == BattleStatus.PlayerCombat)
+            NextTurn();
+    }
 
-        status = (BattleStatus)index;
+    public void SwitchRelation()
+    {
+        GetStats[] characters = FindObjectsOfType<GetStats>();
+
+        foreach(GetStats character in characters)
+        {
+            if (character.character.relation == RelationType.Enemy)
+                character.character.relation = RelationType.Friendly;
+            else if(character.character.relation == RelationType.Friendly)
+                character.character.relation = RelationType.Enemy;
+        }
     }
 
     public void PrintBattleStatus()

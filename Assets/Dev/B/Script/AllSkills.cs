@@ -6,6 +6,11 @@ public enum Skills
     Strike, Move
 }
 
+public enum TargetType
+{
+    ally, enemies, tiles
+}
+
 public class AllSkills : MonoBehaviour
 {
     private int targets = 0;
@@ -25,9 +30,9 @@ public class AllSkills : MonoBehaviour
     }
 
     #region cast methods
-
     public bool cast(Card card, EditedGridGenerator _gridGenerator, GameObject user, BattleStatus battleStatus)
     {
+        targets = 0;
         gridGenerator = _gridGenerator;
 
         if (turnSystem.GetBattleStatus() != battleStatus)
@@ -35,12 +40,13 @@ public class AllSkills : MonoBehaviour
             Debug.Log("Its not your turn");
             return false;
         }
-        if (user.GetComponent<GetStats>().character.currentHealth >= card.manaCost)
+        if (user.GetComponent<GetStats>().character.currentMana >= card.manaCost)
         {
             foreach (GameObject tile in gridGenerator.selectedTiles)
             {
                 foreach (GameObject tile1 in gridGenerator.rangeTiles)
                 {
+                    Debug.Log($"{tile.transform.position.x} == {tile1.transform.position.x} && {tile.transform.position.z} == {tile1.transform.position.z} ");
                     if (tile.transform.position.x == tile1.transform.position.x && tile.transform.position.z == tile1.transform.position.z)
                     {
                         parametersObjects.Add(user);
@@ -57,26 +63,29 @@ public class AllSkills : MonoBehaviour
             if (targets == 0)
             {
                 Debug.LogError("Select other tiles");
-                if (turnSystem.GetBattleStatus() != BattleStatus.PlayerMove) gridGenerator.DestroyTiles(DestroyOption.all);
+                if (turnSystem.GetBattleStatus() != BattleStatus.PlayerMove) gridGenerator.DestroyTiles(DestroyOption.all, true, true);
                 return false;
             }
         }
         else
         {
             Debug.Log("You dont have enough mana for this ability");
+            return false;
         }
-        return true;
+        return false;
     }
 
     public bool cast(Card card, List<GameObject> selectedTiles, List<GameObject> rangeTiles, GameObject user, BattleStatus battleStatus)
     {
+        targets = 0;
+
         if (turnSystem.GetBattleStatus() != battleStatus)
         {
             Debug.Log("Its not your turn");
             return false;
         }
 
-        if (user.GetComponent<GetStats>().character.currentHealth >= card.manaCost)
+        if (user.GetComponent<GetStats>().character.currentMana >= card.manaCost)
         {
             foreach (GameObject tile in selectedTiles)
             {
@@ -98,17 +107,17 @@ public class AllSkills : MonoBehaviour
             if (targets == 0)
             {
                 Debug.Log("Select valid targets");
-                if (turnSystem.GetBattleStatus() != BattleStatus.PlayerMove) gridGenerator.DestroyTiles(DestroyOption.all);
+                if (turnSystem.GetBattleStatus() != BattleStatus.PlayerMove) gridGenerator.DestroyTiles(DestroyOption.all, true, true);
                 return false;
             }
-            else
-            {
-                Debug.Log("You dont have enough mana for this ability");
-            }
         }
-        return true;
+        else
+        {
+            Debug.Log("You dont have enough mana for this ability");
+            return false;
+        }
+        return false;
     }
-
     #endregion
 
     public void Strike(List<GameObject> parameters)
@@ -118,7 +127,7 @@ public class AllSkills : MonoBehaviour
         parameters[0].GetComponent<GetStats>().character.currentMana -= parameters[0].GetComponent<GetStats>().lastcastedSkill.manaCost;
         getBarInfo.RefreshBar();
         parametersObjects.Clear();
-        gridGenerator.DestroyTiles(DestroyOption.all);
+        gridGenerator.DestroyTiles(DestroyOption.all, true, true);
     }
 
     public void Move(List<GameObject> parameters)
@@ -126,6 +135,6 @@ public class AllSkills : MonoBehaviour
         turnSystem.NextTurn();
         parameters[0].transform.position = parameters[1].transform.position;
         parametersObjects.Clear();
-        gridGenerator.DestroyTiles(DestroyOption.all);
+        gridGenerator.DestroyTiles(DestroyOption.all, true, true);
     }
 }

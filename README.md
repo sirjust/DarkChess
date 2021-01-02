@@ -294,7 +294,7 @@ This process goes through each card until all have been moved
 
 In order to let the `cast()` method returns the bool value `true`, the player has to select the right tiles and there has to be at least one object which can be [detected](#objectDetection) by a tile e.g a other [character object](#character-object).
 
-After the player [selected](#select-a-tile) some tiles and [played](#Play-a-Card) a [card](#Card). A method called `cast()` triggers. This method compares the positions of the `ranges` list with every positions of the [selected](#select-a-tile) tile list. Now if the compared tiles has the same position, then method of the skill will be triggered and the `cast()` method returns the bool value `true`. When there is no matches in the comparison, then the method will return the bool value `false`.
+After the player [selected](#select-a-tile) some tiles and [played](#Play-a-Card) a [card](#Card). A method called `cast()` triggers. This method checks the `currentMana` with `manaCost` of the [card](#Card) first and if the user has enought Mana the method going on and compares the positions of the `ranges` list with every positions of the [selected](#select-a-tile) tile list. Now if the compared tiles has the same position, then method of the skill will be triggered and the `cast()` method returns the bool value `true`. When there is no matches in the comparison, then the method will return the bool value `false`.
 
 ##### **Draw a Card**
 
@@ -318,26 +318,24 @@ The range of every [card](#Card) are saved in the [scriptableObject](#Scriptable
 
 ![objectDetection Image](https://i.ibb.co/P65X4q2/Get-Objecton-Tile.png)
 
-- `Layer`: Every object with this layer will be ignored
-
 ##### **How it works**
 
 The script will send a raycast upwards every frame  and once the raycast hits a collider, the game object will be saved in a variable called `gameObjectOnTile`.
 
-In our case we using this script for the `EditedHighlight Quad` object and the `EditedInvisGridTile` object 
+In our case we using this script for the `EditedHighlight Quad` object and the `EditedInvisGridTile` object .
 
 ### **Important notes**
 
 ### ScriptableObject
 
-- In this project work with scriptableObjects
+- In this project we are working with scriptableObjects
 - Currently there are two types of scriptableObjects([Character](#Character), [Card](#Card))
 - ScriptableObject are containers for different values e.g health or mana cost
 - These scriptableObject also contains some other scripts
 
 ### Card
 
-![CardScObject Image](https://i.ibb.co/3rQ7j1N/Strike-Sc-Object.png)
+![CardScObject Image](https://i.ibb.co/80Y93XQ/Strike-Sc-Object.png)
 
 - `Skill Name`: The name which will displayed on the [skillInfo](#skillInfo) display(the name doesnt have to be the same as the name of the object)
 - `Mana Cost`: The amount of mana which will be consumed if the card Object is played
@@ -346,6 +344,7 @@ In our case we using this script for the `EditedHighlight Quad` object and the `
 - `Template`: The linked [card object](#card-object)
 - `Skill`: The skill which will triggered if the [card object](#card-object) is played
 - `Max Amount Of Targets`: The highest number of targets(If the player select more targets, only the first selected will be count)
+- `canTargetObjects`: A bool, which determines whether the user is able to select objects e.g enemies as targets or not 
 - `Ranges`: An list of the relative position of the user e.g (1 | 0 | -1) means the tile before the user on the left side  
 - `Skill description`: A short description, which will be displayed on the [skillInfo](#skillInfo) display
 
@@ -357,7 +356,7 @@ In our case we using this script for the `EditedHighlight Quad` object and the `
 
 - `Skill Pic`: The picture, which is displayed on the [charInfo](#charInfo) display
 
-- `Health Representation`: Specify the way how the haelth be showed in the game. Currently there are two options: None, Healthbar
+- `Health Representation`: Specify the way how the health be showed in the game. Currently there are two options: None, Healthbar
 
 - `Realtion`: Specify the relation to the player. Currently there are three options: friendly, enenmy, neutral 
 

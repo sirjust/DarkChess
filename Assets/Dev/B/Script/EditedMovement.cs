@@ -33,7 +33,7 @@ public class EditedMovement : MonoBehaviour
         {
             if (!tracked)
             {
-                gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, this.gameObject, TypesofValue.relative);
+                gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, getStats.character.movementCard.targetType, this.gameObject, TypesofValue.relative, true);
                 tracked = true;
             }
             checkRayCast();
@@ -45,7 +45,8 @@ public class EditedMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             this.transform.localEulerAngles = left;
-            if(turnSystem.GetBattleStatus() == BattleStatus.PlayerMove) RefreshMoveTiles();
+            if (turnSystem.GetBattleStatus() == BattleStatus.PlayerMove) RefreshMoveTiles();
+
         }
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
@@ -66,8 +67,7 @@ public class EditedMovement : MonoBehaviour
 
     public void RefreshMoveTiles()
     {
-        gridGenerator.DestroyTiles(DestroyOption.rangeTiles);
-        gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, this.gameObject, TypesofValue.relative);
+        gridGenerator.DestroyTiles(DestroyOption.rangeTiles, true, true);
         tracked = false;
     }
 
@@ -78,12 +78,12 @@ public class EditedMovement : MonoBehaviour
         {
             if (hit.collider.gameObject.name == gridGenerator.GetTilePrefabClone().name && Input.GetMouseButtonDown(0))
             {
-                List<GameObject> currentSelectedTiles = gridGenerator.selectedTiles; 
+                List<GameObject> currentSelectedTiles = gridGenerator.selectedTiles;
 
                 if (allSkills.cast(getStats.character.movementCard, currentSelectedTiles, gridGenerator.rangeTiles, this.gameObject, BattleStatus.PlayerMove))
                 {
                     getStats.lastcastedSkill = getStats.character.movementCard;
-                    gridGenerator.DestroyTiles(DestroyOption.all);
+                    gridGenerator.DestroyTiles(DestroyOption.all, true, true);
                     tracked = false;
                 }
             }

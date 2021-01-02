@@ -24,13 +24,15 @@ public class CardSystem : MonoBehaviour
     private Card[] uniqueCards;
     private Vector3 placePos;
 
+    private TurnSystem turnSystem;
+
     private void Awake()
     {
         drawableCards = Player.GetComponentInChildren<GetStats>().normalskills;
         uniqueCards = Player.GetComponentInChildren<GetStats>().uniqueSkills;
+        turnSystem = FindObjectOfType<TurnSystem>();
 
-        GameObject empty = new GameObject();
-        empty.name = "place";
+        GameObject empty = new GameObject("place");
 
         for (int i = 0; i < maxCardCount; i++)
         {
@@ -80,10 +82,14 @@ public class CardSystem : MonoBehaviour
 
     public void DrawCard()
     {
-        if (lastIndex != maxCardCount)
+        if (turnSystem.GetBattleStatus() == BattleStatus.PlayerCombat)
         {
-            InstantiateCard(lastIndex);
-            lastIndex++;
+            //turnSystem.NextTurn();
+            if (lastIndex != maxCardCount)
+            {
+                InstantiateCard(lastIndex);
+                lastIndex++;
+            }
         }
     }
 

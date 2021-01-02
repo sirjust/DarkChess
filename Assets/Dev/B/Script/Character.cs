@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum RealtionType
+public enum RelationType
 {
-    Friendly, Neutral, Enemy
+    Friendly, Enemy
 }
 
 public enum HealthRepresentation
@@ -28,10 +28,9 @@ public class Character : ScriptableObject, IDamageable<int>
     public int movement;
     public int critRate;
     public int dodgeRate;
-    public List<Vector3> moveRanges = new List<Vector3>();
 
     public HealthRepresentation healthRepresentation;
-    public RealtionType realtion;
+    public RelationType relation;
 
     public Card movementCard;
 

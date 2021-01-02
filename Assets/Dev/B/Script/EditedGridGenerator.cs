@@ -42,6 +42,7 @@ public class EditedGridGenerator : MonoBehaviour
     private float gridstartX;
     private float gridstartY;
     private float gridstartZ;
+    private GameObject tile;
 
     void Start()
     {
@@ -53,7 +54,7 @@ public class EditedGridGenerator : MonoBehaviour
         if (mode == Mode.click) ClickHighlight();
         else HoverHighlight();
 
-        if (Input.GetKey(clearSelectionkey)) DestroyTiles(DestroyOption.selectedTiles);
+        if (Input.GetKey(clearSelectionkey)) DestroyTiles(DestroyOption.selectedTiles, true, true);
     }
 
     public void GenerateMap()
@@ -92,7 +93,7 @@ public class EditedGridGenerator : MonoBehaviour
                 var clone = Instantiate(highlight, objectPosition, Quaternion.Euler(Vector3.right * 90));
                 clone.transform.SetParent(this.gameObject.transform);
                 selectedTiles.Add(clone);
-                if (!Input.GetKey(selectionkey)) StartCoroutine(Wait(clone, destroy, timeBeforeDestroy));
+                if (!Input.GetKey(selectionkey)) StartCoroutine(WaitUntilDestroy(clone, destroy, timeBeforeDestroy));
             }
         }
     }
@@ -108,12 +109,12 @@ public class EditedGridGenerator : MonoBehaviour
                 var clone = Instantiate(highlight, objectPosition, Quaternion.Euler(Vector3.right * 90));
                 clone.transform.SetParent(this.gameObject.transform);
                 selectedTiles.Add(clone);
-                StartCoroutine(Wait(clone, destroy, timeBeforeDestroy));
+                StartCoroutine(WaitUntilDestroy(clone, destroy, timeBeforeDestroy));
             }
         }
     }
 
-    public void GenerateSkillTiles(List<Vector3> relativepositions, GameObject user, TypesofValue typesofValue)
+    public void GenerateSkillTiles(List<Vector3> relativepositions, TargetType targetType, GameObject user, TypesofValue typesofValue, bool visible)
     {
         if (user.transform.position.x % 0.5f == 0 && user.transform.position.z % 0.5f == 0)
         {
@@ -129,13 +130,12 @@ public class EditedGridGenerator : MonoBehaviour
                     else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, realtiveposition.x);
 
                     if (Mathf.Abs(realtiveposition.x) > Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
-                    if (Mathf.Abs(realtiveposition.x) < Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
+                    else if (Mathf.Abs(realtiveposition.x) < Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
                 }
                 if (user.transform.localEulerAngles == new Vector3(0, 270, 0) && typesofValue == TypesofValue.relative)
                 {
                     //Left
                     newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, -realtiveposition.z);
-                    Debug.LogError("B");
                 }
                 if (user.transform.localEulerAngles == new Vector3(0, 180, 0) && typesofValue == TypesofValue.relative)
                 {
@@ -144,14 +144,65 @@ public class EditedGridGenerator : MonoBehaviour
                     else if (realtiveposition.z < 0) newRealtiveposition = new Vector3(-realtiveposition.x, realtiveposition.y, realtiveposition.z);
                     else if (realtiveposition.z == 0) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
 
-                    if (Mathf.Abs(realtiveposition.x) > Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(-realtiveposition.z, realtiveposition.y, realtiveposition.x);
-                    if (Mathf.Abs(realtiveposition.x) < Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
+                    if (Mathf.Abs(realtiveposition.x) > Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
+                    else if (Mathf.Abs(realtiveposition.x) < Mathf.Abs(realtiveposition.z)) newRealtiveposition = new Vector3(realtiveposition.z, realtiveposition.y, -realtiveposition.x);
                 }
 
                 var position = newRealtiveposition + user.transform.position;
-                var tile = Instantiate(highlight, new Vector3(position.x, gridstartY + 0.01f, position.z), Quaternion.Euler(Vector3.right * 90));
+                tile = Instantiate(highlight, new Vector3(position.x, gridstartY + 0.01f, position.z), Quaternion.Euler(Vector3.right * 90));
                 tile.transform.SetParent(this.gameObject.transform);
+                if (!visible)
+                    tile.GetComponent<MeshRenderer>().enabled = false;
                 rangeTiles.Add(tile);
+
+                CheckTargetType(targetType);
+            }
+        }
+    }
+
+    public void CheckTargetType(TargetType targetType)
+    {
+        for (int i = 0; i < rangeTiles.Count; i++)
+        {
+            if (targetType == TargetType.tiles)
+            {
+                if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
+                {
+                    Destroy(tile);
+                    rangeTiles.Remove(rangeTiles[i]);
+                }
+            }
+            else if (targetType == TargetType.enemies)
+            {
+                if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
+                {
+                    if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.relation != RelationType.Enemy)
+                    {
+                        Destroy(tile);
+                        rangeTiles.Remove(rangeTiles[i]);
+                    }
+                }
+                else
+                {
+                    Destroy(tile);
+                    rangeTiles.Remove(rangeTiles[i]);
+                }
+            }
+            else if (targetType == TargetType.ally)
+            {
+                if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
+                {
+                    if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.relation != RelationType.Friendly)
+                    {
+                        Destroy(tile);
+                        rangeTiles.Remove(rangeTiles[i]);
+                    }
+                }
+                else
+                {
+                    Destroy(tile);
+                    rangeTiles.Remove(rangeTiles[i]);
+                }
             }
         }
     }
@@ -161,27 +212,31 @@ public class EditedGridGenerator : MonoBehaviour
         return tilePrefabclone;
     }
 
-    public void DestroyTiles(DestroyOption destroyOption)
+    public void DestroyTiles(DestroyOption destroyOption, bool clearList, bool destroyTiles)
     {
         if (destroyOption != DestroyOption.selectedTiles)
         {
-            foreach (GameObject tile in rangeTiles)
-            {
-                Destroy(tile);
-            }
-            rangeTiles.Clear();
+            if(destroyTiles)
+                foreach (GameObject tile in rangeTiles)
+                {
+                    Destroy(tile);
+                }
+            if(clearList)
+                rangeTiles.Clear();
         }
         if (destroyOption != DestroyOption.rangeTiles)
         {
-            foreach (GameObject tile in selectedTiles)
-            {
-                Destroy(tile);
-            }
-            selectedTiles.Clear();
+            if(destroyTiles)
+                foreach (GameObject tile in selectedTiles)
+                {
+                    Destroy(tile);
+                }
+            if(clearList)
+                selectedTiles.Clear();
         }
     }
 
-    IEnumerator Wait(GameObject gameObject, bool _destroy, float _timeBeforeDestroy)
+    IEnumerator WaitUntilDestroy(GameObject gameObject, bool _destroy, float _timeBeforeDestroy)
     {
         yield return new WaitForSecondsRealtime(_timeBeforeDestroy);
         if (_destroy)
