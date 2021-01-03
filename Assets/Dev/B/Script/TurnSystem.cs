@@ -35,8 +35,22 @@ public class TurnSystem : MonoBehaviour
         getStats = FindObjectsOfType<GetStats>();
         foreach (GetStats getStat in getStats)
         {
-            getStat.character.realtion = getStat.character.startRelationType;
+            if (currentTurn != cardSystem.Player.GetComponent<GetStats>())
+            {
+                if (getStat != cardSystem.Player.GetComponent<GetStats>())
+                    getStat.character.realtion = RealtionType.Friendly;
+                else
+                    getStat.character.realtion = RealtionType.Enemy;
+            }
+            else if (currentTurn == cardSystem.Player.GetComponent<GetStats>())
+            {
+                if (getStat == cardSystem.Player.GetComponent<GetStats>())
+                    getStat.character.realtion = RealtionType.Friendly;
+                else
+                    getStat.character.realtion = RealtionType.Enemy;
+            }
         }
+
         SetOrder();
         RefreshOrder();
     }
@@ -92,7 +106,7 @@ public class TurnSystem : MonoBehaviour
     {
         gridGenerator.DestroyTiles(DestroyOption.all, true, true);
 
-        if (index > 0) 
+        if (index > 0)
             index--;
         else
             index = battleStatusLastIndex;
