@@ -82,9 +82,9 @@ public class CardSystem : MonoBehaviour
 
     public void DrawCard()
     {
-        if (turnSystem.currentTurn == Player.GetComponent<GetStats>())
+        if (turnSystem.GetBattleStatus() == BattleStatus.Combat && turnSystem.currentTurn == Player.GetComponent<GetStats>())
         {
-            turnSystem.NextTurn();
+            //turnSystem.NextTurn();
             if (lastIndex != maxCardCount)
             {
                 InstantiateCard(lastIndex);
