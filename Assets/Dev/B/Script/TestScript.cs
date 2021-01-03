@@ -3,21 +3,25 @@ using UnityEngine;
 
 public class TestScript : MonoBehaviour
 {
-    public List<GameObject> oldList = new List<GameObject>();
-    public List<GameObject> newList = new List<GameObject>();
+    public delegate void aa(int num);
+    public aa a;
 
-    private void Awake()
+    public void Ak(int num)
     {
-        newList.AddRange(oldList.ToArray());
+        Debug.Log($" Ak trigger: {num}");
     }
 
-    public void Change()
+    public void As(int num)
     {
-        oldList.Add(new GameObject());
+        Debug.Log($" As trigger: {num}");
     }
 
-    public void Delete()
+    public void chnage()
     {
-        oldList.RemoveAt(0);
+        if (a == Ak)
+            a = As;
+        else
+            a = Ak;
+        a(10);
     }
 }

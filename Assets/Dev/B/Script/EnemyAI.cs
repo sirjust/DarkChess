@@ -6,23 +6,25 @@ public class EnemyAI : MonoBehaviour
     public List<GameObject> tempList = new List<GameObject>();
     public List<GameObject> tempList2 = new List<GameObject>();
     public List<Vector3> playerPos = new List<Vector3>();
-    public int limitHealthPercent;
+    public int limitHealthPercent = 20;
     public GameObject closestTile;
     public GameObject furthermostTile;
     public float smallestDistance;
     public float largestDistance;
 
+    private GameObject placeHolder;
     private TurnSystem turnSystem;
     private GetStats getStats;
     private EditedGridGenerator gridGenerator;
     private AllSkills allSkills;
     private Card usedCard;
-    private bool tracked = false;
+    private bool alreadyWent = false;
     private int rotation = 0;
     private GameObject placeHolder;
 
     private void Awake()
     {
+        placeHolder = new GameObject();
         allSkills = FindObjectOfType<AllSkills>();
         turnSystem = FindObjectOfType<TurnSystem>();
         gridGenerator = FindObjectOfType<EditedGridGenerator>();
@@ -33,13 +35,13 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        if (turnSystem.currentTurn == getStats && turnSystem.GetBattleStatus() == BattleStatus.Move && !tracked)
+        if (turnSystem.GetBattleStatus() == BattleStatus.Move && !alreadyWent && turnSystem.currentTurn == getStats)
         {
             usedCard = PickRndCard(getStats.normalskills);
             ClearLists();
             EnemyMove();
         }
-        else if (turnSystem.currentTurn == getStats && turnSystem.GetBattleStatus() == BattleStatus.Combat && !tracked)
+        else if (turnSystem.GetBattleStatus() == BattleStatus.Combat && !alreadyWent && turnSystem.currentTurn == getStats)
         {
             ClearLists();
             EnemyCombat();
@@ -48,7 +50,7 @@ public class EnemyAI : MonoBehaviour
 
     private void EnemyMove()
     {
-        tracked = true;
+        alreadyWent = true;
 
         int rotation = (360 - (360 - (int)this.transform.localEulerAngles.y)) / 90;
 
@@ -134,7 +136,7 @@ public class EnemyAI : MonoBehaviour
             gridGenerator.GenerateSkillTiles(getStats.character.movementCard.ranges, getStats.character.movementCard.targetType, gameObject, TypesofValue.relative, false);
             if (allSkills.cast(getStats.character.movementCard, gridGenerator, gameObject, BattleStatus.Move, getStats))
             {
-                tracked = false;
+                alreadyWent = false;
                 break;
             }
             CheckRotation(gameObject);
@@ -161,14 +163,14 @@ public class EnemyAI : MonoBehaviour
             }
             if (allSkills.cast(usedCard, gridGenerator, gameObject, BattleStatus.Combat, getStats))
             {
-                tracked = false;
-                break;
+                alreadyWent = false;
+                return;
             }
             CheckRotation(gameObject);
         }
         if (gridGenerator.selectedTiles.Count == 0)
         {
-            tracked = false;
+            alreadyWent = false;
             turnSystem.NextTurn();
         }
     }
@@ -184,7 +186,7 @@ public class EnemyAI : MonoBehaviour
         {
             if (getObjectonTile.gameObjectOnTile != null)
             {
-                if (getObjectonTile.gameObjectOnTile.GetComponent<GetStats>().character.realtion != RealtionType.Friendly)
+                if (getObjectonTile.gameObjectOnTile.GetComponent<GetStats>().character.relation != RelationType.Friendly)
                 {
                     positions.Add(getObjectonTile.gameObjectOnTile.transform.localPosition);
                 }

@@ -30,12 +30,12 @@ public class TurnSystem : MonoBehaviour
     {
         cardSystem = FindObjectOfType<CardSystem>();
         gridGenerator = FindObjectOfType<EditedGridGenerator>();
-        index = (int)status;
 
+        index = (int)status;
         getStats = FindObjectsOfType<GetStats>();
         foreach (GetStats getStat in getStats)
         {
-            getStat.character.realtion = getStat.character.startRelationType;
+            getStat.character.relation = getStat.character.startRelation;
         }
         SetOrder();
         RefreshOrder();
@@ -70,7 +70,7 @@ public class TurnSystem : MonoBehaviour
         if (currentTurnIndex < (turnOrder.Count - 1) && (status == BattleStatus.Combat))
         {
             currentTurnIndex++;
-            if (turnOrder[currentTurnIndex].character.realtion != turnOrder[currentTurnIndex - 1].character.realtion)
+            if (turnOrder[currentTurnIndex].character.relation != turnOrder[currentTurnIndex - 1].character.relation)
                 SwitchRelation();
         }
         else if (status == BattleStatus.Combat)
@@ -78,7 +78,7 @@ public class TurnSystem : MonoBehaviour
             SetOrder();
             currentTurnIndex = 0;
 
-            if (turnOrder[currentTurnIndex].character.realtion != lastTurn.character.realtion)
+            if (turnOrder[currentTurnIndex].character.relation != lastTurn.character.relation)
                 SwitchRelation();
         }
 
@@ -92,7 +92,7 @@ public class TurnSystem : MonoBehaviour
     {
         gridGenerator.DestroyTiles(DestroyOption.all, true, true);
 
-        if (index > 0) 
+        if (index > 0)
             index--;
         else
             index = battleStatusLastIndex;
@@ -100,14 +100,14 @@ public class TurnSystem : MonoBehaviour
         if (currentTurnIndex == 1 && (status == BattleStatus.Combat))
         {
             currentTurnIndex--;
-            if (turnOrder[currentTurnIndex].character.realtion != turnOrder[currentTurnIndex + 1].character.realtion)
+            if (turnOrder[currentTurnIndex].character.relation != turnOrder[currentTurnIndex + 1].character.relation)
                 SwitchRelation();
         }
         else if (status == BattleStatus.Combat)
         {
             SetOrder();
             currentTurnIndex = turnOrder.Count - 1;
-            if (turnOrder[currentTurnIndex].character.realtion != lastTurn.character.realtion)
+            if (turnOrder[currentTurnIndex].character.relation != lastTurn.character.relation)
                 SwitchRelation();
         }
 
@@ -125,10 +125,10 @@ public class TurnSystem : MonoBehaviour
         GetStats[] characters = FindObjectsOfType<GetStats>();
         foreach (GetStats character in characters)
         {
-            if (character.character.realtion == RealtionType.Enemy)
-                character.character.realtion = RealtionType.Friendly;
-            else if (character.character.realtion == RealtionType.Friendly)
-                character.character.realtion = RealtionType.Enemy;
+            if (character.character.relation == RelationType.Enemy)
+                character.character.relation = RelationType.Friendly;
+            else if (character.character.relation == RelationType.Friendly)
+                character.character.relation = RelationType.Enemy;
         }
     }
 

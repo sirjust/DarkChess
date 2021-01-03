@@ -36,7 +36,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     private void Update()
     {
-        if (turnSystem.GetBattleStatus() == BattleStatus.Combat && turnSystem.currentTurn == cardSystem.Player.GetComponent<GetStats>() && isSelected)
+        if (isSelected && turnSystem.GetBattleStatus() == BattleStatus.Combat && turnSystem.currentTurn == cardSystem.Player.GetComponent<GetStats>()) 
         {
             gridGenerator.DestroyTiles(DestroyOption.rangeTiles, true, true);
             gridGenerator.GenerateSkillTiles(getCardInfo.card.ranges, getCardInfo.card.targetType, cardSystem.Player, TypesofValue.relative, true);
@@ -91,7 +91,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void Deselect()
     {
         CardGameObject.transform.position -= selectedPos;
-        if (turnSystem.GetBattleStatus() == BattleStatus.Combat && turnSystem.currentTurn == cardSystem.Player.GetComponent<GetStats>()) 
+        if (turnSystem.GetBattleStatus() == BattleStatus.Combat && turnSystem.currentTurn == cardSystem.Player.GetComponent<GetStats>())
             gridGenerator.DestroyTiles(DestroyOption.rangeTiles, true, true);
         isSelected = false;
     }
@@ -99,7 +99,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void ResetCardPos()
     {
         this.transform.position = lastPos;
-        if (turnSystem.GetBattleStatus() == BattleStatus.Combat && turnSystem.currentTurn == cardSystem.Player.GetComponent<GetStats>())
+        if(turnSystem.GetBattleStatus() == BattleStatus.Combat && turnSystem.currentTurn == cardSystem.Player.GetComponent<GetStats>())
             gridGenerator.DestroyTiles(DestroyOption.all, true, true);
         isSelected = false;
     }

@@ -197,7 +197,7 @@ public class EditedGridGenerator : MonoBehaviour
             {
                 if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
                 {
-                    if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.realtion != RealtionType.Enemy)
+                    if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.relation != RelationType.Enemy)
                     {
                         Destroy(tile);
                         rangeTiles.Remove(rangeTiles[i]);
@@ -213,7 +213,7 @@ public class EditedGridGenerator : MonoBehaviour
             {
                 if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile != null)
                 {
-                    if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.realtion != RealtionType.Friendly)
+                    if (rangeTiles[i].GetComponent<GetObjectonTile>().gameObjectOnTile.GetComponent<GetStats>().character.relation != RelationType.Friendly)
                     {
                         Destroy(tile);
                         rangeTiles.Remove(rangeTiles[i]);
