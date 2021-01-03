@@ -16,15 +16,14 @@ MonoBehaviour:
   Model: {fileID: 5403002427580834744, guid: 8361691f425fb7f44a02419bf45f5154, type: 3}
   charName: Troll
   health: 100
-  currentHealth: 110
+  currentHealth: 10
   mana: 1000
-  currentMana: 560
+  currentMana: 516
   strength: 0
   defense: 22
   movement: 11
   critRate: 13
   dodgeRate: 0
   healthRepresentation: 0
-  startRelation: 0
   relation: 1
   movementCard: {fileID: 11400000, guid: 66952b6fa6dd5c643ac75f68fd0077d2, type: 2}

@@ -15,16 +15,15 @@ MonoBehaviour:
   picture: {fileID: 21300000, guid: 5bf33171a7890405fadd9ba6c341d086, type: 3}
   Model: {fileID: 5403002427580834744, guid: 8361691f425fb7f44a02419bf45f5154, type: 3}
   charName: Xny
-  health: 50
-  currentHealth: 1
+  health: 100
+  currentHealth: 10
   mana: 100
-  currentMana: 34
+  currentMana: 56
   strength: 0
   defense: 0
   movement: 0
   critRate: 0
   dodgeRate: 0
   healthRepresentation: 0
-  startRelation: 0
   relation: 1
-  movementCard: {fileID: 11400000, guid: 53911660d304a644ca7095c3ce3936b5, type: 2}
+  movementCard: {fileID: 11400000, guid: 66952b6fa6dd5c643ac75f68fd0077d2, type: 2}
